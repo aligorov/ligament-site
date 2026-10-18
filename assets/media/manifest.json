@@ -1,0 +1,647 @@
+{
+  "$schema": "./schema.json",
+  "version": "1.0.0",
+  "updated_at": "2026-10-18",
+  "items": [
+    {
+      "id": "demo-windows-logon",
+      "type": "video",
+      "file": "demo-windows-logon.webm",
+      "fallback_file": "demo-windows-logon.mp4",
+      "poster": "demo-windows-logon-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "hero",
+      "status": "todo",
+      "ru": {
+        "title": "Windows Auto-Logon",
+        "caption": "Push-подтверждение на смартфоне → мгновенный вход в Windows без клика и Enter",
+        "alt": "Демонстрация автоматического входа в Windows 11 после подтверждения push-уведомления"
+      },
+      "en": {
+        "title": "Windows Auto-Logon",
+        "caption": "Smartphone push approval → instant Windows logon without pressing Enter",
+        "alt": "Demonstration of automatic Windows 11 logon following push approval"
+      }
+    },
+    {
+      "id": "demo-number-matching",
+      "type": "video",
+      "file": "demo-number-matching.webm",
+      "fallback_file": "demo-number-matching.mp4",
+      "poster": "demo-number-matching-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Number Matching на экране входа",
+        "caption": "Защита от push-бомбинга: совпадение двузначного числа между экраном и приложением",
+        "alt": "Ввод проверочного числа в мобильном приложении Ligament"
+      },
+      "en": {
+        "title": "Number Matching on Logon Screen",
+        "caption": "Push fatigue protection: matching the 2-digit number between screen and mobile app",
+        "alt": "Entering verification number in Ligament mobile app"
+      }
+    },
+    {
+      "id": "demo-uac-elevation",
+      "type": "video",
+      "file": "demo-uac-elevation.webm",
+      "fallback_file": "demo-uac-elevation.mp4",
+      "poster": "demo-uac-elevation-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "UAC Elevation 2FA",
+        "caption": "Второй фактор при повышении привилегий (UAC) в среде Windows",
+        "alt": "Подтверждение прав администратора через второй фактор Ligament"
+      },
+      "en": {
+        "title": "UAC Elevation 2FA",
+        "caption": "Second factor prompt upon administrator privilege escalation in Windows",
+        "alt": "Admin privilege escalation verified via Ligament 2FA"
+      }
+    },
+    {
+      "id": "demo-kerberos-login",
+      "type": "video",
+      "file": "demo-kerberos-login.webm",
+      "fallback_file": "demo-kerberos-login.mp4",
+      "poster": "demo-kerberos-login-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Kerberos SSO: «Вход через Windows»",
+        "caption": "Беспарольный вход с доменного ПК по Kerberos-тикету с прохождением только 2-го фактора",
+        "alt": "Вход в портал Ligament через кнопку Вход через Windows"
+      },
+      "en": {
+        "title": "Kerberos SSO: Windows Logon",
+        "caption": "Passwordless domain logon using Kerberos tickets followed by second factor only",
+        "alt": "One-click domain login using Kerberos SPNEGO ticket"
+      }
+    },
+    {
+      "id": "demo-telegram-approve",
+      "type": "video",
+      "file": "demo-telegram-approve.webm",
+      "fallback_file": "demo-telegram-approve.mp4",
+      "poster": "demo-telegram-approve-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Подтверждение в Telegram и мессенджерах",
+        "caption": "Интерактивные кнопки подтверждения, кнопка «❌ Это не я!» и меню самообслуживания",
+        "alt": "Подтверждение попытки входа в корпоративном Telegram-боте"
+      },
+      "en": {
+        "title": "Messenger Approval",
+        "caption": "Interactive Telegram approval buttons, instant reject with alert, self-service menu",
+        "alt": "Login confirmation in Telegram bot with instant reject button"
+      }
+    },
+    {
+      "id": "demo-pwa-push",
+      "type": "video",
+      "file": "demo-pwa-push.webm",
+      "fallback_file": "demo-pwa-push.mp4",
+      "poster": "demo-pwa-push-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "PWA Аутентификатор /app",
+        "caption": "Web Push на iOS и Android без установки из магазинов приложений",
+        "alt": "Push-карточка в мобильном веб-приложении PWA"
+      },
+      "en": {
+        "title": "PWA Authenticator /app",
+        "caption": "Web Push on iOS and Android without requiring App Store / Google Play",
+        "alt": "Push notification card in Ligament PWA"
+      }
+    },
+    {
+      "id": "demo-radius-wifi",
+      "type": "video",
+      "file": "demo-radius-wifi.webm",
+      "fallback_file": "demo-radius-wifi.mp4",
+      "poster": "demo-radius-wifi-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "RADIUS 802.1X для Wi-Fi и VPN",
+        "caption": "Аутентификация в корпоративном Wi-Fi с удержанием сессии и push-подтверждением",
+        "alt": "Подключение к корпоративному Wi-Fi с двухфакторным подтверждением"
+      },
+      "en": {
+        "title": "RADIUS 802.1X Wi-Fi & VPN",
+        "caption": "Enterprise Wi-Fi authentication with push holding and device trust window",
+        "alt": "Corporate Wi-Fi connection with push approval"
+      }
+    },
+    {
+      "id": "demo-radius-disconnect",
+      "type": "video",
+      "file": "demo-radius-disconnect.webm",
+      "fallback_file": "demo-radius-disconnect.mp4",
+      "poster": "demo-radius-disconnect-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Принудительное завершение RADIUS-сессии",
+        "caption": "RFC 5176 CoA-Disconnect и kick-sta фолбэк для немедленного отключения пользователя",
+        "alt": "Завершение сессии пользователя в админке с отправкой CoA Disconnect"
+      },
+      "en": {
+        "title": "RADIUS Disconnect",
+        "caption": "RFC 5176 CoA-Disconnect and UniFi kick-sta fallback for instant session termination",
+        "alt": "Terminating active RADIUS session from admin console"
+      }
+    },
+    {
+      "id": "demo-sso-oidc",
+      "type": "video",
+      "file": "demo-sso-oidc.webm",
+      "fallback_file": "demo-sso-oidc.mp4",
+      "poster": "demo-sso-oidc-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "SSO OIDC & SAML IdP",
+        "caption": "Единый вход в корпоративные сервисы (Nextcloud, GitLab, 1C) без Keycloak",
+        "alt": "Вход через Ligament SSO в корпоративные приложения"
+      },
+      "en": {
+        "title": "SSO OIDC & SAML IdP",
+        "caption": "Single Sign-On to corporate services (Nextcloud, GitLab, Proxmox) without Keycloak",
+        "alt": "SSO login flow into internal applications"
+      }
+    },
+    {
+      "id": "demo-launchpad-saml",
+      "type": "video",
+      "file": "demo-launchpad-saml.webm",
+      "fallback_file": "demo-launchpad-saml.mp4",
+      "poster": "demo-launchpad-saml-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Launchpad портал приложений",
+        "caption": "Каталог сервисов компании с бесшовным IdP-initiated входом",
+        "alt": "Витрина корпоративных приложений в Launchpad"
+      },
+      "en": {
+        "title": "Application Launchpad",
+        "caption": "Corporate app directory with seamless IdP-initiated SAML/OIDC navigation",
+        "alt": "Corporate apps catalog in user Launchpad"
+      }
+    },
+    {
+      "id": "demo-bastion-ssh",
+      "type": "video",
+      "file": "demo-bastion-ssh.webm",
+      "fallback_file": "demo-bastion-ssh.mp4",
+      "poster": "demo-bastion-ssh-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Бастион: Web-SSH терминал",
+        "caption": "Полноэкранный SSH в браузере с 2FA, 256 ANSI цветами и полным аудитом команд",
+        "alt": "Сессия Web-SSH терминала с журналом команд"
+      },
+      "en": {
+        "title": "Bastion: Web-SSH Terminal",
+        "caption": "Full-screen in-browser SSH terminal with 2FA, 256 ANSI colors and command audit",
+        "alt": "Web SSH session with live command auditing"
+      }
+    },
+    {
+      "id": "demo-bastion-rdp",
+      "type": "video",
+      "file": "demo-bastion-rdp.webm",
+      "fallback_file": "demo-bastion-rdp.mp4",
+      "poster": "demo-bastion-rdp-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Бастион: RDP-проброс в браузере",
+        "caption": "Безопасное подключение к серверам Windows без открытия порта 3389 наружу",
+        "alt": "Сессия RDP внутри браузера через бастионный шлюз"
+      },
+      "en": {
+        "title": "Bastion: Browser RDP Gateway",
+        "caption": "Secure browser RDP tunnel to Windows servers without exposing port 3389",
+        "alt": "RDP desktop session inside browser tab"
+      }
+    },
+    {
+      "id": "demo-endpoint-console",
+      "type": "video",
+      "file": "demo-endpoint-console.webm",
+      "fallback_file": "demo-endpoint-console.mp4",
+      "poster": "demo-endpoint-console-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Консоль на заблокированной машине",
+        "caption": "Headless служба Windows позволяет подключиться до входа в систему",
+        "alt": "Подключение к экрану блокировки Windows через Ligament2FAService"
+      },
+      "en": {
+        "title": "Locked Endpoint Console",
+        "caption": "Headless Windows service enables console access on locked or pre-login machines",
+        "alt": "Connecting to locked Windows logon screen via headless service"
+      }
+    },
+    {
+      "id": "demo-sos-webrtc",
+      "type": "video",
+      "file": "demo-sos-webrtc.webm",
+      "fallback_file": "demo-sos-webrtc.mp4",
+      "poster": "demo-sos-webrtc-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "SOS-помощь: WebRTC-консоль",
+        "caption": "Кнопка помощи на экране Windows LogonUI, P2P DTLS-SRTP шифрование без TeamViewer",
+        "alt": "Сессия удаленной поддержки пользователя с одноразовым кодом подтверждения"
+      },
+      "en": {
+        "title": "SOS Helpdesk: WebRTC Console",
+        "caption": "Help button right on Windows logon screen, P2P DTLS-SRTP, zero 3rd-party tools",
+        "alt": "Remote assistance session initiated from Windows logon UI"
+      }
+    },
+    {
+      "id": "demo-device-posture",
+      "type": "video",
+      "file": "demo-device-posture.webm",
+      "fallback_file": "demo-device-posture.mp4",
+      "poster": "demo-device-posture-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Device Posture и соответствие",
+        "caption": "Контроль BitLocker, FileVault, Defender и целостности ОС при каждом запросе",
+        "alt": "Проверка параметров безопасности устройства в профиле"
+      },
+      "en": {
+        "title": "Device Posture Assessment",
+        "caption": "Verification of BitLocker, FileVault, Defender and OS integrity on each challenge",
+        "alt": "Device security posture checklist in user settings"
+      }
+    },
+    {
+      "id": "demo-relay-offline",
+      "type": "video",
+      "file": "demo-relay-offline.webm",
+      "fallback_file": "demo-relay-offline.mp4",
+      "poster": "demo-relay-offline-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Ligament Relay: офлайн-кэш филиала",
+        "caption": "Бесперебойная аутентификация сотрудников в удаленном офисе при обрыве WAN-канала",
+        "alt": "Работа филиального Relay-узла в изолированном офлайн-режиме"
+      },
+      "en": {
+        "title": "Ligament Relay: Branch Offline Cache",
+        "caption": "Uninterrupted employee authentication during WAN outage via local cached state",
+        "alt": "Branch office Relay authenticating users with disconnected WAN"
+      }
+    },
+    {
+      "id": "demo-guest-invite",
+      "type": "video",
+      "file": "demo-guest-invite.webm",
+      "fallback_file": "demo-guest-invite.mp4",
+      "poster": "demo-guest-invite-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Гостевой доступ со спонсорством",
+        "caption": "Выдача временных пропусков подрядчикам по QR без заведения учетной записи в Active Directory",
+        "alt": "Генерация гостевого QR-приглашения спонсором"
+      },
+      "en": {
+        "title": "Sponsored Guest Access",
+        "caption": "Temporary QR passes for contractors without creating objects in Active Directory",
+        "alt": "Sponsor issuing timed guest access QR code"
+      }
+    },
+    {
+      "id": "demo-notify-gateway",
+      "type": "video",
+      "file": "demo-notify-gateway.webm",
+      "fallback_file": "demo-notify-gateway.mp4",
+      "poster": "demo-notify-gateway-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Шлюз уведомлений и топики",
+        "caption": "Доставка алертов из Home Assistant / Zabbix через единый API с поддержкой картинок",
+        "alt": "Отправка уведомления через curl с получением сообщения в Telegram"
+      },
+      "en": {
+        "title": "Notification Gateway & Topics",
+        "caption": "Alert delivery from monitoring and ITSM via single API with image support",
+        "alt": "Sending notification via curl and instant delivery to Telegram"
+      }
+    },
+    {
+      "id": "demo-admin-tour",
+      "type": "video",
+      "file": "demo-admin-tour.webm",
+      "fallback_file": "demo-admin-tour.mp4",
+      "poster": "demo-admin-tour-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Панель администратора без перезагрузок",
+        "caption": "Асинхронные формы, адаптивные политики, аудит в реальном времени на 8 языках",
+        "alt": "Обзор интерфейса администратора Ligament"
+      },
+      "en": {
+        "title": "Reactive Admin Console",
+        "caption": "Async forms, toast feedback, adaptive security policies in 8 localized languages",
+        "alt": "Tour of Ligament administrator dashboard"
+      }
+    },
+    {
+      "id": "demo-update-card",
+      "type": "video",
+      "file": "demo-update-card.webm",
+      "fallback_file": "demo-update-card.mp4",
+      "poster": "demo-update-card-poster.jpg",
+      "width": 1920,
+      "height": 1080,
+      "aspect_ratio": "16/9",
+      "section": "features",
+      "status": "todo",
+      "ru": {
+        "title": "Версии и обновления парка",
+        "caption": "Сравнение релизов ядра и мониторинг версий живых устройств пользователей",
+        "alt": "Карточка контроля версий компонентов системы"
+      },
+      "en": {
+        "title": "Fleet Versions & Updates",
+        "caption": "Comparing server core releases and monitoring live client versions across endpoints",
+        "alt": "Component versions overview card in admin console"
+      }
+    },
+    {
+      "id": "screen-login",
+      "type": "image",
+      "file": "screen-login.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Экран входа в веб-портал",
+        "caption": "Чистая форма аутентификации с поддержкой Passkeys, TOTP и резервных кодов",
+        "alt": "Страница аутентификации пользователя в портале Ligament"
+      },
+      "en": {
+        "title": "Portal Login Screen",
+        "caption": "Clean authentication view with Passkeys, TOTP and recovery options",
+        "alt": "Ligament user login portal"
+      }
+    },
+    {
+      "id": "screen-windows-tile",
+      "type": "image",
+      "file": "screen-windows-tile.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Windows Credential Provider плитка",
+        "caption": "Нативная плитка на экране блокировки Windows с QR-кодом FIDO2 и таймером",
+        "alt": "Плитка Ligament 2FA на экране Windows LogonUI"
+      },
+      "en": {
+        "title": "Windows Credential Provider Tile",
+        "caption": "Native LogonUI tile on Windows 11 lock screen with dynamic QR code",
+        "alt": "Ligament 2FA credential provider tile on Windows logon screen"
+      }
+    },
+    {
+      "id": "screen-dashboard",
+      "type": "image",
+      "file": "screen-dashboard.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Панель мониторинга безопасности",
+        "caption": "Сводка активных сессий, распределение факторов и карта событий входа",
+        "alt": "Главная панель администратора с аналитикой входов"
+      },
+      "en": {
+        "title": "Security Dashboard",
+        "caption": "Active session counts, factor distribution and geographical event map",
+        "alt": "Ligament administrator dashboard"
+      }
+    },
+    {
+      "id": "screen-users",
+      "type": "image",
+      "file": "screen-users.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Управление пользователями",
+        "caption": "Список сотрудников, статус привязанных факторов и история блокировок",
+        "alt": "Таблица учетных записей и статусов второго фактора"
+      },
+      "en": {
+        "title": "User Management",
+        "caption": "Employee directory, enrolled factor statuses and lockout history",
+        "alt": "User accounts table in administrator portal"
+      }
+    },
+    {
+      "id": "screen-policies",
+      "type": "image",
+      "file": "screen-policies.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Адаптивные политики безопасности",
+        "caption": "Правила принуждения факторов по группам AD, подсетям и гео-зонам",
+        "alt": "Конфигуратор политик доступа Ligament"
+      },
+      "en": {
+        "title": "Adaptive Security Policies",
+        "caption": "Factor enforcement rules by Active Directory group, CIDR subnet and Geo-IP",
+        "alt": "Access policy configuration interface"
+      }
+    },
+    {
+      "id": "screen-push-card",
+      "type": "image",
+      "file": "screen-push-card.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Push-карточка в мобильном приложении",
+        "caption": "Детали входа: внешний и внутренний IP, устройство, локация и таймер действия",
+        "alt": "Всплывающая карточка подтверждения входа"
+      },
+      "en": {
+        "title": "Mobile Push Prompt",
+        "caption": "Login context: external vs internal IP, device details, geo-location and countdown",
+        "alt": "Interactive login prompt in mobile application"
+      }
+    },
+    {
+      "id": "screen-bastion-terminal",
+      "type": "image",
+      "file": "screen-bastion-terminal.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Бастион: консоль Web-SSH",
+        "caption": "Терминал в браузере с 256 ANSI цветами, поддержкой горячих клавиш и аудитом",
+        "alt": "Окно терминала Web-SSH в браузере"
+      },
+      "en": {
+        "title": "Bastion Web-SSH Terminal",
+        "caption": "Browser terminal with 256 ANSI colors, hotkey mapping and audit recording",
+        "alt": "Web SSH terminal session window"
+      }
+    },
+    {
+      "id": "screen-audit",
+      "type": "image",
+      "file": "screen-audit.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Неизменяемый журнал аудита",
+        "caption": "Записи всех событий аутентификации с фиксацией IP «из офиса» vs «из дома»",
+        "alt": "Таблица журнала событий безопасности"
+      },
+      "en": {
+        "title": "Immutable Audit Log",
+        "caption": "Event log capturing external/internal IPs, factor results and device posture",
+        "alt": "Security audit trail table"
+      }
+    },
+    {
+      "id": "screen-incident-report",
+      "type": "image",
+      "file": "screen-incident-report.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Печатный отчет по инциденту",
+        "caption": "Хронологический таймлайн событий для передачи в службу ИБ и регуляторам",
+        "alt": "Сформированный отчет по подозрительной активности"
+      },
+      "en": {
+        "title": "Printable Incident Report",
+        "caption": "Chronological forensic timeline ready for security teams and compliance audits",
+        "alt": "Generated security incident report view"
+      }
+    },
+    {
+      "id": "screen-license",
+      "type": "image",
+      "file": "screen-license.png",
+      "width": 1600,
+      "height": 1000,
+      "aspect_ratio": "16/10",
+      "section": "media",
+      "status": "todo",
+      "ru": {
+        "title": "Управление лицензией",
+        "caption": "Офлайн-активация ключом, статус модулей и аппаратный код привязки",
+        "alt": "Страница информации о лицензии в панели управления"
+      },
+      "en": {
+        "title": "License Management",
+        "caption": "Offline cryptographic license activation, hardware code and feature gates",
+        "alt": "License status and activation interface"
+      }
+    }
+  ]
+}
