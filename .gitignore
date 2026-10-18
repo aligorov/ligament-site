@@ -1,0 +1,46 @@
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor & IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Environment & Secrets (strict)
+.env
+.env.*
+*.pem
+*.key
+*.cert
+*.crt
+license.lic
+
+# Heavy / Uncompressed raw media drafts
+raw_media/
+drafts/
+*.mov
+*.raw
+*.avi
+
+# Node / Build artifacts (if any tools are run locally)
+node_modules/
+dist/
+build/
+.cache/
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+tmp/
+temp/
