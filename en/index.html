@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles.css?v=modules-1">
 </head>
 <body>
 
@@ -177,7 +177,7 @@
         <div class="metric-card">
           <div class="metric-value">$0 / Free</div>
           <div class="metric-label">Free Tier Forever</div>
-          <div class="metric-sub">Up to 5 users with full features</div>
+          <div class="metric-sub">Up to 5 users with base features</div>
         </div>
         <div class="metric-card">
           <div class="metric-value">up to 85%</div>
@@ -467,7 +467,7 @@
           <h3 class="collab-card-title">CIO & Chief Financial Officer (CFO)</h3>
           <p class="collab-card-desc">Reduce 5-year Total Cost of Ownership (TCO) by up to 85% compared to foreign SaaS providers.</p>
           <ul class="collab-card-list">
-            <li>Perpetual lifetime licensing: one-time investment (CAPEX)</li><li>$1,500 one-time for 100 users vs $7,200/yr with Cisco Duo</li><li>1 year of updates included; later update renewals are separate</li><li>Immunity against sanctions, currency inflation, and license cancelation</li><li>Forever free tier for up to 5 users with all enterprise features</li>
+            <li>Perpetual lifetime licensing: one-time investment (CAPEX)</li><li>$1,500 one-time for 100 users vs $7,200/yr with Cisco Duo</li><li>1 year of updates included; later update renewals are separate</li><li>Immunity against sanctions, currency inflation, and license cancelation</li><li>Forever free tier for up to 5 users with base features</li>
           </ul>
         </div>
 
@@ -661,7 +661,9 @@
           </div>
           <input type="range" id="calc-users-range" class="calc-range" min="5" max="1000" step="5" value="50">
           <div class="preset-buttons">
+            <button type="button" class="preset-btn" data-count="5">5</button>
             <button type="button" class="preset-btn" data-count="10">10</button>
+            <button type="button" class="preset-btn" data-count="20">20</button>
             <button type="button" class="preset-btn" data-count="50">50</button>
             <button type="button" class="preset-btn" data-count="100">100</button>
             <button type="button" class="preset-btn" data-count="250">250</button>
@@ -671,26 +673,24 @@
         </div>
 
         <div class="plan-switch-group">
-          <button type="button" id="plan-sub" class="plan-switch-btn active">
+          <button type="button" id="plan-sub" class="plan-switch-btn">
             <div class="plan-name">Annual Subscription ($3/mo/user)</div>
-            <div class="plan-rate">11 paid months + 1 month free</div>
+            <div class="plan-rate">12 paid months + 1 month free</div>
           </button>
-          <button type="button" id="plan-life" class="plan-switch-btn">
+          <button type="button" id="plan-life" class="plan-switch-btn active">
             <div class="plan-name">Perpetual License ($15/user one-time)</div>
             <div class="plan-rate">Lifetime license; 1 year of updates included</div>
           </button>
         </div>
 
+<fieldset class="license-options"><legend>Additional modules</legend><p>One-time per organization. Notify is included in the base.</p><div class="module-options"><label><input type="checkbox" data-module-price="500"> Trust — $500</label><label><input type="checkbox" data-module-price="750"> SSO — $750</label><label><input type="checkbox" data-module-price="1000"> Bastion — $1,000</label><label><input type="checkbox" data-module-price="2000"> SIEM — $2,000</label><label><input type="checkbox" data-module-price="1000"> PACS — $1,000</label></div><label for="calc-relays">Relay — $500 per node</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — from $500/year</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Estimated License Cost</div>
-          <div id="calc-price-output" class="calc-result-price">$1,650 / yr</div>
-          <div id="calc-sub-output" class="calc-result-sub">Annual price: $3 per user/month, 11 paid months + 1 month free</div>
+          <div id="calc-price-output" class="calc-result-price">$750 one-time</div>
+          <div id="calc-sub-output" class="calc-result-sub">50 licenses × $15; modules extra</div><p id="calc-breakdown"></p><p id="calc-renewal"></p>
         </div>
 
-        <div class="savings-callout">
-          <div class="savings-text">💡 <strong>TCO Savings:</strong> For 100 users you pay <strong>$1,500 one-time</strong> instead of <strong>$7,200+ every year</strong> with Cisco Duo or Okta!</div>
-          <span class="savings-badge">Save up to 85%</span>
-        </div>
+<p class="pricing-terms">Base: Windows Logon/UAC, RADIUS and Notify. Perpetual: $15 per user, minimum 20 licenses ($300). User and module licenses include 1 year of updates; optional update renewal is 20% of their price annually. Without renewal the acquired version keeps working. Annual subscription: $36 per user for 13 months. Support and deployment are billed separately.</p>
       </div>
 
       <!-- 4 Price Cards -->
@@ -700,7 +700,7 @@
           <h3 class="price-card-tier">Community</h3>
           <div class="price-card-price">$0</div>
           <div class="price-card-period">Free Forever</div>
-          <ul class="price-card-features"><li>Up to 5 active users</li><li>Full Windows Logon & RDP</li><li>RADIUS Wi-Fi & VPN Server</li><li>Web SSO & Bastion</li><li>Community support</li></ul>
+          <ul class="price-card-features"><li>Up to 5 active users</li><li>Full Windows Logon & RDP</li><li>RADIUS Wi-Fi & VPN Server</li><li>Notify included; modules extra</li><li>Community support</li></ul>
           <a href="#quickstart" class="btn btn-outline">Начать бесплатно</a>
         </div>
 
@@ -710,7 +710,7 @@
           <h3 class="price-card-tier">Standard (Subscription)</h3>
           <div class="price-card-price">$3</div>
           <div class="price-card-period">per user / month • 1 month free when billed annually</div>
-          <ul class="price-card-features"><li>From 6 users and above</li><li>All platform capabilities</li><li>Priority SLA tech support</li><li>Continuous security updates</li><li>Deployment assistance</li></ul>
+          <ul class="price-card-features"><li>From 6 users and above</li><li>Windows Logon/UAC + RADIUS + Notify</li><li>Support billed separately</li><li>Continuous security updates</li><li>$36 per user for 13 months</li></ul>
           <a href="mailto:admin@ligam.org?subject=Standard%20License%20Request" class="btn btn-primary">Выбрать Standard</a>
         </div>
 
@@ -719,18 +719,27 @@
           <h3 class="price-card-tier">Perpetual (Lifetime)</h3>
           <div class="price-card-price">$15</div>
           <div class="price-card-period">per user one-time</div>
-          <ul class="price-card-features"><li>One-time investment forever (CAPEX)</li><li>Zero recurring monthly fees</li><li>Total infrastructure sovereignty</li><li>1 year of updates included</li><li>Updates after year one renewed separately</li><li>Contractual price guarantee</li></ul>
+          <ul class="price-card-features"><li>Minimum 20 licenses — $300</li><li>Zero recurring monthly fees</li><li>Total infrastructure sovereignty</li><li>1 year of updates included</li><li>Optional updates after year one — 20% per year</li><li>Contractual price guarantee</li></ul>
           <a href="mailto:admin@ligam.org?subject=Perpetual%20License%20Request" class="btn btn-secondary">Купить навсегда</a>
         </div>
 
+      </div>
+      <h3 class="section-title">Organization modules — separate from user licenses</h3>
+      <div class="pricing-grid">
         <!-- Relay -->
         <div class="price-card">
           <h3 class="price-card-tier">Branch Relay</h3>
-          <div class="price-card-price">$150</div>
+          <div class="price-card-price">$500</div>
           <div class="price-card-period">per branch node one-time</div>
           <ul class="price-card-features"><li>RDP :3389 and SSH :22 forwarding</li><li>Outbound WSS :443 tunnel without a public IP</li><li>Backup RADIUS for branch Wi-Fi</li><li>802.1X Wi-Fi authentication during WAN cuts</li><li>Automatic audit replication to Core</li></ul>
           <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
         </div>
+<article class="price-card"><h3 class="price-card-tier">Trust</h3><div class="price-card-price">$500</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">SSO</h3><div class="price-card-price">$750</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">Bastion</h3><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">SIEM</h3><div class="price-card-price">$2,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">PACS</h3><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">Support</h3><div class="price-card-price">from $500</div><div class="price-card-period">per organization per year</div><p>Support service: scope, response times and SLA agreed in contract. Deployment quoted separately.</p><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Support">Discuss support</a></article>
       </div>
     </div>
   </section>
@@ -755,7 +764,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon &amp; UAC Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Relay: RDP/SSH + Wi-Fi RADIUS</strong></td><td class="check-no">✕ (Requires public IP / fails on WAN)</td><td class="check-no">✕ (No forwarding or sync)</td><td class="col-highlight check-yes">✓ WSS :443 forwarding + cached 802.1X Wi-Fi</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram &amp; eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$1,500 one-time or $3,300/yr (11 paid months)</td></tr>
+            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon &amp; UAC Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Relay: RDP/SSH + Wi-Fi RADIUS</strong></td><td class="check-no">✕ (Requires public IP / fails on WAN)</td><td class="check-no">✕ (No forwarding or sync)</td><td class="col-highlight check-yes">✓ WSS :443 forwarding + cached 802.1X Wi-Fi</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram &amp; eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$1,500 one-time or $3,600 for 13 months; modules extra</td></tr>
           </tbody>
         </table>
       </div>
@@ -815,7 +824,7 @@
             <div class="faq-answer">Yes. Ligament runs 100% On-Premise inside your private network. Credentials, session states, and audit logs never leave your servers, fulfilling strict corporate sovereignty requirements.</div>
           </details><details class="faq-item">
             <summary class="faq-question">How does upgrading from the 5 free users to a commercial license work?</summary>
-            <div class="faq-answer">The free Community tier (up to 5 users) is free forever with complete features. When expanding, simply apply a license key in the admin UI without reinstalling or interrupting users.</div>
+            <div class="faq-answer">The free Community tier (up to 5 users) is free forever with base features; modules extra. When expanding, simply apply a license key in the admin UI without reinstalling or interrupting users.</div>
           </details>
       </div>
 
@@ -877,6 +886,6 @@
     </div>
   </footer>
 
-  <script src="../site.js"></script>
+  <script src="../site.js?v=modules-1"></script>
 </body>
 </html>

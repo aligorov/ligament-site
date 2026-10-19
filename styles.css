@@ -1194,6 +1194,13 @@ button {
 }
 
 /* Modern Pricing Calculator */
+.license-options { margin: 24px 0; padding: 20px; border: 1px solid var(--border); border-radius: 12px; }
+.license-options legend { padding: 0 8px; font-weight: 700; }
+.license-options label { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+.module-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px 20px; }
+.license-options input[type="number"] { width: 120px; padding: 10px; color: var(--text-main); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; }
+.license-options input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
+.pricing-terms, #calc-breakdown, #calc-renewal { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-top: 16px; }
 .calc-wrapper {
   background: var(--bg-card);
   backdrop-filter: blur(16px);

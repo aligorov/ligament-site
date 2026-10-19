@@ -101,7 +101,12 @@
     if (!range || !priceOutput) return;
 
     const isEn = document.documentElement.lang === 'en';
-    let activePlan = 'sub'; // 'sub' ($3/mo/user, 11 paid months + 1 free) or 'life' ($15/user one-time)
+    let activePlan = 'life';
+    const moduleInputs = document.querySelectorAll('[data-module-price]');
+    const relayInput = document.getElementById('calc-relays');
+    const supportInput = document.getElementById('calc-support');
+    const breakdown = document.getElementById('calc-breakdown');
+    const renewal = document.getElementById('calc-renewal');
 
     function update() {
       const raw = parseInt(range.value, 10) || 5;
@@ -110,36 +115,50 @@
         valueBadge.textContent = users + (isEn ? ' users' : ' польз.');
       }
 
+      let modulesTotal = 0;
+      moduleInputs.forEach(function (input) {
+        if (input.checked) modulesTotal += Number(input.getAttribute('data-module-price')) || 0;
+      });
+      const relays = relayInput ? Math.min(1000, Math.max(0, Math.floor(Number(relayInput.value) || 0))) : 0;
+      if (relayInput) relayInput.value = String(relays);
+      modulesTotal += relays * 500;
+      const support = supportInput && supportInput.checked ? 500 : 0;
+      const money = function (amount) { return '$' + amount.toLocaleString('en-US'); };
+      const seats = users <= 5 ? 0 : Math.max(20, users);
+      const baseTotal = activePlan === 'sub' ? (users <= 5 ? 0 : users * 36) : seats * 15;
+      const total = baseTotal + modulesTotal + support;
+      priceOutput.textContent = (support ? (isEn ? 'from ' : 'от ') : '') + money(total);
+      if (breakdown) breakdown.textContent = (isEn ? 'User licenses: ' : 'Лицензии пользователей: ') + money(baseTotal) + (isEn ? '; modules and Relay: ' : '; модули и Relay: ') + money(modulesTotal) + (isEn ? '; Support, first year: from ' : '; Support за первый год: от ') + money(support);
+      if (renewal) renewal.textContent = (isEn ? 'Optional annual update renewal from year two: ' : 'Продление обновлений со второго года, по желанию: ') + money((modulesTotal + (activePlan === 'life' ? baseTotal : 0)) * 0.2) + (activePlan === 'sub' && users > 5 ? (isEn ? '. User subscription renewal: ' : '. Продление пользовательской подписки: ') + money(baseTotal) + (isEn ? ' for 13 months' : ' за 13 месяцев') : '') + (support ? (isEn ? '. Support: from $500/year, final quote by agreement.' : '. Support: от $500/год, итог по договору.') : '');
+
       if (users <= 5) {
-        priceOutput.textContent = '$0';
         if (subOutput) {
           subOutput.textContent = isEn
-            ? 'Free forever (up to 5 users, all features included)'
-            : 'Бесплатно навсегда (до 5 пользователей, все функции)';
+            ? 'Community: up to 5 users free for base features; selected modules billed separately'
+            : 'Community: до 5 пользователей бесплатно с базовыми функциями; выбранные модули отдельно';
         }
         return;
       }
 
       if (activePlan === 'sub') {
-        const totalYear = users * 3 * 11; // $3/user/mo * 11 paid months; 1 month free
-        priceOutput.textContent = '$' + totalYear.toLocaleString('en-US') + (isEn ? ' / yr' : ' / год');
         if (subOutput) {
           subOutput.textContent = isEn
-            ? 'Annual price: $3 per user/month, 11 paid months + 1 month free'
-            : 'Годовая цена: $3/пользователь/мес, оплачиваются 11 месяцев + 1 месяц в подарок';
+            ? '$3 per user/month: 12 paid months + 1 month free ($36 per user for 13 months). Modules extra.'
+            : '$3/пользователь/мес: 12 месяцев оплаты + 1 месяц в подарок ($36 за 13 месяцев). Модули отдельно.';
         }
       } else {
-        const totalLife = users * 15; // $15/user one-time
-        priceOutput.textContent = '$' + totalLife.toLocaleString('en-US') + (isEn ? ' one-time' : ' разово');
         if (subOutput) {
           subOutput.textContent = isEn
-            ? 'Perpetual lifetime license: $15 per user one-time; 1 year of updates included, then renewed separately'
-            : 'Бессрочная лицензия: $15/пользователь разово; 1 год обновлений включен, далее обновления продлеваются отдельно';
+            ? seats + ' licenses × $15 one-time; minimum 20 licenses ($300). First year of updates included.'
+            : seats + ' лицензий × $15 разово; минимум 20 лицензий ($300). Первый год обновлений включён.';
         }
       }
     }
 
     range.addEventListener('input', update);
+    moduleInputs.forEach(function (input) { input.addEventListener('change', update); });
+    if (relayInput) relayInput.addEventListener('input', update);
+    if (supportInput) supportInput.addEventListener('change', update);
 
     presetBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {

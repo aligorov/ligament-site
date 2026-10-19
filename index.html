@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=modules-1">
 </head>
 <body>
 
@@ -467,7 +467,7 @@
           <h3 class="collab-card-title">ИТ-директору и CFO</h3>
           <p class="collab-card-desc">Сокращение совокупной стоимости владения (TCO) до 85% по сравнению с зарубежными облачными решениями.</p>
           <ul class="collab-card-list">
-            <li>Бессрочная лицензия: разовая покупка навсегда (CAPEX)</li><li>$1,500 разово на 100 польз. против $7,200/год у Cisco Duo</li><li>1 год обновлений включен, дальнейшее продление обновлений — отдельно</li><li>Защита от валютных колебаний и односторонних санкций</li><li>Бесплатный полнофункциональный тариф до 5 пользователей</li>
+            <li>Бессрочная лицензия: разовая покупка навсегда (CAPEX)</li><li>$1,500 разово на 100 польз. против $7,200/год у Cisco Duo</li><li>1 год обновлений включен, дальнейшее продление обновлений — отдельно</li><li>Защита от валютных колебаний и односторонних санкций</li><li>Бесплатный базовый тариф до 5 пользователей</li>
           </ul>
         </div>
 
@@ -661,7 +661,9 @@
           </div>
           <input type="range" id="calc-users-range" class="calc-range" min="5" max="1000" step="5" value="50">
           <div class="preset-buttons">
+            <button type="button" class="preset-btn" data-count="5">5</button>
             <button type="button" class="preset-btn" data-count="10">10</button>
+            <button type="button" class="preset-btn" data-count="20">20</button>
             <button type="button" class="preset-btn" data-count="50">50</button>
             <button type="button" class="preset-btn" data-count="100">100</button>
             <button type="button" class="preset-btn" data-count="250">250</button>
@@ -671,26 +673,24 @@
         </div>
 
         <div class="plan-switch-group">
-          <button type="button" id="plan-sub" class="plan-switch-btn active">
+          <button type="button" id="plan-sub" class="plan-switch-btn">
             <div class="plan-name">Годовая подписка ($3/мес/чел)</div>
-            <div class="plan-rate">11 месяцев оплаты + 1 месяц в подарок</div>
+            <div class="plan-rate">12 месяцев оплаты + 1 месяц в подарок</div>
           </button>
-          <button type="button" id="plan-life" class="plan-switch-btn">
+          <button type="button" id="plan-life" class="plan-switch-btn active">
             <div class="plan-name">Бессрочная лицензия ($15/чел разово)</div>
             <div class="plan-rate">Навсегда; 1 год обновлений включен</div>
           </button>
         </div>
 
+<fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу.</p><div class="module-options"><label><input type="checkbox" data-module-price="500"> Trust — $500</label><label><input type="checkbox" data-module-price="750"> SSO — $750</label><label><input type="checkbox" data-module-price="1000"> Bastion — $1,000</label><label><input type="checkbox" data-module-price="2000"> SIEM — $2,000</label><label><input type="checkbox" data-module-price="1000"> PACS — $1,000</label></div><label for="calc-relays">Relay — $500 за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от $500/год</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Оценочная стоимость лицензии</div>
-          <div id="calc-price-output" class="calc-result-price">$1,650 / год</div>
-          <div id="calc-sub-output" class="calc-result-sub">Годовая цена: $3/пользователь/мес, оплачиваются 11 месяцев + 1 месяц в подарок</div>
+          <div id="calc-price-output" class="calc-result-price">$750 разово</div>
+          <div id="calc-sub-output" class="calc-result-sub">50 лицензий × $15; модули отдельно</div><p id="calc-breakdown"></p><p id="calc-renewal"></p>
         </div>
 
-        <div class="savings-callout">
-          <div class="savings-text">💡 <strong>Экономия TCO:</strong> на 100 пользователей вы платите <strong>$1,500 один раз</strong> вместо <strong>$7,200+ каждый год</strong> у Cisco Duo или Okta!</div>
-          <span class="savings-badge">Экономия до 85%</span>
-        </div>
+<p class="pricing-terms">База: Windows Logon/UAC, RADIUS и Notify. Бессрочная лицензия — $15 за пользователя, минимум 20 лицензий ($300). Лицензии пользователей и модулей включают 1 год обновлений; далее продление обновлений — 20% их стоимости в год, по желанию. Без продления приобретённая версия продолжает работать. Годовая подписка — $36 за пользователя за 13 месяцев. Support и внедрение оплачиваются отдельно.</p>
       </div>
 
       <!-- 4 Price Cards -->
@@ -700,7 +700,7 @@
           <h3 class="price-card-tier">Community</h3>
           <div class="price-card-price">$0</div>
           <div class="price-card-period">Бесплатно навсегда</div>
-          <ul class="price-card-features"><li>До 5 активных пользователей</li><li>Полный функционал Windows Logon</li><li>RADIUS-сервер Wi-Fi и VPN</li><li>Web SSO (OIDC/SAML) и Бастион</li><li>Поддержка сообщества</li></ul>
+          <ul class="price-card-features"><li>До 5 активных пользователей</li><li>Полный функционал Windows Logon</li><li>RADIUS-сервер Wi-Fi и VPN</li><li>Notify включён; модули отдельно</li><li>Поддержка сообщества</li></ul>
           <a href="#quickstart" class="btn btn-outline">Начать бесплатно</a>
         </div>
 
@@ -710,7 +710,7 @@
           <h3 class="price-card-tier">Standard (Подписка)</h3>
           <div class="price-card-price">$3</div>
           <div class="price-card-period">за пользователя в месяц • 1 месяц в подарок при оплате за год</div>
-          <ul class="price-card-features"><li>От 6 пользователей</li><li>Все возможности платформы</li><li>Приоритетная техподдержка (SLA)</li><li>Регулярные обновления безопасности</li><li>Помощь во внедрении</li></ul>
+          <ul class="price-card-features"><li>От 6 пользователей</li><li>Windows Logon/UAC + RADIUS + Notify</li><li>Support оплачивается отдельно</li><li>Регулярные обновления безопасности</li><li>$36 за пользователя за 13 месяцев</li></ul>
           <a href="mailto:admin@ligam.org?subject=Standard%20License%20Request" class="btn btn-primary">Выбрать Standard</a>
         </div>
 
@@ -719,14 +719,17 @@
           <h3 class="price-card-tier">Perpetual (Бессрочная)</h3>
           <div class="price-card-price">$15</div>
           <div class="price-card-period">за пользователя разово</div>
-          <ul class="price-card-features"><li>Разовый платеж навсегда (CAPEX)</li><li>Без ежемесячных подписок</li><li>Полный суверенитет и автономия</li><li>1 год обновлений включен</li><li>После первого года обновления продлеваются отдельно</li><li>Фиксация цены в договоре</li></ul>
+          <ul class="price-card-features"><li>Минимум 20 лицензий — $300</li><li>Без ежемесячных подписок</li><li>Полный суверенитет и автономия</li><li>1 год обновлений включен</li><li>После первого года обновления — 20% в год</li><li>Фиксация цены в договоре</li></ul>
           <a href="mailto:admin@ligam.org?subject=Perpetual%20License%20Request" class="btn btn-secondary">Купить навсегда</a>
         </div>
 
+      </div>
+      <h3 class="section-title">Модули организации — отдельно от пользователей</h3>
+      <div class="pricing-grid">
         <!-- Relay -->
         <div class="price-card">
           <h3 class="price-card-tier">Branch Relay</h3>
-          <div class="price-card-price">$150</div>
+          <div class="price-card-price">$500</div>
           <div class="price-card-period">за филиальный узел разово</div>
           <ul class="price-card-features">
             <li>Безопасный проброс RDP (:3389) и SSH (:22)</li>
@@ -737,6 +740,12 @@
           </ul>
           <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
         </div>
+<article class="price-card"><h3 class="price-card-tier">Trust</h3><div class="price-card-price">$500</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Запросить модуль</a></article>
+<article class="price-card"><h3 class="price-card-tier">SSO</h3><div class="price-card-price">$750</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Запросить модуль</a></article>
+<article class="price-card"><h3 class="price-card-tier">Bastion</h3><div class="price-card-price">$1,000</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Запросить модуль</a></article>
+<article class="price-card"><h3 class="price-card-tier">SIEM</h3><div class="price-card-price">$2,000</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Запросить модуль</a></article>
+<article class="price-card"><h3 class="price-card-tier">PACS</h3><div class="price-card-price">$1,000</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Запросить модуль</a></article>
+<article class="price-card"><h3 class="price-card-tier">Support</h3><div class="price-card-price">от $500</div><div class="price-card-period">на организацию в год</div><p>Услуга сопровождения: объём работ, время реакции и SLA по договору. Внедрение оценивается отдельно.</p><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Support">Обсудить сопровождение</a></article>
       </div>
     </div>
   </section>
@@ -761,7 +770,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>100% On-Premise (без облака)</strong></td><td class="check-no">✕ (Только SaaS-облако)</td><td class="check-no">✓ (Локально)</td><td class="col-highlight check-yes">✓ 100% On-Premise в Docker</td></tr><tr><td><strong>Защита Windows Logon & UAC</strong></td><td class="check-no">✓ (Сложная настройка)</td><td class="check-no">✕ (Нет интеграции)</td><td class="col-highlight check-yes">✓ Нативная плитка LogonUI</td></tr><tr><td><strong>Авто-вход Auto-Logon (0.4 сек)</strong></td><td class="check-no">✕ (Ручной клик и ввод)</td><td class="check-no">✕ (Ручной ввод 6 цифр)</td><td class="col-highlight check-yes">✓ Вход за 0.4с без клика</td></tr><tr><td><strong>Филиальный Relay (RDP/SSH + Wi-Fi)</strong></td><td class="check-no">✕ (Требует белых IP / падает без WAN)</td><td class="check-no">✕ (Нет связи)</td><td class="col-highlight check-yes">✓ Проброс RDP/SSH + Бэкап RADIUS Wi-Fi</td></tr><tr><td><strong>Защита от push-бомбинга</strong></td><td class="check-no">Ограниченно</td><td class="check-no">✕ (Уязвим к фишингу)</td><td class="col-highlight check-yes">✓ Number Matching на экране</td></tr><tr><td><strong>Корпоративные боты (Telegram/eXpress)</strong></td><td class="check-no">✕ (Нет)</td><td class="check-no">✕ (Нет)</td><td class="col-highlight check-yes">✓ Вход без мобильного приложения</td></tr><tr><td><strong>Стоимость за 100 пользователей</strong></td><td class="check-no">$7,200+ каждый год</td><td class="check-no">$0 (без управления)</td><td class="col-highlight check-yes">$1,500 разово или $3,300/год (11 месяцев оплаты)</td></tr>
+            <tr><td><strong>100% On-Premise (без облака)</strong></td><td class="check-no">✕ (Только SaaS-облако)</td><td class="check-no">✓ (Локально)</td><td class="col-highlight check-yes">✓ 100% On-Premise в Docker</td></tr><tr><td><strong>Защита Windows Logon & UAC</strong></td><td class="check-no">✓ (Сложная настройка)</td><td class="check-no">✕ (Нет интеграции)</td><td class="col-highlight check-yes">✓ Нативная плитка LogonUI</td></tr><tr><td><strong>Авто-вход Auto-Logon (0.4 сек)</strong></td><td class="check-no">✕ (Ручной клик и ввод)</td><td class="check-no">✕ (Ручной ввод 6 цифр)</td><td class="col-highlight check-yes">✓ Вход за 0.4с без клика</td></tr><tr><td><strong>Филиальный Relay (RDP/SSH + Wi-Fi)</strong></td><td class="check-no">✕ (Требует белых IP / падает без WAN)</td><td class="check-no">✕ (Нет связи)</td><td class="col-highlight check-yes">✓ Проброс RDP/SSH + Бэкап RADIUS Wi-Fi</td></tr><tr><td><strong>Защита от push-бомбинга</strong></td><td class="check-no">Ограниченно</td><td class="check-no">✕ (Уязвим к фишингу)</td><td class="col-highlight check-yes">✓ Number Matching на экране</td></tr><tr><td><strong>Корпоративные боты (Telegram/eXpress)</strong></td><td class="check-no">✕ (Нет)</td><td class="check-no">✕ (Нет)</td><td class="col-highlight check-yes">✓ Вход без мобильного приложения</td></tr><tr><td><strong>Стоимость за 100 пользователей</strong></td><td class="check-no">$7,200+ каждый год</td><td class="check-no">$0 (без управления)</td><td class="col-highlight check-yes">$1,500 разово или $3,600 за 13 месяцев; модули отдельно</td></tr>
           </tbody>
         </table>
       </div>
@@ -821,7 +830,7 @@
             <div class="faq-answer">Да. Ligament разворачивается полностью On-Premise внутри вашей закрытой сети. Базы учетных записей, хэши, сессии и логи аудита никогда не передаются на зарубежные серверы. Система готова к аттестации по высшим классам защищенности.</div>
           </details><details class="faq-item">
             <summary class="faq-question">Как осуществляется переход с 5 бесплатных пользователей на коммерческий тариф?</summary>
-            <div class="faq-answer">Тариф Community (до 5 пользователей) бесплатен навсегда без ограничений функционала. При росте штата достаточно ввести лицензионный ключ в веб-интерфейсе без переустановки сервера и без остановки работы пользователей.</div>
+            <div class="faq-answer">Тариф Community (до 5 пользователей) бесплатен навсегда с базовыми функциями; модули отдельно. При росте штата достаточно ввести лицензионный ключ в веб-интерфейсе без переустановки сервера и без остановки работы пользователей.</div>
           </details>
       </div>
 
@@ -883,6 +892,6 @@
     </div>
   </footer>
 
-  <script src="site.js"></script>
+  <script src="site.js?v=modules-1"></script>
 </body>
 </html>
