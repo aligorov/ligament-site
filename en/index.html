@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
-  <title>Ligament — Whole-Perimeter Self-Hosted MFA / 2FA Platform</title>
-  <meta name="description" content="Self-hosted MFA/2FA in a single Docker container: Windows logon, RDP, RADIUS 802.1X/VPN, SSO OIDC/SAML/Kerberos, browser bastion, SOS console, and PACS.">
-  <meta name="theme-color" content="#111827">
+  <title>Ligament 2FA — On-Premise MFA for Windows Logon, RDP, RADIUS & SSO</title>
+  <meta name="description" content="Self-hosted MFA platform in a single Docker container: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, bastion & physical access without cloud lock-in.">
+  <meta name="theme-color" content="#07090e">
 
   <link rel="canonical" href="https://ligam.org/en/">
   <link rel="alternate" hreflang="ru" href="https://ligam.org/">
@@ -15,13 +15,13 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ligam.org/en/">
-  <meta property="og:title" content="Ligament — Whole-Perimeter Self-Hosted MFA / 2FA Platform">
-  <meta property="og:description" content="Self-hosted MFA/2FA in a single Docker container: Windows logon, RDP, RADIUS 802.1X/VPN, SSO OIDC/SAML/Kerberos, browser bastion, SOS console, and PACS.">
+  <meta property="og:title" content="Ligament 2FA — On-Premise MFA for Windows Logon, RDP, RADIUS & SSO">
+  <meta property="og:description" content="Self-hosted MFA platform in a single Docker container: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, bastion & physical access without cloud lock-in.">
   <meta property="og:image" content="../assets/brand/og-image.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ligament — Whole-Perimeter Self-Hosted MFA / 2FA Platform">
-  <meta name="twitter:description" content="Self-hosted MFA/2FA in a single Docker container: Windows logon, RDP, RADIUS 802.1X/VPN, SSO OIDC/SAML/Kerberos, browser bastion, SOS console, and PACS.">
+  <meta name="twitter:title" content="Ligament 2FA — On-Premise MFA for Windows Logon, RDP, RADIUS & SSO">
+  <meta name="twitter:description" content="Self-hosted MFA platform in a single Docker container: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, bastion & physical access without cloud lock-in.">
   <meta name="twitter:image" content="../assets/brand/og-image.png">
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
@@ -30,1003 +30,772 @@
 </head>
 <body>
 
+  <!-- Announcement Bar -->
+  <aside class="announcement-bar" role="complementary">
+    <div class="container">
+      🚀 <strong>Ligament 1.1 Release:</strong> Native Auto-Logon for Windows 11 and Autonomous Offline Branch Relay.
+      <a href="#architecture">View Architecture →</a>
+    </div>
+  </aside>
+
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="#" class="brand-link" aria-label="Ligament Security">
         <img src="../assets/brand/logo.svg" alt="Ligament Logo" width="130" height="32">
+        <span class="brand-badge">On-Premise 2FA</span>
       </a>
-      <nav aria-label="Main Navigation">
-        <ul class="nav-links">
-          <li><a href="#features" class="nav-link">Features</a></li><li><a href="#media" class="nav-link">Media</a></li><li><a href="#comparison" class="nav-link">Comparison</a></li><li><a href="#pricing" class="nav-link">Pricing</a></li><li><a href="#whatsnew" class="nav-link">What's New</a></li><li><a href="#install" class="nav-link">Install</a></li><li><a href="#faq" class="nav-link">FAQ</a></li>
-        </ul>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="#architecture">Topology Graph</a><a href="#debate">Why Ligament</a><a href="#benefits">Features</a><a href="#personas">Solutions</a><a href="#pricing">Pricing & TCO</a><a href="#quickstart">Quickstart</a><a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
         <a href="../index.html" class="lang-switch" hreflang="ru" aria-label="Change language to RU">RU</a>
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
-        <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request a 30-day Demo</a>
+        <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request Demo</a>
       </div>
     </div>
   </header>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-badge-trust">🛡️ 100% On-Premise • Zero External Dependencies • Air-Gapped Ready</div>
-        <h1 class="hero-title">MFA for your whole perimeter. One container. No cloud.</h1>
-        <p class="hero-subtitle">One self-hosted Docker container covers Windows logon and RDP, 802.1X and VPN via RADIUS, SSO for internal web (OIDC, SAML, Kerberos), branch offices, a browser bastion, emergency assistance and a notification gateway — in air-gapped environments by design.</p>
-        <div class="hero-cta">
-          <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request a 30-day Demo</a>
-          <a href="#features" class="btn btn-secondary">Explore Features</a>
-        </div>
-        <div class="hero-badges-grid">
-          <span class="proof-badge">On-premise</span><span class="proof-badge">Docker • amd64 | arm64</span><span class="proof-badge">Free up to 5 users</span><span class="proof-badge">Works without internet</span>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="container hero-content">
+      <div class="hero-badge-pill">🛡️ 100% On-Premise Self-Hosted • Zero Cloud • Air-Gapped Ready</div>
+      <h1 class="hero-title">Unified Enterprise 2FA/MFA <span>Without Foreign Cloud Lock-In</span></h1>
+      <p class="hero-desc">Protect Windows Logon, RDP, RADIUS VPN/Wi-Fi, and Web SSO in a single Docker container. Instant 0.4s approval via push number matching — zero SMS or manual code typing.</p>
+      
+      <div class="hero-actions">
+        <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request 30-Day Demo</a>
+        <a href="#pricing" class="btn btn-secondary">Calculate TCO & Savings</a>
+        <a href="../assets/downloads/ligament-presentation.pdf" class="btn btn-outline" download>📄 Presentation PDF</a>
+      </div>
 
-        <!-- Hero Media Slot (Windows Logon Demo) -->
-        <div style="max-width: 860px; margin: 48px auto 0;">
-          <div class="media-slot ratio-16-9" data-slot="demo-windows-logon">
-            <span class="media-slot-tag">VIDEO DEMO</span>
-            <div class="media-slot-title">Windows Auto-Logon Workflow</div>
-            <div class="media-caption">Push approval on smartphone → instant Windows 11 logon without pressing Enter</div>
-            <span class="media-slot-id">demo-windows-logon.webm</span>
+      <!-- Quickstart Command -->
+      <div class="terminal-box">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+          </div>
+          <span class="terminal-title">bash — docker quickstart</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-code">
+            <span class="prompt">$ </span>docker run -d --name ligament -p 8443:8443 -p 1812:1812/udp -v ./data:/data aligorov/ligament_2fa:latest
+          </div>
+          <button type="button" class="copy-btn" data-copy="docker run -d --name ligament -p 8443:8443 -p 1812:1812/udp -v ./data:/data aligorov/ligament_2fa:latest">Копировать</button>
+        </div>
+      </div>
+
+      <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
+      <div class="hero-mockup-wrapper">
+        <div class="mockup-grid">
+          <!-- Left: Windows Screen -->
+          <div class="mockup-card">
+            <span class="mockup-tag">Рабочая станция • Windows 11 / Server RDP</span>
+            <div class="windows-logon-screen">
+              <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
+                <div class="user-avatar-placeholder">АС</div>
+                <div>
+                  <div class="user-name" style="margin-bottom: 2px;">Alex Smith</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">corp\a.smith (RDP Session)</div>
+                </div>
+              </div>
+              <div class="matching-number-box">
+                <div class="matching-number-label">Security Match Code</div>
+                <div class="matching-number-value">42</div>
+              </div>
+              <div style="margin-top: 14px; text-align: center;">
+                <div id="win-logon-status" style="font-size: 13.5px; font-weight: 600; color: #a5b4fc;">
+                  <span class="pulse-dot"></span> Waiting for smartphone approval...
+                </div>
+                <div id="win-logon-sub" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                  Tap number 42 on your phone
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Smartphone Push -->
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="push-notification">
+              <div class="push-header">
+                <span class="push-app-title">🛡️ Ligament 2FA</span>
+                <span class="push-time">Now</span>
+              </div>
+              <div class="push-text">
+                <strong>Windows RDP Sign-in</strong><br>
+                <span style="font-size: 11.5px; color: var(--text-muted);">ПК: WS-CORP-042 • IP: 192.168.1.10</span>
+              </div>
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 6px; font-weight: 700; text-align: center;">
+                Select the matching number:
+              </div>
+              <div class="matching-choices">
+                <button type="button" class="match-opt" data-match="18">18</button>
+                <button type="button" class="match-opt" data-match="42">42</button>
+                <button type="button" class="match-opt" data-match="79">79</button>
+              </div>
+              <div id="phone-push-status" style="font-size: 11.5px; text-align: center; color: var(--text-muted); min-height: 16px;">
+                Tap 42 for instant unlock
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Pains -> Solutions -->
-    <section id="solutions" style="background-color: var(--color-bg-card);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Problems & Solutions</div>
-          <h2 class="section-title">Enterprise Challenges Solved at the Core</h2>
-          <p class="section-desc">Direct answers to common perimeter security and identity vulnerabilities.</p>
-        </div>
-        <div class="pains-grid">
-          
-        <div class="pain-card">
-          <div class="pain-before">⚠️ Push fatigue and push bombing attacks</div>
-          <div class="pain-after">✓ Number matching on logon tile: requires confirming matching 2-digit number</div>
-        </div>
-        <div class="pain-card">
-          <div class="pain-before">⚠️ WAN network outage at remote branch office</div>
-          <div class="pain-after">✓ Local Relay cache: uninterrupted authentication during connectivity loss</div>
-        </div>
-        <div class="pain-card">
-          <div class="pain-before">⚠️ Technician asking for administrator credentials</div>
-          <div class="pain-after">✓ Over-the-shoulder approval: second factor challenge routed to administrator phone</div>
-        </div>
-        <div class="pain-card">
-          <div class="pain-before">⚠️ Exposing port 3389 publicly for remote RDP</div>
-          <div class="pain-after">✓ Web-SSH and RDP bastion in browser with 2FA, zero open service ports</div>
-        </div>
-        <div class="pain-card">
-          <div class="pain-before">⚠️ Employee connecting from unmanaged personal PC</div>
-          <div class="pain-after">✓ Device Posture verification (BitLocker / FileVault / Defender) + PACS presence</div>
-        </div>
-        <div class="pain-card">
-          <div class="pain-before">⚠️ Unclear forensic trail during incident investigation</div>
-          <div class="pain-after">✓ Immutable audit log distinguishing 'office LAN' vs 'remote WAN' IP addresses</div>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 14 Features -->
-    <section id="features">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Capabilities</div>
-          <h2 class="section-title">What Ligament Delivers</h2>
-          <p class="section-desc">14 integrated security modules in a unified self-hosted platform.</p>
-        </div>
-        <div class="cards-grid">
-          
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>01</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-config">Config-dependent</span></div>
-          </div>
-          <h3 class="card-title">Windows Logon & RDP 2FA (Credential Provider)</h3>
-          <ul class="card-list"><li>Native LogonUI tile on Windows 10/11 and Windows Server 2016–2025.</li><li>Auto-Logon upon mobile confirmation: instant Windows desktop unlock without extra clicks or Enter.</li><li>Number matching to defeat push fatigue and push bombing attacks.</li><li>UAC elevation 2FA: mandatory second factor challenge upon administrator privilege escalation.</li><li>Over-the-shoulder verification: approval prompt sent to the administrator's phone, not the operator.</li><li>FIDO2 / Passkeys / YubiKey hardware keys directly on logon screen via dynamic QR code.</li><li>Configurable Fail-Open / Fail-Close policies and emergency break-glass whitelist.</li><li>Silent MSI deployment (with SERVERURL argument) and centralized GPO/ADMX management.</li></ul>
-          <div class="card-footnote">2FA on Windows logon is disabled by default in MSI and enabled via RDP2FAEnabled=1 / Console2FAEnabled=1 policy. UAC scenario requires credentialed-UAC.</div>
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>02</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span></div>
-          </div>
-          <h3 class="card-title">RADIUS Server</h3>
-          <ul class="card-list"><li>Supports PAP, EAP-TTLS/PAP, PEAP/MS-CHAPv2 protocols and RADIUS Accounting.</li><li>Compatible with MikroTik RouterOS, Cisco ASA/IOS, Fortinet FortiGate, Ubiquiti UniFi, Check Point, Huawei, Keenetic.</li><li>Corporate Wi-Fi 802.1X (WPA2/WPA3-Enterprise) and VPN (L2TP/IPsec, SSTP, OpenVPN, IKEv2, WireGuard, PPPoE).</li><li>Push Holding: holds RADIUS authentication window while user completes second factor.</li><li>RFC 5080 compliant UDP retransmission cache preventing duplicate challenges.</li><li>Forced session termination via RFC 5176 CoA-Disconnect and UniFi kick-sta fallback.</li><li>Device Trust Window (licensed), VSA attribute management and MFA state sync with Relays.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>03</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">SSO: OIDC + SAML IdP & MFA Proxy</h3>
-          <ul class="card-list"><li>Built-in OpenID Connect Identity Provider without requiring Keycloak.</li><li>SAML 2.0 IdP supporting RSA-SHA256 signatures and HTTP POST-binding.</li><li>Forward-auth proxy (nginx auth_request / Traefik forwardAuth) adding MFA to web services with zero code changes.</li><li>Standards compliant: /.well-known/openid-configuration, JWKS RS256, PKCE (RFC 7636).</li><li>Corporate Application Launchpad portal and IdP-initiated SAML catalog.</li><li>Pre-built integrations: Nextcloud, GitLab, 1C Enterprise, Proxmox VE, Grafana, Portainer, Zabbix, BookStack.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>04</span></div>
-            <div class="card-badges"><span class="badge badge-proven">Battle-tested in prod</span><span class="badge badge-config">Config-dependent</span></div>
-          </div>
-          <h3 class="card-title">Kerberos SSO — «Windows Logon»</h3>
-          <ul class="card-list"><li>Passwordless logon from domain-joined workstations without entering credentials.</li><li>Browser presents Kerberos ticket (SPNEGO), server verifies it against service keytab.</li><li>Employee passes only the second factor (passkey, mobile push, or code).</li><li>Seamless first step for OIDC web services and browser_sso bridge for SAML.</li><li>Automatic domain account mapping via LDAP resolution (DomainAccountName).</li><li>Strict msDS-SupportedEncryptionTypes validation and ticket integrity verification.</li></ul>
-          <div class="card-footnote">Production environment verified October 12, 2026 (core ≥ v0.8.179). Requires Service Principal Name (SPN) configuration and keytab export.</div>
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>05</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">Branches: Ligament Relay</h3>
-          <ul class="card-list"><li>Lightweight edge agents for remote branch offices, subsidiary sites, and isolated DMZs.</li><li>Local authentication cache: uninterrupted employee sign-ins during WAN connectivity outages.</li><li>Persistent encrypted WebSocket tunnel with automatic background synchronization.</li><li>Blind pipe for bastion access: Web-SSH and RDP traffic routed transparently without inspection by the node.</li><li>Minimal resource footprint; available as Linux container, binary, or Windows Server service.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>06</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span></div>
-          </div>
-          <h3 class="card-title">Comprehensive 2FA Factor Support</h3>
-          <ul class="card-list"><li>App Push with biometric confirmation and anti-fatigue number matching.</li><li>Messenger bots: Telegram, eXpress, MAX, VK Teams, Slack, Mattermost, Discord, VK.</li><li>Interactive approval buttons, instant fraud alert button («❌ Not me!»), and /menu self-service portal.</li><li>Passkeys / WebAuthn / FIDO2 hardware tokens (YubiKey, Windows Hello, Touch ID, Face ID).</li><li>TOTP (RFC 6238): Google Authenticator, 2FAS, Microsoft Authenticator; HOTP (RFC 4226); backup codes.</li><li>PWA Authenticator (/app): Web Push on iOS without requiring App Store distribution.</li><li>Email (SMTP) delivery, SMS gateways, and TTS voice call delivery for users without smartphones.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>07</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-config">Config-dependent</span></div>
-          </div>
-          <h3 class="card-title">Remote Machine Access & Endpoint Console</h3>
-          <ul class="card-list"><li>Ligament2FAService runs headless: console access available on locked screens and pre-login LogonUI.</li><li>Dual operating modes: view-only screen monitoring and full interactive remote control.</li><li>Multi-monitor support, mouse wheel, hotkey mapping, and bi-directional file transfer.</li><li>Direct Unicode text paste and temporary local keyboard/mouse input lock during sessions.</li><li>Flexible routing: direct, through agent, through branch Relay, or through Terminal Server with inline passkey MFA.</li><li>Audit notifications on remote connection specifying initiator, target, IP, server timezone, and session ID.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>08</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">SOS Helpdesk: WebRTC Console</h3>
-          <ul class="card-list"><li>One-click help request button directly on the Windows logon screen (pre-authentication).</li><li>Social engineering defense: one-time visual code on user display paired with operator MFA.</li><li>Desktop viewing and full keyboard/mouse control (mode chosen by user during request).</li><li>Integrated text chat and file transfer directly within operator's browser window.</li><li>P2P media streams via DTLS-SRTP: core server handles signaling only, cannot view stream contents.</li><li>Eliminates dependency on third-party cloud tools such as AnyDesk or TeamViewer.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>09</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">Bastion: Web-SSH & RDP Forwarding</h3>
-          <ul class="card-list"><li>In-browser secure shell and desktop access protected by Ligament SSO and mandatory 2FA.</li><li>Full-screen Web-SSH terminal: 256 ANSI colors, F1–F12 keys, responsive geometry (htop, mc).</li><li>Full command audit recording and dedicated session review with playback capabilities.</li><li>In-browser RDP forwarding tunnel without exposing service port 3389 publicly.</li><li>Automatic zombie session termination, keepalive heartbeat, and access re-validation every 30 seconds.</li><li>Seamless access to hosts in isolated branch subnets through branch Relay nodes.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>10</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">Notification Gateway & Verified Contacts</h3>
-          <ul class="card-list"><li>Unified POST /api/v1/notify endpoint for monitoring systems (Zabbix), ITSM, and ERP alerts.</li><li>Dynamic topics and end-to-end image delivery (image_url) through API → PWA → Telegram.</li><li>Pre-built integration profiles for Home Assistant, MikroTik, Zabbix, and Frigate.</li><li>Delivery channel binding strictly requires verified ownership (prevents arbitrary recipient spoofing).</li><li>Server-side storage of employee consent per delivery channel.</li><li>Immutable delivery journal with filtering, configurable retention policies, and message archiving.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>11</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span></div>
-          </div>
-          <h3 class="card-title">Device Posture & Enterprise Fleet Management</h3>
-          <ul class="card-list"><li>Windows: validates BitLocker encryption (manage-bde), Windows Defender, and Windows Firewall (netsh).</li><li>macOS: verifies FileVault (fdesetup), Gatekeeper (spctl), macOS Firewall, and Touch ID hardware.</li><li>Android & iOS: automated detection of Root / Jailbreak and operating system integrity.</li><li>Push channel delivery latency monitoring (SLA telemetry) and status visibility in /me/devices.</li><li>High-priority notification delivery: Full-Screen Intent on Android and Time-Sensitive Alerts on iOS.</li><li>Unified MSI package: desktop client + Credential Provider DLL + watchdog service Ligament2FAService.</li><li>Windows GPO/ADMX and Apple macOS MDM profiles: enforced server URL, exit lockdown (AllowExit=0).</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>12</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-proven">Battle-tested in prod</span></div>
-          </div>
-          <h3 class="card-title">Security, Roles, Monitoring, Operations</h3>
-          <ul class="card-list"><li>Argon2id password hashing, AES-256-GCM with AAD for database secrets, Ed25519 license signatures.</li><li>Integrated CIDR firewall and automatic brute-force rate-limiting (fail2ban).</li><li>Adaptive security policies: enforce specific factors by AD group, time-of-day, and Geo-IP filters.</li><li>Multi-AD/LDAP directory integration with unified DOMAIN\user virtual authentication.</li><li>Role-based access: admin, operator, auditor; scoped API tokens; one-time break-glass recovery codes.</li><li>Prometheus /metrics endpoint, SIEM connector (CEF / LEEF templates), and webhook dispatching.</li><li>Immutable audit log capturing external and internal LAN IP addresses (office vs remote distinction).</li><li>Interface fully localized into 8 languages (EN, RU, DE, FR, ES, PT, TR, ZH); reactive admin UI.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>13</span></div>
-            <div class="card-badges"><span class="badge badge-stable">Stable</span><span class="badge badge-license">Demo / Commercial</span></div>
-          </div>
-          <h3 class="card-title">Sponsored Guest Access</h3>
-          <ul class="card-list"><li>Issue temporary credentials to contractors and visitors without cluttering Active Directory.</li><li>Sponsor workflow: verified employee submits request, approves access, and issues pass.</li><li>Zero-onboarding sign-in: one-time pass via URL or QR code without requiring mobile app installation.</li><li>Strict isolation in dedicated guest VLAN and restricted policy scopes (guest Wi-Fi SSID only).</li><li>Independent lifecycle limits (account validity window vs session timeout) with background pruning.</li><li>Full attribution of all guest activities back to the sponsoring employee in audit trails.</li></ul>
-          
-        </article>
-        <article class="card">
-          <div class="card-header">
-            <div class="card-icon"><span>14</span></div>
-            <div class="card-badges"><span class="badge badge-early">Early module</span><span class="badge badge-license">Separate License</span></div>
-          </div>
-          <h3 class="card-title">Physical Access Control (PACS) Integration — Early Module</h3>
-          <ul class="card-list"><li>Physical building access as a digital security factor: connects physical turnstiles to IT authentication.</li><li>Core driver registry: Bolid (IntegrServ 2.0.1 JSON-RPC and native MS SQL adapter), Sigur, PERCo, Parsec, RusGuard.</li><li>Automated badge-to-employee mapping via normalized exact full name matching (up to 100,000 subjects).</li><li>Background paginated directory synchronization (500 records/page) resilient to server restarts.</li><li>Passage event log with configurable retention (default 90 days) and vehicle license plate capture (Avto).</li><li>Zero-Trust physical presence check for RDP: remote session granted only if employee is inside building.</li></ul>
-          <div class="card-footnote">PACS subsystem is at the laboratory testbed verification stage. Sold strictly under an independent license gate. Availability and pricing available on individual inquiry.</div>
-        </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Architecture & Security -->
-    <section id="security" style="background-color: var(--color-bg-card);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Architecture</div>
-          <h2 class="section-title">Verifiable Security Perimeter</h2>
-          <p class="section-desc">All cryptographic keys, credentials, and logs stay strictly inside your network.</p>
-        </div>
-        
-    <div class="arch-diagram-wrapper">
-      <svg viewBox="0 0 1000 400" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Secrets, database, and encryption keys never leave your perimeter">
-        <style>
-          .diag-box { fill: #111827; stroke: #243046; stroke-width: 2; rx: 10px; }
-          .diag-core { fill: #161f32; stroke: #6366f1; stroke-width: 2.5; rx: 12px; }
-          .diag-title { fill: #22d3ee; font-family: -apple-system, sans-serif; font-size: 14px; font-weight: 700; }
-          .diag-core-title { fill: #f8fafc; font-family: -apple-system, sans-serif; font-size: 16px; font-weight: 800; }
-          .diag-text { fill: #94a3b8; font-family: -apple-system, sans-serif; font-size: 12px; }
-          .diag-line { stroke: #4f46e5; stroke-width: 2; stroke-dasharray: 4,4; }
-          .diag-arrow { fill: #4f46e5; }
-        </style>
-        <!-- Entry Points -->
-        <rect x="20" y="30" width="230" height="250" class="diag-box" />
-        <text x="35" y="60" class="diag-title">1. Entry Points</text>
-        <text x="35" y="95" class="diag-text">• Windows LogonUI &amp; RDP</text>
-        <text x="35" y="125" class="diag-text">• RADIUS (Wi-Fi 802.1X &amp; VPN)</text>
-        <text x="35" y="155" class="diag-text">• SSO (OIDC / SAML / Kerberos)</text>
-        <text x="35" y="185" class="diag-text">• Бастион Web-SSH / RDP</text>
-        <text x="35" y="215" class="diag-text">• SOS-помощь WebRTC</text>
-        <text x="35" y="245" class="diag-text">• СКУД (Болид / Sigur / PERCo)</text>
-
-        <!-- Arrow to Core -->
-        <line x1="250" y1="155" x2="330" y2="155" class="diag-line" />
-        <polygon points="330,155 322,150 322,160" class="diag-arrow" />
-
-        <!-- Core -->
-        <rect x="330" y="20" width="340" height="270" class="diag-core" />
-        <text x="355" y="55" class="diag-core-title">🛡️ Ligament Core (Docker)</text>
-        <text x="355" y="90" class="diag-text">• Адаптивные политики &amp; Geo-IP</text>
-        <text x="355" y="115" class="diag-text">• Неизменяемый аудит (LAN vs WAN IP)</text>
-        <text x="355" y="140" class="diag-text">• Встроенный CIDR-файрвол &amp; fail2ban</text>
-        <text x="355" y="165" class="diag-text">• Device Posture (BitLocker / FileVault)</text>
-        <text x="355" y="190" class="diag-text">• Argon2id • AES-256-GCM • Ed25519</text>
-        <text x="355" y="215" class="diag-text">• Multi-AD/LDAP каталог &amp; Kerberos Keytab</text>
-        <text x="355" y="240" class="diag-text">• Шлюз уведомлений &amp; топики</text>
-        <text x="355" y="265" class="diag-text">• Zero-Trust проверка присутствия RDP</text>
-
-        <!-- Arrow to Factors -->
-        <line x1="670" y1="155" x2="750" y2="155" class="diag-line" />
-        <polygon points="750,155 742,150 742,160" class="diag-arrow" />
-
-        <!-- Factors -->
-        <rect x="750" y="30" width="230" height="250" class="diag-box" />
-        <text x="765" y="60" class="diag-title">3. Authentication Factors</text>
-        <text x="765" y="95" class="diag-text">• App Push (Number matching)</text>
-        <text x="765" y="125" class="diag-text">• Боты: Telegram, eXpress, MAX</text>
-        <text x="765" y="155" class="diag-text">• Passkeys / WebAuthn / FIDO2</text>
-        <text x="765" y="185" class="diag-text">• PWA Аутентификатор /app</text>
-        <text x="765" y="215" class="diag-text">• TOTP / HOTP / Резервные коды</text>
-        <text x="765" y="245" class="diag-text">• SMS / Email / Голос (TTS)</text>
-
-        <!-- Relays and Endpoints -->
-        <rect x="140" y="320" width="310" height="55" class="diag-box" />
-        <text x="160" y="353" class="diag-text">🏢 Branch Relays (Offline Cache)</text>
-        <line x1="295" y1="320" x2="430" y2="290" class="diag-line" />
-
-        <rect x="550" y="320" width="320" height="55" class="diag-box" />
-        <text x="570" y="353" class="diag-text">💻 Endpoint Services (Win / Mac / Linux)</text>
-        <line x1="710" y1="320" x2="570" y2="290" class="diag-line" />
-      </svg>
-      <div class="arch-caption">🔒 Secrets, database, and encryption keys never leave your perimeter</div>
     </div>
-    
-      </div>
-    </section>
+  </section>
 
-    <!-- Media Gallery -->
-    <section id="media">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Gallery</div>
-          <h2 class="section-title">Screenshots & Walkthrough Demos</h2>
-          <p class="section-desc">Visual overview of system interfaces, administrator tools, and mobile workflows.</p>
+  <!-- Metrics Bar -->
+  <section class="metrics-section">
+    <div class="container">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">0.4s</div>
+          <div class="metric-label">Approval Latency</div>
+          <div class="metric-sub">1-tap number matching</div>
         </div>
-        <div class="media-grid">
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Windows LogonUI 2FA Tile</div>
-              <span class="media-slot-id">screen-windows-tile.png</span>
-            </div>
-            <div class="media-caption">LogonUI tile with dynamic QR code for FIDO2 and number matching</div>
-          </div>
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Administrator Security Dashboard</div>
-              <span class="media-slot-id">screen-dashboard.png</span>
-            </div>
-            <div class="media-caption">Active session monitor, geographic IP map, and factor distribution</div>
-          </div>
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Web-SSH Bastion Terminal</div>
-              <span class="media-slot-id">screen-bastion-terminal.png</span>
-            </div>
-            <div class="media-caption">Full-screen in-browser terminal with command logging and 256 colors</div>
-          </div>
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Immutable Audit Trail</div>
-              <span class="media-slot-id">screen-audit.png</span>
-            </div>
-            <div class="media-caption">Detailed logon audit capturing office LAN vs remote WAN IP addresses</div>
-          </div>
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Mobile Push Prompt</div>
-              <span class="media-slot-id">screen-push-card.png</span>
-            </div>
-            <div class="media-caption">Interactive push notification with number verification on mobile device</div>
-          </div>
-          <div class="media-item">
-            <div class="media-slot ratio-16-10">
-              <span class="media-slot-tag">SCREENSHOT</span>
-              <div class="media-slot-title">Printable Incident Report</div>
-              <span class="media-slot-id">screen-incident-report.png</span>
-            </div>
-            <div class="media-caption">Forensic timeline ready for security officers and regulatory compliance</div>
-          </div>
+        <div class="metric-card">
+          <div class="metric-value">100% On-Prem</div>
+          <div class="metric-label">Data Sovereignty</div>
+          <div class="metric-sub">Zero data leaves your perimeter</div>
         </div>
-        <!-- TODO: PACS-медиа по решению владельца -->
-      </div>
-    </section>
-
-    <!-- Competitor Comparison -->
-    <section id="comparison" style="background-color: var(--color-bg-card);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Comparison</div>
-          <h2 class="section-title">Detailed Technical Comparison</h2>
-          <p class="section-desc">Objective evaluation based on public vendor documentation (October 2026).</p>
+        <div class="metric-card">
+          <div class="metric-value">$0 / Free</div>
+          <div class="metric-label">Free Tier Forever</div>
+          <div class="metric-sub">Up to 5 users with full features</div>
         </div>
-
-        <!-- Russian Market Table -->
-        <h3 style="margin-bottom: 16px; font-size: 1.25rem;">Russian Market Comparison (Октябрь 2026)</h3>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th scope="col">Capability / Feature</th>
-                <th scope="col" class="highlight-col">🛡️ Ligament</th>
-                <th scope="col">Multifactor</th>
-                <th scope="col">IDEA MFA</th>
-                <th scope="col">ViPNet IAS</th>
-                <th scope="col">UserGate MFA</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Architecture</td>
-                <td class="highlight-col"><strong>100% Self-Hosted (1 Docker)</strong></td>
-                <td>Hybrid (Cloud + Agent)</td>
-                <td>On-Prem / Cloud</td>
-                <td>On-Prem (Complex PKI)</td>
-                <td>On-Prem Appliance</td>
-              </tr>
-              <tr>
-                <td>Free Tier</td>
-                <td class="highlight-col"><strong>Up to 5 users forever</strong></td>
-                <td>Trial only</td>
-                <td>Trial only</td>
-                <td>None</td>
-                <td>None</td>
-              </tr>
-              <tr>
-                <td>Windows RDP / Console 2FA</td>
-                <td class="highlight-col"><strong>Yes (Auto-Logon + QR)</strong></td>
-                <td>Yes (Manual)</td>
-                <td>Yes</td>
-                <td>Partial</td>
-                <td>Limited</td>
-              </tr>
-              <tr>
-                <td>Number Matching on Tile</td>
-                <td class="highlight-col"><strong>Yes (Native on screen)</strong></td>
-                <td>Yes</td>
-                <td>Yes</td>
-                <td>Yes</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <td>Passwordless Kerberos / SPNEGO</td>
-                <td class="highlight-col"><strong>Yes (Battle-tested)</strong></td>
-                <td>Partial</td>
-                <td>Yes</td>
-                <td>Yes</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Device Posture (BitLocker/Defender)</td>
-                <td class="highlight-col"><strong>Yes (Win / Mac / Mobile)</strong></td>
-                <td>Limited</td>
-                <td>Limited</td>
-                <td>Ecosystem only</td>
-                <td>Platform only</td>
-              </tr>
-              <tr>
-                <td>Remote Connection Audit Alerts</td>
-                <td class="highlight-col"><strong>Yes (with IP / session ID)</strong></td>
-                <td>No</td>
-                <td>No</td>
-                <td>No</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Branch Office Offline Cache</td>
-                <td class="highlight-col"><strong>Yes (Ligament Relay)</strong></td>
-                <td>Partial (Cloud required)</td>
-                <td>Yes (Distributed)</td>
-                <td>Yes</td>
-                <td>Central only</td>
-              </tr>
-              <tr>
-                <td>Push + Messengers (Telegram, MAX)</td>
-                <td class="highlight-col"><strong>Yes (Native bots + /menu)</strong></td>
-                <td>Telegram / App</td>
-                <td>Yes</td>
-                <td>Yes</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <td>In-browser Web-SSH/RDP Bastion</td>
-                <td class="highlight-col"><strong>Yes (with command audit)</strong></td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-              </tr>
-              <tr>
-                <td>SOS Remote Assistance Console</td>
-                <td class="highlight-col"><strong>Yes (WebRTC P2P)</strong></td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-              </tr>
-              <tr>
-                <td>Sponsored Guest Access</td>
-                <td class="highlight-col"><strong>Yes (Auto-expiring)</strong></td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-              </tr>
-              <!-- TODO: сравнение СКУД-интеграций по подтверждённым источникам -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- International Alternatives Table -->
-        <h3 style="margin-top: 40px; margin-bottom: 16px; font-size: 1.25rem;">International Alternatives Comparison (October 2026)</h3>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th scope="col">Capability / Feature</th>
-                <th scope="col" class="highlight-col">🛡️ Ligament</th>
-                <th scope="col">RCDevs OpenOTP</th>
-                <th scope="col">privacyIDEA</th>
-                <th scope="col">Fortinet FortiAuth</th>
-                <th scope="col">Cisco Duo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Deployment</td>
-                <td class="highlight-col"><strong>100% Self-Hosted (1 Docker)</strong></td>
-                <td>Linux Suite</td>
-                <td>Self-hosted (OSS)</td>
-                <td>Appliance / VM</td>
-                <td>Cloud SaaS only</td>
-              </tr>
-              <tr>
-                <td>Free Tier</td>
-                <td class="highlight-col"><strong>5 users forever</strong></td>
-                <td>25 users</td>
-                <td>Community unlim</td>
-                <td>None</td>
-                <td>10 users</td>
-              </tr>
-              <tr>
-                <td>Windows Logon / RDP 2FA</td>
-                <td class="highlight-col"><strong>Yes (Auto-Logon + QR)</strong></td>
-                <td>Yes</td>
-                <td>Yes (Plugin)</td>
-                <td>Yes (Agent)</td>
-                <td>Yes (CP)</td>
-              </tr>
-              <tr>
-                <td>Passwordless Kerberos SSO</td>
-                <td class="highlight-col"><strong>Yes (SPNEGO + 2FA)</strong></td>
-                <td>Yes</td>
-                <td>Via plugin</td>
-                <td>Yes</td>
-                <td>Cloud SSO</td>
-              </tr>
-              <tr>
-                <td>Device Posture & Fleet Lockdown</td>
-                <td class="highlight-col"><strong>Yes (BitLocker / Defender / MDM)</strong></td>
-                <td>Limited</td>
-                <td>No</td>
-                <td>FortiClient only</td>
-                <td>Duo Desktop</td>
-              </tr>
-              <tr>
-                <td>Push to PWA without App Store</td>
-                <td class="highlight-col"><strong>Yes (Web Push incl. iOS)</strong></td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Approve in Corporate Messengers</td>
-                <td class="highlight-col"><strong>Yes (Telegram, eXpress, MAX)</strong></td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Bundled Web Bastion (SSH/RDP)</td>
-                <td class="highlight-col"><strong>Yes (with command audit)</strong></td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>SOS Remote Assistance Console</td>
-                <td class="highlight-col"><strong>Yes (P2P WebRTC)</strong></td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Entry Price</td>
-                <td class="highlight-col"><strong>$2/user/mo • $5 one-time</strong></td>
-                <td>~€2.3/user/mo</td>
-                <td>Free OSS + paid support</td>
-                <td>Quote-based</td>
-                <td>$3–9/user/mo</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="table-footnote">* Compiled from public vendor documentation, October 2026. Hardware configurations and pricing models vary; table is not a price ranking.</p>
-
-        <!-- Where Ligament is different / weaker -->
-        <div style="margin-top: 32px; padding: 24px; background-color: var(--color-bg-surface); border-radius: var(--radius-md); border-left: 4px solid var(--color-warning);">
-          <h4 style="font-size: 1.0625rem; margin-bottom: 8px;">Honest Differences: Where Ligament is Different or Simpler</h4>
-          <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6;">
-            Global enterprise Wi-Fi markets are migrating towards complex certificate-based EAP-TLS architectures (SecureW2, Keytos, RADIUSaaS). Ligament deliberately maintains password-based EAP-TTLS/PEAP with live mobile push confirmation — vastly easier, more cost-effective, and robust to operate for small and mid-sized networks. Certain advanced modules (SSO, Bastion, Relay, PACS) require an active license. Windows UAC elevation requires credentialed-UAC policy. 2FA on Windows logon is disabled by default upon MSI installation and enabled via GPO policy. PACS is an early laboratory module.
-          </p>
+        <div class="metric-card">
+          <div class="metric-value">up to 85%</div>
+          <div class="metric-label">TCO Cost Reduction</div>
+          <div class="metric-sub">Versus foreign SaaS subscriptions</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Pricing & Editions -->
-    <section id="pricing">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Licensing</div>
-          <h2 class="section-title">Transparent, Predictable Pricing</h2>
-          <p class="section-desc">No hidden fees, no per-feature extortion. All basic 2FA security factors are free forever.</p>
+  <!-- Debate & Comparison Section -->
+  <section id="debate" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Why Ligament Matters</span>
+        <h2 class="section-title">Why Traditional MFA Solutions Fall Short</h2>
+        <p class="section-desc">Examine the real risks of foreign clouds, the friction of free TOTP apps, and the resilience of On-Premise Ligament.</p>
+      </div>
+
+      <div class="debate-grid">
+        <!-- Cloud Card -->
+        <div class="debate-card card-cloud">
+          <div class="debate-header">
+            <span class="debate-type">Vulnerability #1</span>
+            <h3 class="debate-title">Foreign Clouds (Duo, Okta)</h3>
+          </div>
+          <ul class="debate-list">
+            <li><strong>Sanctions & Lockout:</strong> Risk of sudden tenant suspension and immediate loss of access.</li><li><strong>Foreign Sovereignty:</strong> Regulatory non-compliance. Sensitive identity data leaves your private network.</li><li><strong>WAN Single Point of Failure:</strong> Fiber cut or ISP outage paralyzes local workstation sign-ins.</li><li><strong>Expensive SaaS Subscriptions:</strong> $6 to $15 per user monthly in foreign currency with compounding costs.</li>
+          </ul>
         </div>
 
-        <div class="pricing-grid">
-          <!-- Free -->
-          <div class="pricing-card">
-            <h3 class="pricing-plan-name">Free</h3>
-            <div class="pricing-plan-audience">Homelabs, micro-teams, protecting admin accounts</div>
-            <div class="pricing-price">$0</div>
-            <div class="pricing-period">Forever • up to 5 users</div>
-            <ul class="pricing-features">
-              <li>✓ Windows Logon & RDP Credential Provider</li>
-              <li>✓ Mobile Push with Number Matching</li>
-              <li>✓ Passkeys / WebAuthn / FIDO2</li>
-              <li>✓ RADIUS Server (Wi-Fi 802.1X & VPN)</li>
-              <li>✓ Telegram & messenger bot auth</li>
-              <li>✓ CIDR firewall & immutable audit</li>
-            </ul>
-            <a href="#install" class="btn btn-secondary">Get Started Free</a>
+        <!-- TOTP Card -->
+        <div class="debate-card card-totp">
+          <div class="debate-header">
+            <span class="debate-type">Vulnerability #2</span>
+            <h3 class="debate-title">Free Google Auth / Generic TOTP</h3>
           </div>
-
-          <!-- Demo -->
-          <div class="pricing-card featured">
-            <h3 class="pricing-plan-name">Demo (Enterprise)</h3>
-            <div class="pricing-plan-audience">Full evaluation of every enterprise capability</div>
-            <div class="pricing-price">$0</div>
-            <div class="pricing-period">30 days • unlimited users • bound to hardware</div>
-            <ul class="pricing-features">
-              <li>✓ 100% of Enterprise modules unlocked</li>
-              <li>✓ SSO IdP (OIDC, SAML, Kerberos)</li>
-              <li>✓ Web-SSH & RDP Bastion with session audit</li>
-              <li>✓ Branch Relay nodes & SOS assistance</li>
-              <li>✓ Active Directory / LDAP multi-sync</li>
-              <li>✓ Graceful fallback to Free without lockouts</li>
-            </ul>
-            <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request a 30-day Demo</a>
-          </div>
-
-          <!-- Subscription -->
-          <div class="pricing-card">
-            <h3 class="pricing-plan-name">Subscription</h3>
-            <div class="pricing-plan-audience">Production deployment with flexible term</div>
-            <div class="pricing-price">$2</div>
-            <div class="pricing-period">per user / month (3, 6, 13 mo)</div>
-            <ul class="pricing-features">
-              <li>✓ All Enterprise modules included</li>
-              <li>✓ Terms: 3, 6, or 13 months</li>
-              <!-- TODO: подтвердить условие 13-го месяца -->
-              <li>✓ Branch Relay: $400 / node / term</li>
-              <li>✓ Instant offline license activation</li>
-              <li>✓ Software updates during subscription</li>
-            </ul>
-            <a href="#license" class="btn btn-secondary">Order License</a>
-          </div>
-
-          <!-- Perpetual -->
-          <div class="pricing-card">
-            <h3 class="pricing-plan-name">Perpetual</h3>
-            <div class="pricing-plan-audience">One-time capital purchase forever</div>
-            <div class="pricing-price">$5</div>
-            <div class="pricing-period">per user one-time payment forever</div>
-            <ul class="pricing-features">
-              <li>✓ Lifetime license for current major release</li>
-              <li>✓ Branch Relay: $1,000 / node one-time</li>
-              <li>✓ Zero ongoing cloud dependencies</li>
-              <li>✓ Offline activation key signed by Ed25519</li>
-            </ul>
-            <a href="#license" class="btn btn-secondary">Order Perpetual</a>
-          </div>
+          <ul class="debate-list">
+            <li><strong>No Windows Protection:</strong> Cannot natively protect Windows LogonUI, RDP, or UAC admin escalation.</li><li><strong>User Fatigue & Friction:</strong> Retyping 6-digit codes 30 times daily wastes time and frustrates employees.</li><li><strong>Phishing Vulnerability:</strong> Static 6-digit TOTP codes are easily captured via real-time reverse proxies.</li><li><strong>Zero Central Revocation:</strong> Impossible to centrally revoke or audit offline software authenticators.</li>
+          </ul>
         </div>
 
-        <!-- Interactive Calculator -->
-        <div class="calc-wrapper">
-          <h3 class="calc-title">License Price Calculator</h3>
-          <div class="calc-row">
-            <label for="calc-users" class="calc-label">Number of Users:</label>
-            <input type="number" id="calc-users" class="calc-input" value="100" min="5" step="5">
+        <!-- Ligament Card -->
+        <div class="debate-card card-ligament">
+          <div class="debate-header">
+            <span class="debate-type">The Winning Choice</span>
+            <h3 class="debate-title">Ligament 2FA (On-Premise)</h3>
           </div>
-          <div class="calc-row">
-            <label for="calc-plan" class="calc-label">Licensing Plan:</label>
-            <select id="calc-plan" class="calc-select">
-              <option value="sub3">Subscription: 3 months ($2/user/mo)</option>
-              <option value="sub6">Subscription: 6 months ($2/user/mo)</option>
-              <option value="sub13" selected>Subscription: 13 months ($2/user/mo)</option>
-              <option value="perpetual">Perpetual: Lifetime ($5/user one-time)</option>
-            </select>
-          </div>
-          <div class="calc-row">
-            <label for="calc-relays" class="calc-label">Branch Relay Nodes ($400/term or $1,000 lifetime):</label>
-            <input type="number" id="calc-relays" class="calc-input" value="1" min="0" step="1">
-          </div>
-          <div class="calc-result">
-            <div id="calc-total" class="calc-total">3,000 USDT</div>
-            <div id="calc-formula" class="calc-formula">2 × 100 users × 13 mo + 1 relays × $400 = 3,000 USDT</div>
-          </div>
-          <p class="calc-disclaimer">
-            * Infrastructure hosting, installation, maintenance, and network delivery are not included; this is licensing price, not TCO. USD/USDT/RUB exchange rates are not fixed. PACS module is quoted separately.
-            <!-- TODO: цена и модель pacs -->
-          </p>
+          <ul class="debate-list">
+            <li><strong>100% On-Premise:</strong> Single Docker container on your servers. Zero external cloud dependencies.</li><li><strong>Autonomous Branch Relay:</strong> Remote branches & factories authenticate locally even during complete WAN cut.</li><li><strong>0.4s Auto-Logon:</strong> Number matching on login screen: 1 tap approves and unlocks Windows without click.</li><li><strong>Honest Pricing:</strong> $0 Free up to 5 users, $2/mo subscription, or $5 perpetual lifetime license.</li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Quick Start -->
-    <section id="install" style="background-color: var(--color-bg-card);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Deployment</div>
-          <h2 class="section-title">Ready in 2 Minutes</h2>
-          <p class="section-desc">No build tools or compiler required — pre-built Docker containers and native OS installers.</p>
+  <!-- Architecture Graph Section -->
+  <section id="architecture" class="graph-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Interactive Architecture</span>
+        <h2 class="section-title">Corporate Perimeter & Zero-Trust Graph</h2>
+        <p class="section-desc">Click any scenario or node to inspect the real-world authenticated packet flow.</p>
+      </div>
+
+      <div class="graph-wrapper">
+        <!-- Scenario Controls -->
+        <div class="graph-controls">
+          <button type="button" class="graph-scenario-btn active" data-scenario="all">🌐 All Nodes</button>
+          <button type="button" class="graph-scenario-btn" data-scenario="windows">💻 Windows Auto-Logon</button>
+          <button type="button" class="graph-scenario-btn" data-scenario="vpn">📡 RADIUS VPN & Wi-Fi</button>
+          <button type="button" class="graph-scenario-btn" data-scenario="relay">🏭 Offline Branch Relay</button>
+          <button type="button" class="graph-scenario-btn" data-scenario="sso">🛡️ Web SSO & Bastion</button>
         </div>
 
-        <div class="code-box">
-          <div class="code-box-header">
-            <span class="code-box-title">One-command installation script (recommended):</span>
-            <button class="code-copy-btn" data-copy="mkdir -p ligament &amp;&amp; cd ligament &amp;&amp; curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh &amp;&amp; chmod +x install.sh &amp;&amp; ./install.sh" data-copied-label="Copied!">Copy Command</button>
+        <!-- SVG Network Graph -->
+        <div class="graph-svg-container">
+          <svg class="graph-svg" viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-core" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.1" />
+              </linearGradient>
+              <filter id="glow-core" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- CONNECTION PATHS (FLOW LINES) -->
+            <!-- AD -> Core -->
+            <path id="line-ad" class="flow-line" d="M 480 95 L 480 208" stroke="#818cf8" stroke-width="2.5" />
+            
+            <!-- Ingress -> Core -->
+            <path id="line-win" class="flow-line" d="M 240 141 C 320 141, 320 230, 380 240" stroke="#38bdf8" stroke-width="2.5" />
+            <path id="line-vpn" class="flow-line" d="M 240 260 L 380 260" stroke="#06b6d4" stroke-width="2.5" />
+            <path id="line-sso" class="flow-line" d="M 240 379 C 320 379, 320 290, 380 280" stroke="#a855f7" stroke-width="2.5" />
+
+            <!-- Core -> Relay -->
+            <path id="line-relay" class="flow-line" d="M 480 312 L 480 415" stroke="#10b981" stroke-width="2.5" />
+
+            <!-- Core -> Factors -->
+            <path id="line-push" class="flow-line" d="M 580 240 C 640 230, 640 141, 720 141" stroke="#34d399" stroke-width="2.5" />
+            <path id="line-bot" class="flow-line" d="M 580 260 L 720 260" stroke="#38bdf8" stroke-width="2.5" />
+            <path id="line-yubi" class="flow-line" d="M 580 280 C 640 290, 640 379, 720 379" stroke="#fbbf24" stroke-width="2.5" />
+
+            <!-- CORE PULSING RING -->
+            <circle cx="480" cy="260" r="56" fill="none" stroke="#6366f1" stroke-width="2" opacity="0.4" style="animation: pulse-ring 2.5s infinite;" />
+
+            <!-- CENTRAL HUB: LIGAMENT CORE -->
+            <g id="node-core" class="graph-node-group"
+               data-title-ru="Ядро Ligament Core (Docker On-Premise)"
+               data-title-en="Ligament Core Engine (Docker On-Premise)"
+               data-desc-ru="Центральный сервис аутентификации. Работает локально в одном контейнере без облачных задержек. Хранит политики, сессии и журнал аудита."
+               data-desc-en="Central On-Premise authentication brain. Runs locally in a single container with zero cloud dependencies, holding policies & audit."
+               data-badge-ru="100% On-Premise • 152-ФЗ / КИИ"
+               data-badge-en="100% On-Premise • Zero Cloud">
+              <rect class="node-bg" x="380" y="210" width="200" height="100" rx="16" ry="16" fill="#0b1120" stroke="#6366f1" stroke-width="2" filter="url(#glow-core)" />
+              <text x="480" y="242" fill="#fff" font-size="16" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">🛡️ LIGAMENT CORE</text>
+              <text x="480" y="266" fill="#38bdf8" font-size="12" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">On-Premise Docker Hub</text>
+              <text x="480" y="288" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">AD Sync • Policies • Audit</text>
+            </g>
+
+            <!-- DIRECTORY NODE (TOP) -->
+            <g id="node-ad" class="graph-node-group"
+               data-title-ru="Служба каталогов (Active Directory / FreeIPA)"
+               data-title-en="Directory Sync (Active Directory / FreeIPA)"
+               data-desc-ru="Мгновенная синхронизация пользователей и групп по защищенному протоколу LDAPS. При блокировке учетки в домене доступ отзывается сразу."
+               data-desc-en="Real-time sync with Active Directory / FreeIPA over secure LDAPS. Immediate access revocation upon domain account lock."
+               data-badge-ru="LDAPS • Без миграции базы"
+               data-badge-en="LDAPS • Zero Database Migration">
+              <rect class="node-bg" x="385" y="35" width="190" height="60" rx="12" ry="12" fill="#090d16" stroke="#818cf8" stroke-width="1.5" />
+              <text x="480" y="60" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏢 Active Directory / IPA</text>
+              <text x="480" y="80" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">LDAPS Sync • Пользователи</text>
+            </g>
+
+            <!-- INGRESS NODES (LEFT) -->
+            <!-- Windows Logon -->
+            <g id="node-win" class="graph-node-group"
+               data-title-ru="Windows Logon & RDP 2FA (Credential Provider)"
+               data-title-en="Windows Logon & RDP 2FA (Credential Provider)"
+               data-desc-ru="Нативная плитка LogonUI на Windows 10/11 и Server. Автоматический вход Auto-Logon за 0.4 сек после подтверждения на смартфоне."
+               data-desc-en="Native credential provider for Windows 10/11 & Server. Instant 0.4s auto-logon upon mobile confirmation."
+               data-badge-ru="LogonUI • Auto-Logon • UAC"
+               data-badge-en="LogonUI • Auto-Logon • UAC">
+              <rect class="node-bg" x="40" y="110" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
+              <text x="140" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💻 Windows Logon & RDP</text>
+              <text x="140" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Auto-Logon • UAC • GPO MSI</text>
+            </g>
+
+            <!-- RADIUS VPN & Wi-Fi -->
+            <g id="node-vpn" class="graph-node-group"
+               data-title-ru="RADIUS-сервер (VPN и корпоративный Wi-Fi)"
+               data-title-en="RADIUS Server (VPN & Enterprise Wi-Fi)"
+               data-desc-ru="Поддержка MikroTik, Cisco, Fortinet, UniFi. Механизм Push Holding удерживает UDP-сессию по RFC 5080 до подтверждения."
+               data-desc-en="MikroTik, Cisco, Fortinet, UniFi support. Push Holding preserves UDP sessions under RFC 5080 until confirmed."
+               data-badge-ru="RFC 5080 • WPA2/WPA3"
+               data-badge-en="RFC 5080 • WPA2/WPA3">
+              <rect class="node-bg" x="40" y="229" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#06b6d4" stroke-width="1.5" />
+              <text x="140" y="255" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">📡 RADIUS VPN & Wi-Fi</text>
+              <text x="140" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">MikroTik • Cisco • Push Holding</text>
+            </g>
+
+            <!-- Web SSO & Bastion -->
+            <g id="node-sso" class="graph-node-group"
+               data-title-ru="Web SSO & Бастион (Zero-Trust)"
+               data-title-en="Web SSO & Bastion (Zero-Trust)"
+               data-desc-ru="IdP OIDC/SAML для веб-приложений и Web-SSH/RDP в браузере без публикации портов 22 и 3389 наружу в интернет."
+               data-desc-en="OIDC/SAML IdP for web applications and browser-based Web-SSH/RDP bastion with zero exposed external ports."
+               data-badge-ru="OIDC/SAML • Браузерный RDP"
+               data-badge-en="OIDC/SAML • In-Browser RDP">
+              <rect class="node-bg" x="40" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#a855f7" stroke-width="1.5" />
+              <text x="140" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🌐 Web SSO & Бастион</text>
+              <text x="140" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">OIDC/SAML • Web-SSH • 3389 Off</text>
+            </g>
+
+            <!-- BOTTOM: OFFLINE BRANCH RELAY -->
+            <g id="node-relay" class="graph-node-group"
+               data-title-ru="Автономный филиальный узел (Branch Relay)"
+               data-title-en="Autonomous Branch Relay Node"
+               data-desc-ru="Автономный демон на филиалах и складах. Хранит кэш ключей — при обрыве оптики и интернета сотрудники продолжают работать."
+               data-desc-en="Autonomous daemon on remote sites. Caches keys so workers continue logging in during total WAN fiber cuts."
+               data-badge-ru="100% Автономность при обрыве WAN"
+               data-badge-en="100% Offline WAN Survival">
+              <rect class="node-bg" x="380" y="415" width="200" height="65" rx="12" ry="12" fill="#090d16" stroke="#10b981" stroke-width="1.5" />
+              <text x="480" y="442" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏭 Офлайн Relay (Филиалы)</text>
+              <text x="480" y="462" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">Локальный кэш • Обрыв WAN</text>
+            </g>
+
+            <!-- FACTOR NODES (RIGHT) -->
+            <!-- Mobile Push -->
+            <g id="node-push" class="graph-node-group"
+               data-title-ru="Мобильный Push (Number Matching)"
+               data-title-en="Mobile Push (Number Matching)"
+               data-desc-ru="Защита от push-бомбинга и утомления. Пользователь подтверждает число на экране за 0.4 сек без ручного ввода SMS."
+               data-desc-en="Protection against push fatigue and bombing. Worker taps matching number in 0.4s without retyping SMS codes."
+               data-badge-ru="0.4 сек вход • Без SMS"
+               data-badge-en="0.4s Unlock • Zero SMS">
+              <rect class="node-bg" x="720" y="110" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#34d399" stroke-width="1.5" />
+              <text x="820" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">📱 Мобильный Push 0.4s</text>
+              <text x="820" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Number Matching • 1 клик</text>
+            </g>
+
+            <!-- Telegram / eXpress -->
+            <g id="node-bot" class="graph-node-group"
+               data-title-ru="Корпоративные боты (Telegram и eXpress)"
+               data-title-en="Corporate Messengers (Telegram & eXpress)"
+               data-desc-ru="Подтверждение входа прямо в мессенджере компании. Не требует установки сторонних приложений на личные телефоны."
+               data-desc-en="Approval directly inside corporate messengers without forcing staff to install third-party mobile apps."
+               data-badge-ru="Без установки приложений"
+               data-badge-en="Zero App Installation">
+              <rect class="node-bg" x="720" y="229" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
+              <text x="820" y="255" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💬 Telegram / eXpress</text>
+              <text x="820" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Корп-боты • Нативно</text>
+            </g>
+
+            <!-- FIDO2 / YubiKey -->
+            <g id="node-yubi" class="graph-node-group"
+               data-title-ru="Аппаратные ключи (FIDO2 / YubiKey)"
+               data-title-en="Hardware Keys (FIDO2 / YubiKey)"
+               data-desc-ru="Поддержка USB токенов (YubiKey, Рутокен, JaCarta) и WebAuthn Passkeys прямо на экране блокировки Windows."
+               data-desc-en="USB security keys (YubiKey, Rutoken, FIDO2) and WebAuthn Passkeys directly on Windows login screens."
+               data-badge-ru="FIDO2 • QR • Аппаратная защита"
+               data-badge-en="FIDO2 • QR • Hardware Grade">
+              <rect class="node-bg" x="720" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#fbbf24" stroke-width="1.5" />
+              <text x="820" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🔑 FIDO2 / YubiKey</text>
+              <text x="820" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Passkeys • Рутокен • QR</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Node & Scenario Detail Info Banner -->
+        <div class="graph-info-banner">
+          <div>
+            <div id="graph-info-title" class="graph-info-title">Full Corporate Security Perimeter Topology</div>
+            <div id="graph-info-desc" class="graph-info-desc">Unified On-Premise mesh securing workstations, VPN/Wi-Fi, SSO, and branch relays with central audit.</div>
           </div>
-          <pre class="code-pre"><code>mkdir -p ligament &amp;&amp; cd ligament
-curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh
-chmod +x install.sh &amp;&amp; ./install.sh</code></pre>
-        </div>
-
-        <div style="margin-bottom: 32px; font-size: 0.9375rem; color: var(--color-text-muted); line-height: 1.6;">
-          <p>The installer validates Docker availability, verifies TCP ports 80/8080 and UDP ports 1812/1813 are free, safely generates and saves the PostgreSQL database secret into .env (with chmod 600 permissions), waits for health endpoint readiness, and generates admin_password.txt and admin_recovery_codes.txt.</p>
-        </div>
-
-        <!-- Client packages table -->
-        <h3 style="margin-bottom: 16px; font-size: 1.125rem;">Native Client Packages & Enterprise Linux Support</h3>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th scope="col">Component / OS</th>
-                <th scope="col">Format / Arch</th>
-                <th scope="col">Capabilities</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Windows Credential Provider</strong></td>
-                <td>MSI, ZIP (x64)</td>
-                <td>LogonUI RDP/Local 2FA, Auto-Logon, UAC elevation MFA, Ligament2FAService watchdog</td>
-              </tr>
-              <tr>
-                <td><strong>Astra Linux (SE 1.7 / CE), Ubuntu, Debian</strong></td>
-                <td>.deb (amd64)</td>
-                <td>Desktop push alerts, system tray icon, number matching, protocol handler</td>
-              </tr>
-              <tr>
-                <td><strong>РЕД ОС (7.3, 8), Альт (p9, p10), RHEL</strong></td>
-                <td>.rpm (x86_64)</td>
-                <td>Verified package integration, menu launcher, desktop notifications</td>
-              </tr>
-              <tr>
-                <td><strong>macOS (Apple Silicon &amp; Intel)</strong></td>
-                <td>DMG</td>
-                <td>Menu bar app, Dock integration, Touch ID confirmation, MDM profile support</td>
-              </tr>
-              <tr>
-                <td><strong>Android &amp; iOS PWA</strong></td>
-                <td>.apk / PWA /app</td>
-                <td>Web Push on iOS without App Store, Full-Screen Intent on Android</td>
-              </tr>
-              <tr>
-                <td><strong>Ligament Relay Node</strong></td>
-                <td>Docker, Binary (Linux, Win Server)</td>
-                <td>Branch offline cache, blind proxy tunnel for Web-SSH/RDP bastion</td>
-              </tr>
-            </tbody>
-          </table>
+          <span id="graph-info-badge" class="graph-info-badge">All Nodes Active</span>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Licensing & How to Buy -->
-    <section id="license">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Purchase & Activation</div>
-          <h2 class="section-title">How to Request Demo or Buy</h2>
-          <p class="section-desc">Instant offline cryptographic activation without external internet telemetry.</p>
+  <!-- Personas Section -->
+  <section id="personas" class="collab-section section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Target Audience</span>
+        <h2 class="section-title">Built for Critical Enterprise Roles</h2>
+        <p class="section-desc">Security that satisfies CISOs, saves capital for CFOs, and eliminates user friction.</p>
+      </div>
+
+      <div class="collab-grid">
+        <!-- CISO -->
+        <div class="collab-card">
+          <div class="collab-icon">🛡️</div>
+          <h3 class="collab-card-title">Chief Information Security Officer (CISO)</h3>
+          <p class="collab-card-desc">Full data sovereignty. Complete compliance with enterprise security baselines and immutable audit logs.</p>
+          <ul class="collab-card-list">
+            <li>100% On-Premise: encryption keys never touch external clouds</li><li>Anti-push bombing defense: mandatory Number Matching</li><li>Device Posture verification (BitLocker, Defender, Firewall)</li><li>Seamless SIEM integration with immutable audit logs</li>
+          </ul>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;">
-          <div style="background-color: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px;">
-            <h3 style="font-size: 1.1875rem; margin-bottom: 12px; color: var(--color-accent);">1. Free 30-Day Demo Request</h3>
-            <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 16px;">
-              Obtain an unrestricted 30-day Enterprise license file in one email. No credit card, no account registration required.
-            </p>
-            <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6;">
-              1. Open your admin web console: /admin → License<br>
-              2. Copy your unique Current Host Activation Code (LG-XXXX-XXXX-...)<br>
-              3. Send an email to admin@ligam.org with subject 'Demo license request'
-            </p>
-          </div>
-
-          <div style="background-color: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px;">
-            <h3 style="font-size: 1.1875rem; margin-bottom: 12px; color: var(--color-accent);">2. Commercial License Payment</h3>
-            <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 12px;">
-              Payment is completed transparently via USDT cryptocurrency on the TRON network (TRC-20):
-            </p>
-            <div style="background-color: var(--color-bg-canvas); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); font-family: var(--font-mono); font-size: 0.8125rem; word-break: break-all; margin-bottom: 12px;">
-              THGqs6iB1T4MyL9NC3TKqJkphFGBj4i6uR
-            </div>
-            <button class="code-copy-btn" data-copy="THGqs6iB1T4MyL9NC3TKqJkphFGBj4i6uR" data-copied-label="Address Copied!">Copy USDT TRC-20 Wallet</button>
-          </div>
+        <!-- CIO/CFO -->
+        <div class="collab-card">
+          <div class="collab-icon">💼</div>
+          <h3 class="collab-card-title">CIO & Chief Financial Officer (CFO)</h3>
+          <p class="collab-card-desc">Reduce 5-year Total Cost of Ownership (TCO) by up to 85% compared to foreign SaaS providers.</p>
+          <ul class="collab-card-list">
+            <li>Perpetual lifetime licensing: one-time investment (CAPEX)</li><li>$500 one-time for 100 users vs $7,200/yr with Cisco Duo</li><li>Immunity against sanctions, currency inflation, and license cancelation</li><li>Forever free tier for up to 5 users with all enterprise features</li>
+          </ul>
         </div>
 
-        <div style="background-color: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px;">
-          <h3 style="font-size: 1.125rem; margin-bottom: 12px;">3. Instant Offline Activation</h3>
-          <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6;">
-            In response, you receive a cryptographically signed license file (-----BEGIN LIGAMENT LICENSE-----). Paste the text into /admin → License and click 'Save License'. The license takes effect immediately without container restart, without server reboot, and without internet access.
-          </p>
+        <!-- SysAdmin -->
+        <div class="collab-card">
+          <div class="collab-icon">⚙️</div>
+          <h3 class="collab-card-title">SysAdmins & DevOps Engineers</h3>
+          <p class="collab-card-desc">Deployment in 2 minutes without complex clusters. Ready GPO ADMX templates and silent MSI rollouts.</p>
+          <ul class="collab-card-list">
+            <li>One-command deployment: docker run ... in under 120 seconds</li><li>Direct Active Directory & FreeIPA synchronization over LDAPS</li><li>Packaged ADMX policies and silent MSI rollout via Active Directory GPO</li><li>Autonomous Branch Relay keeping remote sites online during WAN cuts</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- What's New Timeline -->
-    <section id="whatsnew" style="background-color: var(--color-bg-card);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">Changelog</div>
-          <h2 class="section-title">What's New in Ligament</h2>
-          <p class="section-desc">Verified milestones from Git repository commits (October 2026).</p>
+      <!-- Founder Box -->
+      <div class="founder-box">
+        <div class="founder-text">
+          <h3>Engineered by Infrastructure Specialists</h3>
+          <p>Zero external telemetry, clean code, transparent architecture, and direct technical engineering support.</p>
         </div>
-        <div class="timeline">
-          
-        <div class="timeline-item">
-          <div class="timeline-date">17.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.223</div>
-            <div class="timeline-desc">PACS subsystem: drivers for Bolid (IntegrServ 2.0.1 and MS SQL), Sigur, PERCo, Parsec, RusGuard; background import by 500 records; Zero-Trust RDP presence gate.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">15.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.217</div>
-            <div class="timeline-desc">Notification Gateway: dynamic topics and image_url pipeline (API → PWA → Telegram); async forms and toast feedback in admin UI.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">14.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.205</div>
-            <div class="timeline-desc">Bastion: production-grade edge-to-edge Web-SSH terminal, comprehensive command auditing, session review UI, zombie session termination.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">14.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">client v1.1.63</div>
-            <div class="timeline-desc">Unified client update: Device Posture, unified MSI with Ligament2FAService watchdog, Windows GPO/ADMX and Apple MDM profiles.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">12.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.179</div>
-            <div class="timeline-desc">Kerberos SSO: passwordless 'Windows Logon' via SPNEGO ticket followed by 2nd factor only (production environment verified).</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">12.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.187</div>
-            <div class="timeline-desc">Message retention and archiving policies for Notification Gateway; modern responsive PWA push cards.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">12.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.181</div>
-            <div class="timeline-desc">RADIUS: forced session termination via RFC 5176 CoA-Disconnect and UniFi kick-sta fallback; automatic pruning of stale sessions.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">12.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">Security</div>
-            <div class="timeline-desc">Internal CWE audit sprint completed: remediation of CRITICAL, 4 HIGH, and 20 MED issues; SIEM CEF/LEEF logging templates.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">10.10.2026</div>
-          <div class="timeline-content">
-            <div class="timeline-version">v0.8.162</div>
-            <div class="timeline-desc">Headless Windows endpoint service: console access enabled on locked desktops and pre-logon LogonUI screens.</div>
-          </div>
-        </div>
+        <div class="founder-actions">
+          <a href="https://t.me/ligament_support" class="btn btn-secondary" target="_blank" rel="noopener">Telegram Support</a>
+          <a href="mailto:admin@ligam.org?subject=Question%20about%20Ligament" class="btn btn-primary">Contact Engineers</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FAQ -->
-    <section id="faq">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-label">FAQ</div>
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-desc">Direct technical answers for system administrators and security officers.</p>
-        </div>
-        <div class="faq-list">
-          
-        <details class="faq-item">
-          <summary>Does Ligament require internet connectivity to operate?</summary>
-          <div class="faq-content">No. Completely isolated (air-gapped) on-premise operation is the primary design pattern of Ligament. All databases, cryptography, logs, and license validation operate 100% locally with zero phone-home calls.</div>
-        </details>
-        <details class="faq-item">
-          <summary>What happens when the 30-day Enterprise Demo expires?</summary>
-          <div class="faq-content">The server gracefully and automatically transitions into the Free edition (up to 5 users). Active user sign-ins are never abruptly locked out, and the administrator can activate a license key at any time.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Can administrators prevent users from disabling their 2FA?</summary>
-          <div class="faq-content">Yes. Ligament enforces a mandatory 2FA security policy: users are strictly prohibited from removing their last enrolled authentication factor in the self-service portal.</div>
-        </details>
-        <details class="faq-item">
-          <summary>How does Ligament prevent Windows lockouts during network failure?</summary>
-          <div class="faq-content">The Ligament Windows Credential Provider supports configurable Fail-Open (fallback to Windows password if core is unreachable) and Fail-Close modes, alongside an emergency break-glass bypass whitelist.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Does the client support Russian Enterprise Linux distributions?</summary>
-          <div class="faq-content">Yes. Ligament Authenticator is packaged as .deb, .rpm, and universal .tar.gz, verified across Astra Linux 1.7/CE, RED OS 7.3/8, Alt Linux p9/p10, Ubuntu, Debian, and RHEL/Rocky.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Can Ligament be deployed solely for internal web application SSO?</summary>
-          <div class="faq-content">Yes. With native OpenID Connect, SAML 2.0 IdP, and forward-auth proxying, you can protect internal web apps (GitLab, Nextcloud, 1C, Proxmox) without configuring RADIUS or Windows logon modules.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Who can view remote SOS assistance session streams?</summary>
-          <div class="faq-content">Assistance sessions transmit media via peer-to-peer (P2P) WebRTC encrypted with DTLS-SRTP directly between user and operator. The server performs only signaling and audit recording, with no access to stream data.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Why does Ligament support password-based EAP-TTLS/PEAP instead of EAP-TLS?</summary>
-          <div class="faq-content">While large global enterprises often use certificate-heavy EAP-TLS, Ligament deliberately retains password-based EAP-TTLS/PEAP combined with instant mobile push. This pattern is vastly simpler and more economical to maintain for small-to-mid enterprise networks.</div>
-        </details>
-        <details class="faq-item">
-          <summary>How easy is it to migrate from privacyIDEA or Cisco Duo?</summary>
-          <div class="faq-content">Because Ligament adheres to standard RADIUS, OIDC, and LDAP RFCs, you can migrate network authenticators and web applications to Ligament in minutes without altering hardware switches or VPN controllers.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Is a local workstation agent required for Kerberos SSO?</summary>
-          <div class="faq-content">No. The 'Windows Logon' SSO feature leverages native browser SPNEGO/Kerberos ticket negotiation. No desktop agent is needed—only standard Active Directory SPN binding and service keytab export.</div>
-        </details>
+  <!-- Interactive Perimeter Tabs Section -->
+  <section id="benefits" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Protection Modules</span>
+        <h2 class="section-title">Interactive Perimeter Modules</h2>
+        <p class="section-desc">Switch between the primary protection vectors of your enterprise perimeter.</p>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-nav">
+        <button type="button" class="tab-btn active" data-tab="tab-workstations">💻 Workstations</button>
+        <button type="button" class="tab-btn" data-tab="tab-radius">📡 RADIUS & Network</button>
+        <button type="button" class="tab-btn" data-tab="tab-sso">🌐 Web SSO & Bastion</button>
+        <button type="button" class="tab-btn" data-tab="tab-relay">🏭 Offline Relay</button>
+      </div>
+
+      <!-- Tab 1: Workstations -->
+      <div id="tab-workstations" class="tab-content active">
+        <div class="feature-tab-grid">
+          <div class="feat-card">
+            <h4 class="feat-card-title">Windows Auto-Logon</h4>
+            <p class="feat-card-desc">Вход на рабочий стол без повторного клика и нажатия Enter сразу после подтверждения на телефоне.</p>
+            <div class="tag-pills"><span class="tag-pill">LogonUI</span><span class="tag-pill">Windows 10/11</span><span class="tag-pill">0.4s</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Number Matching</h4>
+            <p class="feat-card-desc">На экране входа отображается проверочное число. Защищает от push-бомбинга и случайных нажатий.</p>
+            <div class="tag-pills"><span class="tag-pill">Anti-bombing</span><span class="tag-pill">Security</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">UAC Elevation 2FA</h4>
+            <p class="feat-card-desc">Запрос второго фактора на телефон администратора при попытке запуска программ с правами администратора.</p>
+            <div class="tag-pills"><span class="tag-pill">UAC</span><span class="tag-pill">Admin Guard</span></div>
+          </div>
         </div>
       </div>
-    </section>
-  </main>
+
+      <!-- Tab 2: RADIUS -->
+      <div id="tab-radius" class="tab-content">
+        <div class="feature-tab-grid">
+          <div class="feat-card">
+            <h4 class="feat-card-title">RADIUS Push Holding (RFC 5080)</h4>
+            <p class="feat-card-desc">Сервер удерживает UDP-сессию на время подтверждения вторым фактором, предотвращая повторные запросы.</p>
+            <div class="tag-pills"><span class="tag-pill">RFC 5080</span><span class="tag-pill">UDP</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Корпоративный Wi-Fi 802.1X</h4>
+            <p class="feat-card-desc">Бесшовный доступ к корпоративному Wi-Fi WPA2/WPA3-Enterprise с аутентификацией пользователей.</p>
+            <div class="tag-pills"><span class="tag-pill">WPA2/WPA3</span><span class="tag-pill">EAP-TTLS</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">VPN-шлюзы</h4>
+            <p class="feat-card-desc">Совместимость с MikroTik RouterOS, Cisco ASA, Fortinet, UniFi, WireGuard и OpenVPN.</p>
+            <div class="tag-pills"><span class="tag-pill">MikroTik</span><span class="tag-pill">Cisco</span><span class="tag-pill">Fortinet</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: SSO & Bastion -->
+      <div id="tab-sso" class="tab-content">
+        <div class="feature-tab-grid">
+          <div class="feat-card">
+            <h4 class="feat-card-title">OIDC & SAML 2.0 IdP</h4>
+            <p class="feat-card-desc">Централизованный единый вход для корпоративных веб-сервисов (Nextcloud, GitLab, Битрикс24, 1С).</p>
+            <div class="tag-pills"><span class="tag-pill">OIDC</span><span class="tag-pill">SAML 2.0</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Web-SSH & RDP Бастион</h4>
+            <p class="feat-card-desc">Доступ к серверам через защищенный веб-интерфейс в браузере без публикации портов 22 и 3389 наружу.</p>
+            <div class="tag-pills"><span class="tag-pill">Bastion</span><span class="tag-pill">Zero Exposed Ports</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Reverse Proxy с 2FA</h4>
+            <p class="feat-card-desc">Защита любых legacy веб-панелей и внутренних систем без необходимости изменять их исходный код.</p>
+            <div class="tag-pills"><span class="tag-pill">Proxy</span><span class="tag-pill">Legacy 2FA</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Offline Relay -->
+      <div id="tab-relay" class="tab-content">
+        <div class="feature-tab-grid">
+          <div class="feat-card">
+            <h4 class="feat-card-title">Автономия при обрыве оптики</h4>
+            <p class="feat-card-desc">Локальный Relay-узел на филиале позволяет сотрудникам входить в Windows даже при полном отсутствии интернета.</p>
+            <div class="tag-pills"><span class="tag-pill">Air-gapped</span><span class="tag-pill">WAN cut survival</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Кэширование ключей и сессий</h4>
+            <p class="feat-card-desc">Криптографический кэш синхронизируется с центром в фоновом режиме и изолирован от взлома.</p>
+            <div class="tag-pills"><span class="tag-pill">Local Cache</span><span class="tag-pill">Zero Latency</span></div>
+          </div>
+          <div class="feat-card">
+            <h4 class="feat-card-title">Двусторонний аудит</h4>
+            <p class="feat-card-desc">Все события входа в офлайне сохраняются в локальном журнале и передаются в центр при восстановлении связи.</p>
+            <div class="tag-pills"><span class="tag-pill">Audit Sync</span><span class="tag-pill">Integrity</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">ROI & TCO Calculator</span>
+        <h2 class="section-title">Transparent Pricing Without Hidden Fees</h2>
+        <p class="section-desc">Free up to 5 users. Choose flexible annual subscriptions or purchase perpetual lifetime licenses.</p>
+      </div>
+
+      <!-- Modern Interactive Calculator -->
+      <div class="calc-wrapper">
+        <div class="calc-row">
+          <div class="calc-label-row">
+            <label for="calc-users-range" class="calc-label">Number of Users:</label>
+            <span id="calc-users-val" class="calc-value-badge">50 users</span>
+          </div>
+          <input type="range" id="calc-users-range" class="calc-range" min="5" max="1000" step="5" value="50">
+          <div class="preset-buttons">
+            <button type="button" class="preset-btn" data-count="10">10</button>
+            <button type="button" class="preset-btn" data-count="50">50</button>
+            <button type="button" class="preset-btn" data-count="100">100</button>
+            <button type="button" class="preset-btn" data-count="250">250</button>
+            <button type="button" class="preset-btn" data-count="500">500</button>
+            <button type="button" class="preset-btn" data-count="1000">1000</button>
+          </div>
+        </div>
+
+        <div class="plan-switch-group">
+          <button type="button" id="plan-sub" class="plan-switch-btn active">
+            <div class="plan-name">Annual Subscription ($2/mo/user)</div>
+            <div class="plan-rate">Includes updates & tech support</div>
+          </button>
+          <button type="button" id="plan-life" class="plan-switch-btn">
+            <div class="plan-name">Perpetual License ($5/user one-time)</div>
+            <div class="plan-rate">One-time payment forever (CAPEX)</div>
+          </button>
+        </div>
+
+        <div class="calc-result-box">
+          <div class="calc-result-title">Estimated License Cost</div>
+          <div id="calc-price-output" class="calc-result-price">$1,200 / год</div>
+          <div id="calc-sub-output" class="calc-result-sub">Равносильно $100 в месяц ($2/пользователь, ежегодная оплата)</div>
+        </div>
+
+        <div class="savings-callout">
+          <div class="savings-text">💡 <strong>TCO Savings:</strong> For 100 users you pay <strong>$500 one-time</strong> instead of <strong>$7,200+ every year</strong> with Cisco Duo or Okta!</div>
+          <span class="savings-badge">Save up to 85%</span>
+        </div>
+      </div>
+
+      <!-- 4 Price Cards -->
+      <div class="pricing-grid">
+        <!-- Community -->
+        <div class="price-card">
+          <h3 class="price-card-tier">Community</h3>
+          <div class="price-card-price">$0</div>
+          <div class="price-card-period">Free Forever</div>
+          <ul class="price-card-features"><li>Up to 5 active users</li><li>Full Windows Logon & RDP</li><li>RADIUS Wi-Fi & VPN Server</li><li>Web SSO & Bastion</li><li>Community support</li></ul>
+          <a href="#quickstart" class="btn btn-outline">Начать бесплатно</a>
+        </div>
+
+        <!-- Standard -->
+        <div class="price-card featured">
+          <span class="featured-badge">Most Popular</span>
+          <h3 class="price-card-tier">Standard (Subscription)</h3>
+          <div class="price-card-price">$2</div>
+          <div class="price-card-period">per user / month</div>
+          <ul class="price-card-features"><li>From 6 users and above</li><li>All platform capabilities</li><li>Priority SLA tech support</li><li>Continuous security updates</li><li>Deployment assistance</li></ul>
+          <a href="mailto:admin@ligam.org?subject=Standard%20License%20Request" class="btn btn-primary">Выбрать Standard</a>
+        </div>
+
+        <!-- Perpetual -->
+        <div class="price-card">
+          <h3 class="price-card-tier">Perpetual (Lifetime)</h3>
+          <div class="price-card-price">$5</div>
+          <div class="price-card-period">per user one-time</div>
+          <ul class="price-card-features"><li>One-time investment forever (CAPEX)</li><li>Zero recurring monthly fees</li><li>Total infrastructure sovereignty</li><li>1 year of updates included</li><li>Contractual price guarantee</li></ul>
+          <a href="mailto:admin@ligam.org?subject=Perpetual%20License%20Request" class="btn btn-secondary">Купить навсегда</a>
+        </div>
+
+        <!-- Relay -->
+        <div class="price-card">
+          <h3 class="price-card-tier">Branch Relay</h3>
+          <div class="price-card-price">$150</div>
+          <div class="price-card-period">per branch node one-time</div>
+          <ul class="price-card-features"><li>Full offline WAN cut survival</li><li>Local cryptographic key cache</li><li>Unlimited users per relay node</li><li>Automatic audit replication</li><li>High latency / packet loss support</li></ul>
+          <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table Section -->
+  <section id="comparison" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Comparison</span>
+        <h2 class="section-title">Detailed Solution Comparison</h2>
+        <p class="section-desc">Feature-by-feature evaluation of enterprise authentication approaches.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Feature / Parameter</th>
+              <th>Cisco Duo / Okta</th>
+              <th>Google Auth / TOTP</th>
+              <th class="col-highlight">Ligament 2FA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon & RDP Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Offline Autonomy</strong></td><td class="check-no">✕ (Fails on WAN outage)</td><td class="check-no">✕ (No Sync)</td><td class="col-highlight check-yes">✓ Autonomous Branch Relay</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram & eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$500 one-time or $2,400/yr</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quickstart Section -->
+  <section id="quickstart" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Quickstart</span>
+        <h2 class="section-title">Deploy in 3 Simple Steps</h2>
+        <p class="section-desc">From initial docker container launch to protecting domain workstations in under 15 minutes.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3 class="step-title">1. Launch Docker Container</h3>
+          <p class="step-desc">Spin up the container with a single command. Web administration and identity store are packaged inside.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3 class="step-title">2. Connect Active Directory</h3>
+          <p class="step-desc">Specify your domain controller or FreeIPA endpoint. Users and groups are mapped via LDAPS in 5 minutes.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3 class="step-title">3. Deploy MSI via Group Policy</h3>
+          <p class="step-desc">Create a standard Active Directory GPO with ADMX templates for silent background workstation enrollment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Frequently Asked Questions</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Clear technical and business answers to frequent inquiries.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item">
+            <summary class="faq-question">What happens if the internet goes down or connection to the central server is cut?</summary>
+            <div class="faq-answer">When running a Ligament Branch Relay node, branch staff continue to log in smoothly to Windows and local networks. Authentication is handled locally via secure cached credentials. Once connectivity is restored, audit events automatically sync to the central server.</div>
+          </details><details class="faq-item">
+            <summary class="faq-question">Are employees forced to install a dedicated mobile app on their personal phones?</summary>
+            <div class="faq-answer">No. Ligament supports approvals directly through Telegram or eXpress enterprise bots, hardware FIDO2/Passkey tokens (YubiKey), or generic TOTP authenticators.</div>
+          </details><details class="faq-item">
+            <summary class="faq-question">How does Windows Auto-Logon work and is it secure?</summary>
+            <div class="faq-answer">It is secured with mandatory Number Matching. The Windows login screen displays a verification number (e.g. 42) that the user confirms on their phone. Once verified, the desktop unlocks in 0.4 seconds without user typing, completely immune to push fatigue and replay attacks.</div>
+          </details><details class="faq-item">
+            <summary class="faq-question">Does the solution satisfy strict enterprise data sovereignty and compliance?</summary>
+            <div class="faq-answer">Yes. Ligament runs 100% On-Premise inside your private network. Credentials, session states, and audit logs never leave your servers, fulfilling strict corporate sovereignty requirements.</div>
+          </details><details class="faq-item">
+            <summary class="faq-question">How does upgrading from the 5 free users to a commercial license work?</summary>
+            <div class="faq-answer">The free Community tier (up to 5 users) is free forever with complete features. When expanding, simply apply a license key in the admin UI without reinstalling or interrupting users.</div>
+          </details>
+      </div>
+
+      <!-- CTA Banner -->
+      <div class="cta-banner">
+        <h3 class="cta-title">Secure Your Enterprise Perimeter Today</h3>
+        <p class="cta-desc">Deploy the free version for up to 5 users in 2 minutes or request a full 30-day evaluation license for your organization.</p>
+        <div class="cta-actions">
+          <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Request 30-Day Demo</a>
+          <a href="../assets/downloads/ligament-presentation.pdf" class="btn btn-secondary" download>📄 Download Presentation PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer id="contacts" class="site-footer">
+  <footer class="site-footer">
     <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand-col">
-          <a href="#" class="brand-link">
-            <img src="../assets/brand/logo.svg" alt="Ligament Logo" width="130" height="32">
-          </a>
-          <p style="font-size: 0.8125rem; color: var(--color-text-subtle); max-width: 320px; line-height: 1.5;">
-            Self-hosted whole-perimeter MFA and zero-trust authentication platform. Runs in a single Docker container.
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <img src="../assets/brand/logo.svg" alt="Ligament" width="120" height="28">
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 280px;">
+            Resilient On-Premise 2FA platform protecting Windows workstations, VPN, Wi-Fi & Web SSO.
           </p>
         </div>
-
-        <div>
-          <div class="footer-col-title">Repositories</div>
-          <ul class="footer-links">
-            <li><a href="https://github.com/aligorov/ligament" rel="noopener noreferrer" target="_blank">Core Server (ligament)</a></li>
-            <li><a href="https://github.com/aligorov/ligament-apps" rel="noopener noreferrer" target="_blank">Client Apps (ligament-apps)</a></li>
-            <li><a href="https://github.com/aligorov/ligament-relay" rel="noopener noreferrer" target="_blank">Branch Relays (ligament-relay)</a></li>
-            <li><a href="https://hub.docker.com/r/aligorov/ligament_2fa" rel="noopener noreferrer" target="_blank">Docker Hub Image</a></li>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#architecture">Topology Graph</a></li>
+            <li><a href="#debate">Why Ligament</a></li>
+            <li><a href="#benefits">Features</a></li>
+            <li><a href="#pricing">Pricing & TCO</a></li>
           </ul>
         </div>
-
-        <div>
-          <div class="footer-col-title">Documentation</div>
-          <ul class="footer-links">
-            <li><a href="../assets/downloads/ligament-presentation.pdf" download>Overview Presentation (PDF, 22 slides)</a></li>
-            <li><a href="#install">Quick Start Guide</a></li>
-            <li><a href="#pricing">Pricing & Calculator</a></li>
-            <li><a href="#comparison">Competitor Matrix</a></li>
+        <div class="footer-col">
+          <h4>Integrations</h4>
+          <ul>
+            <li><a href="#benefits">Windows Logon & RDP</a></li>
+            <li><a href="#benefits">RADIUS (MikroTik / Cisco)</a></li>
+            <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
+            <li><a href="#benefits">Branch Relay (Офлайн)</a></li>
           </ul>
         </div>
-
-        <div>
-          <div class="footer-col-title">Contact & Sales</div>
-          <ul class="footer-links">
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
             <li><a href="mailto:admin@ligam.org">admin@ligam.org</a></li>
-            <li><span style="font-size: 0.75rem; color: var(--color-text-subtle);">TRC-20 USDT Wallet:</span></li>
-            <li style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-accent); word-break: break-all;">THGqs6iB1T4MyL9NC3TKqJkphFGBj4i6uR</li>
+            <li><a href="https://t.me/ligament_support" target="_blank" rel="noopener">Telegram Support</a></li>
+            <li><a href="../assets/downloads/ligament-presentation.pdf" download>Presentation PDF</a></li>
           </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
         <div>© 2026 Ligament Security. All rights reserved.</div>
-        <div class="footer-trust-badge">🔒 Zero telemetry: this site loads no third-party scripts, fonts, or analytics.</div>
+        <div style="color: var(--text-subtle);">Zero Cloud • 100% On-Premise • 152-ФЗ / КИИ</div>
       </div>
     </div>
   </footer>
