@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=visual-fixes-5">
+  <link rel="stylesheet" href="../styles.css?v=topology-6">
 </head>
 <body>
 
@@ -190,209 +190,48 @@
   </section>
 
   <!-- Architecture Graph Section -->
-  <section id="architecture" class="graph-section">
+  <section id="architecture" class="section graph-section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Interactive Architecture</span>
-        <h2 class="section-title">Corporate Perimeter & Zero-Trust Graph</h2>
-        <p class="section-desc">Click any scenario or node to inspect the real-world authenticated packet flow.</p>
-      </div>
-
+      <div class="section-header"><span class="section-tag">Interactive architecture</span><h2 class="section-title">How a connection travels</h2><p class="section-desc">Choose a scenario to see its route, second factor and behavior during a connectivity outage.</p></div>
       <div class="graph-wrapper">
-        <!-- Scenario Controls -->
-        <div class="graph-controls">
-          <button type="button" class="graph-scenario-btn active" data-scenario="all">🌐 All Nodes</button>
-          <button type="button" class="graph-scenario-btn" data-scenario="windows">💻 Windows Auto-Logon</button>
-          <button type="button" class="graph-scenario-btn" data-scenario="vpn">📡 RADIUS VPN & Wi-Fi</button>
-          <button type="button" class="graph-scenario-btn" data-scenario="relay">🏭 Offline Branch Relay</button>
-          <button type="button" class="graph-scenario-btn" data-scenario="sso">🛡️ Web SSO</button>
-        </div>
-
-        <!-- SVG Network Graph -->
-        <p class="scroll-hint graph-scroll-hint">Swipe or scroll the diagram horizontally ↔</p>
-        <div class="graph-svg-container" tabindex="0" role="region" aria-label="Architecture diagram, horizontal scrolling">
-          <svg class="graph-svg" viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="grad-core" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.3" />
-                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.1" />
-              </linearGradient>
-              <filter id="glow-core" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="8" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-
-            <!-- CONNECTION PATHS (FLOW LINES) -->
-            <!-- AD -> Core -->
-            <path id="line-ad" class="flow-line" d="M 480 95 L 480 208" stroke="#818cf8" stroke-width="2.5" />
-
-            <!-- Ingress -> Core -->
-            <path id="line-win" class="flow-line" d="M 240 141 C 320 141, 320 230, 380 240" stroke="#38bdf8" stroke-width="2.5" />
-            <path id="line-vpn" class="flow-line" d="M 240 260 L 380 260" stroke="#06b6d4" stroke-width="2.5" />
-            <path id="line-sso" class="flow-line" d="M 240 379 C 320 379, 320 290, 380 280" stroke="#a855f7" stroke-width="2.5" />
-
-            <!-- Core -> Relay -->
-            <path id="line-relay" class="flow-line" d="M 480 312 L 480 415" stroke="#10b981" stroke-width="2.5" />
-
-            <!-- Relay -> Branch LAN (RDP :3389 & SSH :22 Forwarding) -->
-            <path id="line-relay-lan" class="flow-line" d="M 380 448 L 240 448" stroke="#10b981" stroke-width="2.5" />
-
-            <!-- RADIUS Wi-Fi Backup (node-vpn <-> node-relay on WAN outage) -->
-            <path id="line-relay-vpn" class="flow-line" d="M 140 291 C 140 360, 310 438, 380 438" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6,4" />
-
-            <!-- Core -> Factors -->
-            <path id="line-push" class="flow-line" d="M 580 240 C 640 230, 640 141, 720 141" stroke="#34d399" stroke-width="2.5" />
-            <path id="line-bot" class="flow-line" d="M 580 260 L 720 260" stroke="#38bdf8" stroke-width="2.5" />
-            <path id="line-yubi" class="flow-line" d="M 580 280 C 640 290, 640 379, 720 379" stroke="#fbbf24" stroke-width="2.5" />
-
-            <!-- CORE PULSING RING -->
-            <circle cx="480" cy="260" r="56" fill="none" stroke="#6366f1" stroke-width="2" opacity="0.4" style="animation: pulse-ring 2.5s infinite;" />
-
-            <!-- CENTRAL HUB: LIGAMENT CORE -->
-            <g id="node-core" class="graph-node-group"
-               data-title-ru="Ядро Ligament Core (Docker On-Premise)"
-               data-title-en="Ligament Core Engine (Docker On-Premise)"
-               data-desc-ru="Центральный сервис аутентификации. Работает локально в одном контейнере без облачных задержек. Хранит политики, сессии и журнал аудита."
-               data-desc-en="Central On-Premise authentication brain. Runs locally in a single container with zero cloud dependencies, holding policies & audit."
-               data-badge-ru="100% On-Premise • 152-ФЗ / КИИ"
-               data-badge-en="100% On-Premise • Zero Cloud">
-              <rect class="node-bg" x="380" y="210" width="200" height="100" rx="16" ry="16" fill="#0b1120" stroke="#6366f1" stroke-width="2" filter="url(#glow-core)" />
-              <text x="480" y="242" fill="#fff" font-size="16" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">🛡️ LIGAMENT CORE</text>
-              <text x="480" y="266" fill="#38bdf8" font-size="12" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">On-Premise Docker Hub</text>
-              <text x="480" y="288" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">AD Sync • Policies • Audit</text>
-            </g>
-
-            <!-- DIRECTORY NODE (TOP) -->
-            <g id="node-ad" class="graph-node-group"
-               data-title-ru="Служба каталогов (Active Directory / FreeIPA)"
-               data-title-en="Directory Sync (Active Directory / FreeIPA)"
-               data-desc-ru="Мгновенная синхронизация пользователей и групп по защищенному протоколу LDAPS. При блокировке учетки в домене доступ отзывается сразу."
-               data-desc-en="Real-time sync with Active Directory / FreeIPA over secure LDAPS. Immediate access revocation upon domain account lock."
-               data-badge-ru="LDAPS • Без миграции базы"
-               data-badge-en="LDAPS • Zero Database Migration">
-              <rect class="node-bg" x="385" y="35" width="190" height="60" rx="12" ry="12" fill="#090d16" stroke="#818cf8" stroke-width="1.5" />
-              <text x="480" y="60" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏢 Active Directory / IPA</text>
-              <text x="480" y="80" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">LDAPS Sync • Users</text>
-            </g>
-
-            <!-- INGRESS NODES (LEFT) -->
-            <!-- Windows Logon & UAC -->
-            <g id="node-win" class="graph-node-group"
-               data-title-ru="Windows Logon & UAC (Credential Provider)"
-               data-title-en="Windows Logon & UAC (Credential Provider)"
-               data-desc-ru="Credential Provider Ligament работает локально на рабочей станции и связывается напрямую с Core/AD. Auto-Logon за 0.4 сек после подтверждения на смартфоне; филиальный Relay этот сценарий не обслуживает."
-               data-desc-en="Ligament Credential Provider runs locally on the workstation and connects directly to Core/AD. Auto-logon takes 0.4s after mobile approval; the branch Relay is not involved."
-               data-badge-ru="LogonUI • Auto-Logon • UAC"
-               data-badge-en="LogonUI • Auto-Logon • UAC">
-              <rect class="node-bg" x="40" y="110" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
-              <text x="140" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💻 Windows Logon &amp; UAC</text>
-              <text x="140" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Локально через Core / AD</text>
-            </g>
-
-            <!-- RADIUS VPN & Wi-Fi -->
-            <g id="node-vpn" class="graph-node-group"
-               data-title-ru="RADIUS-сервер (VPN и корпоративный Wi-Fi)"
-               data-title-en="RADIUS Server (VPN & Enterprise Wi-Fi)"
-               data-desc-ru="Поддержка MikroTik, Cisco, Fortinet, UniFi. Механизм Push Holding удерживает UDP-сессию по RFC 5080 до подтверждения."
-               data-desc-en="MikroTik, Cisco, Fortinet, UniFi support. Push Holding preserves UDP sessions under RFC 5080 until confirmed."
-               data-badge-ru="RFC 5080 • WPA2/WPA3"
-               data-badge-en="RFC 5080 • WPA2/WPA3">
-              <rect class="node-bg" x="40" y="229" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#06b6d4" stroke-width="1.5" />
-              <text x="140" y="255" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">📡 RADIUS VPN & Wi-Fi</text>
-              <text x="140" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">MikroTik • Cisco • Push Holding</text>
-            </g>
-
-            <!-- Web SSO (Core only) -->
-            <g id="node-sso" class="graph-node-group"
-               data-title-ru="Web SSO (OIDC / SAML 2.0 — строго через Core)"
-               data-title-en="Web SSO (OIDC / SAML 2.0 — Core Only)"
-               data-desc-ru="Центральный IdP для веб-приложений. Web SSO по OIDC/SAML 2.0 работает строго через Ligament Core; филиальный Relay к SSO отношения не имеет."
-               data-desc-en="Central IdP for web applications. OIDC/SAML 2.0 Web SSO works strictly through Ligament Core; the branch Relay is not involved in SSO."
-               data-badge-ru="OIDC/SAML • Строго через Core"
-               data-badge-en="OIDC/SAML • Core Only">
-              <rect class="node-bg" x="40" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#a855f7" stroke-width="1.5" />
-              <text x="140" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🌐 Web SSO</text>
-              <text x="140" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">OIDC/SAML • Только Core</text>
-            </g>
-
-            <!-- Branch LAN Targets (RDP & SSH Forwarding) -->
-            <g id="node-branch-lan" class="graph-node-group"
-               data-title-ru="Хосты филиала (Проброс RDP / SSH)"
-               data-title-en="Branch Hosts (RDP / SSH Forwarding)"
-               data-desc-ru="Внутренние серверы филиала. Доступ к RDP (3389) и SSH (22) идёт через Relay по защищённому туннелю без открытия портов наружу и без белого IP."
-               data-desc-en="Internal branch servers. RDP (3389) and SSH (22) access is forwarded through Relay without exposing ports or requiring a public IP."
-               data-badge-ru="Проброс RDP/SSH • Без белого IP"
-               data-badge-en="RDP/SSH Forwarding • No Public IP">
-              <rect class="node-bg" x="40" y="415" width="200" height="66" rx="12" ry="12" fill="#090d16" stroke="#10b981" stroke-width="1.5" />
-              <text x="140" y="440" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🖥️ Branch Hosts</text>
-              <text x="140" y="461" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">RDP :3389 • SSH :22</text>
-            </g>
-
-            <!-- BOTTOM: OFFLINE BRANCH RELAY -->
-            <g id="node-relay" class="graph-node-group"
-               data-title-ru="Филиальный Relay (RDP/SSH + резервный Wi-Fi RADIUS)"
-               data-title-en="Branch Relay (RDP/SSH + Backup Wi-Fi RADIUS)"
-               data-desc-ru="Relay решает две задачи: пробрасывает RDP (3389) и SSH (22) через исходящий WSS :443 к Core без белого IP и выступает резервным RADIUS для Wi-Fi 802.1X по локальному кэшу при обрыве WAN."
-               data-desc-en="Relay has two jobs: forward RDP (3389) and SSH (22) through an outbound WSS :443 tunnel to Core without a public IP, and provide cached 802.1X Wi-Fi RADIUS during WAN outages."
-               data-badge-ru="RDP/SSH WSS :443 • Резерв Wi-Fi RADIUS"
-               data-badge-en="RDP/SSH WSS :443 • Backup Wi-Fi RADIUS">
-              <rect class="node-bg" x="380" y="415" width="200" height="65" rx="12" ry="12" fill="#090d16" stroke="#10b981" stroke-width="1.5" />
-              <text x="480" y="442" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏭 Branch Relay</text>
-              <text x="480" y="462" fill="#38bdf8" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">RDP/SSH WSS :443</text>
-              <text x="480" y="477" fill="#10b981" font-size="10.5" font-weight="500" text-anchor="middle" font-family="system-ui, sans-serif">Backup Wi-Fi RADIUS</text>
-            </g>
-
-            <!-- FACTOR NODES (RIGHT) -->
-            <!-- Mobile Push -->
-            <g id="node-push" class="graph-node-group"
-               data-title-ru="Мобильный Push (Number Matching)"
-               data-title-en="Mobile Push (Number Matching)"
-               data-desc-ru="Защита от push-бомбинга и утомления. Пользователь подтверждает число на экране за 0.4 сек без ручного ввода SMS."
-               data-desc-en="Protection against push fatigue and bombing. Worker taps matching number in 0.4s without retyping SMS codes."
-               data-badge-ru="0.4 сек вход • Без SMS"
-               data-badge-en="0.4s Unlock • Zero SMS">
-              <rect class="node-bg" x="720" y="110" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#34d399" stroke-width="1.5" />
-              <text x="820" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">📱 Мобильный Push 0.4s</text>
-              <text x="820" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Number Matching • 1 клик</text>
-            </g>
-
-            <!-- Telegram / eXpress -->
-            <g id="node-bot" class="graph-node-group"
-               data-title-ru="Корпоративные боты (Telegram и eXpress)"
-               data-title-en="Corporate Messengers (Telegram & eXpress)"
-               data-desc-ru="Подтверждение входа прямо в мессенджере компании. Не требует установки сторонних приложений на личные телефоны."
-               data-desc-en="Approval directly inside corporate messengers without forcing staff to install third-party mobile apps."
-               data-badge-ru="Без установки приложений"
-               data-badge-en="Zero App Installation">
-              <rect class="node-bg" x="720" y="229" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
-              <text x="820" y="255" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💬 Telegram / eXpress</text>
-              <text x="820" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Corporate bots • Native</text>
-            </g>
-
-            <!-- FIDO2 / YubiKey -->
-            <g id="node-yubi" class="graph-node-group"
-               data-title-ru="Аппаратные ключи (FIDO2 / YubiKey)"
-               data-title-en="Hardware Keys (FIDO2 / YubiKey)"
-               data-desc-ru="Поддержка USB токенов (YubiKey, Рутокен, JaCarta) и WebAuthn Passkeys прямо на экране блокировки Windows."
-               data-desc-en="USB security keys (YubiKey, Rutoken, FIDO2) and WebAuthn Passkeys directly on Windows login screens."
-               data-badge-ru="FIDO2 • QR • Аппаратная защита"
-               data-badge-en="FIDO2 • QR • Hardware Grade">
-              <rect class="node-bg" x="720" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#fbbf24" stroke-width="1.5" />
-              <text x="820" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🔑 FIDO2 / YubiKey</text>
-              <text x="820" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Passkeys • Rutoken • QR</text>
-            </g>
+        <div class="graph-controls" role="group" aria-label="Connection scenarios"><button type="button" class="graph-scenario-btn active" data-scenario="all" aria-pressed="true">All connections</button><button type="button" class="graph-scenario-btn" data-scenario="windows" aria-pressed="false">Windows / UAC</button><button type="button" class="graph-scenario-btn" data-scenario="vpn" aria-pressed="false">VPN / office Wi-Fi</button><button type="button" class="graph-scenario-btn" data-scenario="sso" aria-pressed="false">Web SSO</button><button type="button" class="graph-scenario-btn" data-scenario="bastion" aria-pressed="false">Bastion RDP / SSH</button><button type="button" class="graph-scenario-btn" data-scenario="relay" aria-pressed="false">Branch access</button><button type="button" class="graph-scenario-btn" data-scenario="wifi-offline" aria-pressed="false">Wi-Fi without WAN</button></div>
+        <ol id="graph-route" class="graph-route" aria-label="Selected scenario route"></ol>
+        <div class="graph-toolbar"><span class="graph-legend"><span class="legend-online">Online route</span><span class="legend-backup">Cached Wi-Fi backup</span></span><div class="graph-zoom" role="group" aria-label="Diagram zoom"><button type="button" data-graph-zoom="out" aria-label="Zoom out">−</button><output id="graph-zoom-value" aria-live="polite">100%</output><button type="button" data-graph-zoom="in" aria-label="Zoom in">+</button><button type="button" data-graph-zoom="reset">Center</button></div></div>
+        <p class="graph-caption">Arrows show request or connection initiation; responses use the same channel. MFA factors are alternatives, not a required sequence.</p>
+        <p class="scroll-hint graph-scroll-hint">Scroll horizontally or adjust the zoom ↔</p>
+        <div class="graph-svg-container" tabindex="0" role="region" aria-label="Interactive architecture diagram">
+          <div class="graph-offline-mobile"><div><strong>Branch Wi-Fi</strong><span>Access points • 802.1X</span></div><span aria-hidden="true">↓ RADIUS ↓</span><div><strong>Local Relay</strong><span>Backup RADIUS • cached authentication</span></div></div>
+          <svg class="graph-svg" viewBox="0 0 1120 710" xmlns="http://www.w3.org/2000/svg" role="group" aria-labelledby="topology-title topology-desc"><title id="topology-title">Ligament Core and Relay topology</title><desc id="topology-desc">Ingress services on the left, Core in the center, factors and hosts on the right. Branch Wi-Fi, Relay and branch hosts are at the bottom. Select a node for details.</desc><defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#cbd5e1"/></marker></defs>
+          <text class="graph-zone-label" x="155" y="30">INGRESS SERVICES</text><text class="graph-zone-label" x="965" y="30">FACTORS / TARGET HOSTS</text>
+<g class="graph-connection" data-connection="ad"><path id="line-ad" class="flow-line" d="M560 210 L560 120" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="595" y="165">LDAPS</text></g>
+<g class="graph-connection" data-connection="win"><path id="line-win" class="flow-line" d="M280 135 C355 135 355 235 435 240" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#graph-arrow)"/></g>
+<g class="graph-connection" data-connection="vpn"><path id="line-vpn" class="flow-line" d="M280 230 L435 260" fill="none" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="350" y="235">RADIUS</text></g>
+<g class="graph-connection" data-connection="sso"><path id="line-sso" class="flow-line" d="M280 325 C350 325 355 285 435 280" fill="none" stroke="#a78bfa" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="350" y="326">OIDC / SAML</text></g>
+<g class="graph-connection" data-connection="bastion"><path id="line-bastion" class="flow-line" d="M280 420 C370 420 345 305 435 300" fill="none" stroke="#c084fc" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="357" y="405">RDP / SSH + 2FA</text></g>
+<g class="graph-connection" data-connection="push"><path id="line-push" class="flow-line" d="M685 235 C760 235 760 135 840 135" fill="none" stroke="#34d399" stroke-width="2.5" marker-end="url(#graph-arrow)"/></g>
+<g class="graph-connection" data-connection="bot"><path id="line-bot" class="flow-line" d="M685 260 L840 230" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#graph-arrow)"/></g>
+<g class="graph-connection" data-connection="yubi"><path id="line-yubi" class="flow-line" d="M685 280 C765 280 755 325 840 325" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#graph-arrow)"/></g>
+<g class="graph-connection" data-connection="core-host"><path id="line-core-host" class="flow-line" d="M685 300 C765 300 765 445 840 445" fill="none" stroke="#c084fc" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="765" y="424">RDP / SSH</text></g>
+<g class="graph-connection" data-connection="relay"><path id="line-relay" class="flow-line" d="M560 560 L560 320" fill="none" stroke="#34d399" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="612" y="470">WSS :443</text></g>
+<g class="graph-connection" data-connection="relay-lan"><path id="line-relay-lan" class="flow-line" d="M685 605 L840 605" fill="none" stroke="#34d399" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="762" y="590">RDP / SSH</text></g>
+<g class="graph-connection" data-connection="relay-wifi"><path id="line-relay-wifi" class="flow-line backup-line" d="M280 605 L435 605" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#graph-arrow)"/><text class="graph-edge-label" x="355" y="590">RADIUS</text></g>
+<g id="node-win" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Windows Logon / UAC" data-title="Windows Logon / UAC" data-desc="Local Windows logon and UAC protection. Credential Provider connects to Core/AD; Branch Relay is not involved." data-badge="Credential Provider → Core / AD"><rect class="node-bg" x="30" y="100" width="250" height="70" rx="14" fill="#0b1120" stroke="#38bdf8" stroke-width="1.5"/><text class="graph-node-title" x="155" y="129">Windows Logon / UAC</text><text class="graph-node-subtitle" x="155" y="152">Credential Provider → Core / AD</text></g>
+<g id="node-vpn" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="VPN / office Wi-Fi" data-title="VPN / office Wi-Fi" data-desc="VPN gateways and access points send RADIUS requests to Core. Push or bot-based second-factor approval is handled centrally." data-badge="RADIUS • 802.1X"><rect class="node-bg" x="30" y="195" width="250" height="70" rx="14" fill="#0b1120" stroke="#06b6d4" stroke-width="1.5"/><text class="graph-node-title" x="155" y="224">VPN / office Wi-Fi</text><text class="graph-node-subtitle" x="155" y="247">RADIUS • 802.1X</text></g>
+<g id="node-sso" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Web SSO" data-title="Web SSO" data-desc="OIDC/SAML 2.0 single sign-on runs through Core. Relay does not handle Web SSO." data-badge="OIDC / SAML • Core only"><rect class="node-bg" x="30" y="290" width="250" height="70" rx="14" fill="#0b1120" stroke="#a78bfa" stroke-width="1.5"/><text class="graph-node-title" x="155" y="319">Web SSO</text><text class="graph-node-subtitle" x="155" y="342">OIDC / SAML • Core only</text></g>
+<g id="node-bastion" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Bastion RDP / SSH" data-title="Bastion RDP / SSH" data-desc="Remote RDP or SSH connection after 2FA approval: directly through Core, or through Core and Relay to a branch." data-badge="Connection with 2FA"><rect class="node-bg" x="30" y="385" width="250" height="70" rx="14" fill="#0b1120" stroke="#c084fc" stroke-width="1.5"/><text class="graph-node-title" x="155" y="414">Bastion RDP / SSH</text><text class="graph-node-subtitle" x="155" y="437">Connection with 2FA</text></g>
+<g id="node-ad" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Active Directory / FreeIPA" data-title="Active Directory / FreeIPA" data-desc="Core connects to the directory over LDAPS for users and groups. This is a directory integration, not a branch tunnel." data-badge="Core → LDAPS"><rect class="node-bg" x="435" y="50" width="250" height="70" rx="14" fill="#0b1120" stroke="#818cf8" stroke-width="1.5"/><text class="graph-node-title" x="560" y="79">Active Directory / FreeIPA</text><text class="graph-node-subtitle" x="560" y="102">Core → LDAPS</text></g>
+<g id="node-core" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="LIGAMENT CORE" data-title="LIGAMENT CORE" data-desc="Central on-premise hub for MFA, Web SSO, access policies, audit and Bastion routing. During a WAN outage branch Wi-Fi uses the local Relay without contacting Core." data-badge="SSO • policies • audit"><rect class="node-bg" x="435" y="210" width="250" height="110" rx="14" fill="#0b1120" stroke="#818cf8" stroke-width="1.5"/><text class="graph-node-title" x="560" y="239">LIGAMENT CORE</text><text class="graph-node-subtitle" x="560" y="262">SSO • policies • audit</text><text class="graph-node-subtitle" x="560" y="292">On-Premise • MFA • Bastion</text></g>
+<g id="node-push" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Mobile Push" data-title="Mobile Push" data-desc="The user approves a second-factor request on the phone. Push is handled by Core here; cached offline Wi-Fi does not require a Core push request." data-badge="Number Matching"><rect class="node-bg" x="840" y="100" width="250" height="70" rx="14" fill="#0b1120" stroke="#34d399" stroke-width="1.5"/><text class="graph-node-title" x="965" y="129">Mobile Push</text><text class="graph-node-subtitle" x="965" y="152">Number Matching</text></g>
+<g id="node-bot" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Telegram / eXpress" data-title="Telegram / eXpress" data-desc="Second-factor approval through a supported messenger. This is an alternative MFA channel, not an extra mandatory step after Push." data-badge="MFA approval"><rect class="node-bg" x="840" y="195" width="250" height="70" rx="14" fill="#0b1120" stroke="#38bdf8" stroke-width="1.5"/><text class="graph-node-title" x="965" y="224">Telegram / eXpress</text><text class="graph-node-subtitle" x="965" y="247">MFA approval</text></g>
+<g id="node-yubi" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="FIDO2 / security key" data-title="FIDO2 / security key" data-desc="Hardware keys provide an alternative authentication factor. Scenarios show selected MFA channels; all factors are not required simultaneously." data-badge="Authentication factors"><rect class="node-bg" x="840" y="290" width="250" height="70" rx="14" fill="#0b1120" stroke="#fbbf24" stroke-width="1.5"/><text class="graph-node-title" x="965" y="319">FIDO2 / security key</text><text class="graph-node-subtitle" x="965" y="342">Authentication factors</text></g>
+<g id="node-host" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Host on the Core network" data-title="Host on the Core network" data-desc="A target workstation or server reachable through Core. Bastion forwards the RDP/SSH connection after 2FA approval." data-badge="RDP :3389 / SSH :22"><rect class="node-bg" x="840" y="405" width="250" height="70" rx="14" fill="#0b1120" stroke="#c084fc" stroke-width="1.5"/><text class="graph-node-title" x="965" y="434">Host on the Core network</text><text class="graph-node-subtitle" x="965" y="457">RDP :3389 / SSH :22</text></g>
+<g id="node-relay" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Branch Relay" data-title="Branch Relay" data-desc="Two jobs: an outbound WSS tunnel to Core for RDP/SSH and cached backup Wi-Fi RADIUS during WAN outages. Relay does not handle SSO or Windows Logon/UAC." data-badge="WSS :443 • backup RADIUS"><rect class="node-bg" x="435" y="560" width="250" height="100" rx="14" fill="#0b1120" stroke="#34d399" stroke-width="1.5"/><text class="graph-node-title" x="560" y="589">Branch Relay</text><text class="graph-node-subtitle" x="560" y="612">WSS :443 • backup RADIUS</text><text class="graph-node-subtitle" x="560" y="640">No SSO / Windows Logon</text></g>
+<g id="node-branch-lan" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Branch hosts" data-title="Branch hosts" data-desc="Hosts behind Relay, reached through Core and the outbound branch tunnel after 2FA. A complete WAN outage makes this remote route unavailable." data-badge="RDP :3389 / SSH :22"><rect class="node-bg" x="840" y="565" width="250" height="70" rx="14" fill="#0b1120" stroke="#34d399" stroke-width="1.5"/><text class="graph-node-title" x="965" y="594">Branch hosts</text><text class="graph-node-subtitle" x="965" y="617">RDP :3389 / SSH :22</text></g>
+<g id="node-branch-wifi" class="graph-node-group" role="button" tabindex="0" aria-pressed="false" aria-label="Branch Wi-Fi" data-title="Branch Wi-Fi" data-desc="During a WAN outage branch access points use the local Relay backup RADIUS. Authentication continues using available cached data; Core and mobile Push are not part of this offline route." data-badge="802.1X • local cache"><rect class="node-bg" x="30" y="565" width="250" height="70" rx="14" fill="#0b1120" stroke="#fbbf24" stroke-width="1.5"/><text class="graph-node-title" x="155" y="594">Branch Wi-Fi</text><text class="graph-node-subtitle" x="155" y="617">802.1X • local cache</text></g>
           </svg>
         </div>
-
-        <!-- Node & Scenario Detail Info Banner -->
-        <div class="graph-info-banner">
-          <div>
-            <div id="graph-info-title" class="graph-info-title">Full Corporate Security Perimeter Topology</div>
-            <div id="graph-info-desc" class="graph-info-desc">Unified On-Premise mesh securing workstations, VPN/Wi-Fi, SSO, and branch relays with central audit.</div>
-          </div>
-          <span id="graph-info-badge" class="graph-info-badge">All Nodes Active</span>
-        </div>
+        <div class="graph-info-banner" role="status" aria-live="polite" aria-atomic="true"><div><h3 id="graph-info-title" class="graph-info-title">Full topology</h3><p id="graph-info-desc" class="graph-info-desc">Select a scenario or a node.</p></div><span id="graph-info-badge" class="graph-info-badge">All connections</span></div>
+        <p class="graph-boundaries">SSO and Windows Logon/UAC do not go through Relay. During a complete WAN outage cached Wi-Fi authentication stays local; the remote RDP/SSH tunnel to Core is unavailable.</p>
       </div>
     </div>
   </section>
@@ -872,6 +711,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=visual-fixes-5"></script>
+  <script src="../site.js?v=topology-6"></script>
 </body>
 </html>

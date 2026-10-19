@@ -242,125 +242,165 @@
     });
   }
 
-  // 6. Interactive Zero-Trust Topology Network Graph
+  // 6. Interactive topology: connection routes and a separate offline Wi-Fi path.
   function initGraph() {
-    const scenarioBtns = document.querySelectorAll('.graph-scenario-btn');
-    const nodes = document.querySelectorAll('.graph-node-group');
-    const lines = document.querySelectorAll('.flow-line');
-    const infoTitle = document.getElementById('graph-info-title');
-    const infoDesc = document.getElementById('graph-info-desc');
-    const infoBadge = document.getElementById('graph-info-badge');
+    const viewport = document.querySelector('.graph-svg-container');
+    if (!viewport) return;
+    const buttons = document.querySelectorAll('.graph-scenario-btn');
+    const nodes = Array.from(document.querySelectorAll('.graph-node-group'));
+    const lines = Array.from(document.querySelectorAll('.flow-line'));
+    const title = document.getElementById('graph-info-title');
+    const description = document.getElementById('graph-info-desc');
+    const badge = document.getElementById('graph-info-badge');
+    const route = document.getElementById('graph-route');
     const isEn = document.documentElement.lang === 'en';
-
-    if (!scenarioBtns.length) return;
-
+    const t = function (ru, en) { return isEn ? en : ru; };
     const scenarios = {
-      'all': {
-        title_ru: 'Полный корпоративный периметр Ligament',
-        title_en: 'Full Corporate Security Perimeter Topology',
-        desc_ru: 'Единый On-Premise контур: центральное ядро Core (SSO OpenID, политики, аудит), локальный вход Windows, RADIUS Wi-Fi/VPN и филиальный Relay (проброс RDP/SSH & бэкап Wi-Fi).',
-        desc_en: 'Unified On-Premise mesh: central Core (SSO OpenID, policies, audit), Windows logon, RADIUS Wi-Fi/VPN, and branch Relay (RDP/SSH tunnel & Wi-Fi backup).',
-        badge_ru: 'Все узлы активны',
-        badge_en: 'All Nodes Active',
-        active_nodes: ['node-ad', 'node-core', 'node-win', 'node-vpn', 'node-sso', 'node-relay', 'node-branch-lan', 'node-push', 'node-bot', 'node-yubi'],
-        active_lines: ['line-ad', 'line-win', 'line-vpn', 'line-sso', 'line-relay', 'line-relay-lan', 'line-relay-vpn', 'line-push', 'line-bot', 'line-yubi']
+      all: {
+        title: t('Полная топология', 'Full topology'),
+        desc: t('Core обслуживает MFA, SSO и Bastion. Relay передаёт подключения в филиал и предоставляет отдельный резервный Wi-Fi RADIUS. Факторы справа являются альтернативами.', 'Core handles MFA, SSO and Bastion. Relay forwards branch connections and provides a separate backup Wi-Fi RADIUS. Factors on the right are alternatives.'),
+        badge: t('Все связи • резерв отдельно', 'All connections • separate backup'),
+        nodes: nodes.map(function (node) { return node.id; }),
+        lines: lines.map(function (line) { return line.id; }),
+        steps: [t('Входные сервисы', 'Ingress services'), 'Core + MFA', t('Приложения / хосты', 'Applications / hosts'), t('Relay: филиал / Wi-Fi резерв', 'Relay: branch / Wi-Fi backup')]
       },
-      'windows': {
-        title_ru: 'Сценарий: Windows Auto-Logon & UAC',
-        title_en: 'Scenario: Windows Auto-Logon & UAC',
-        desc_ru: 'Нативная плитка LogonUI на Windows 10/11 отправляет Number Matching на телефон. При подтверждении — локальный вход за 0.4 сек без клика мышью.',
-        desc_en: 'LogonUI tile sends Number Matching to smartphone. Approval yields instant 0.4s local desktop unlock without mouse click.',
-        badge_ru: '0.4 сек вход • Локальный Logon & UAC',
-        badge_en: '0.4s Unlock • Local Logon & UAC',
-        active_nodes: ['node-win', 'node-core', 'node-push'],
-        active_lines: ['line-win', 'line-push']
+      windows: {
+        title: 'Windows Logon / UAC',
+        desc: t('Credential Provider на рабочей станции обращается к Core/AD. После подтверждения MFA выполняется локальный вход или повышение прав. Relay не участвует.', 'The workstation Credential Provider connects to Core/AD. MFA approval enables local logon or elevation. Relay is not involved.'),
+        badge: t('Локальный вход • без Relay', 'Local logon • no Relay'),
+        nodes: ['node-win', 'node-core', 'node-ad', 'node-push'],
+        lines: ['line-win', 'line-ad', 'line-push'],
+        steps: ['Credential Provider', 'Core / AD', 'Push MFA', t('Вход / UAC', 'Logon / UAC')]
       },
-      'vpn': {
-        title_ru: 'Сценарий: RADIUS VPN & Офисный Wi-Fi',
-        title_en: 'Scenario: RADIUS VPN & Office Wi-Fi',
-        desc_ru: 'MikroTik, Cisco, Fortinet отправляют RADIUS-запрос. Сервер Core удерживает сессию (Push Holding по RFC 5080) до подтверждения на смартфоне.',
-        desc_en: 'MikroTik, Cisco, Fortinet send RADIUS requests. Core server holds UDP session (RFC 5080) until push confirmation.',
-        badge_ru: 'WPA2/WPA3 Enterprise • RFC 5080',
-        badge_en: 'WPA2/WPA3 Enterprise • RFC 5080',
-        active_nodes: ['node-vpn', 'node-core', 'node-push', 'node-bot'],
-        active_lines: ['line-vpn', 'line-push', 'line-bot']
+      vpn: {
+        title: t('VPN / офисный Wi-Fi', 'VPN / office Wi-Fi'),
+        desc: t('VPN-шлюз или точка доступа отправляет RADIUS-запрос в Core. Пользователь подтверждает MFA через Push либо бота. Relay не обслуживает этот центральный маршрут.', 'The VPN gateway or access point sends a RADIUS request to Core. The user approves MFA through Push or a bot. Relay does not handle this central route.'),
+        badge: 'RADIUS • MFA',
+        nodes: ['node-vpn', 'node-core', 'node-push', 'node-bot'],
+        lines: ['line-vpn', 'line-push', 'line-bot'],
+        steps: [t('VPN / точка доступа', 'VPN / access point'), 'Core RADIUS', t('Push или бот', 'Push or bot'), t('Доступ в сеть', 'Network access')]
       },
-      'relay': {
-        title_ru: 'Сценарий: Филиал — Проброс RDP/SSH & Резерв Wi-Fi',
-        title_en: 'Scenario: Branch — RDP/SSH Tunnel & Wi-Fi Backup',
-        desc_ru: 'Relay обеспечивает проброс RDP (3389) и SSH (22) к внутренним хостам филиала по туннелю WSS :443 (без белого IP и без открытия портов) и бэкапит RADIUS для Wi-Fi при обрыве WAN.',
-        desc_en: 'Relay tunnels RDP (3389) & SSH (22) to internal branch servers via outbound WSS :443 (no public IP, zero open ports) and backs up RADIUS Wi-Fi on WAN cuts.',
-        badge_ru: 'Проброс RDP/SSH • Бэкап RADIUS Wi-Fi',
-        badge_en: 'RDP/SSH Tunnel • Wi-Fi RADIUS Backup',
-        active_nodes: ['node-core', 'node-relay', 'node-branch-lan', 'node-vpn', 'node-push'],
-        active_lines: ['line-relay', 'line-relay-lan', 'line-relay-vpn', 'line-push']
+      sso: {
+        title: 'Web SSO • OIDC / SAML',
+        desc: t('Веб-приложение использует IdP Ligament Core и центральное подтверждение MFA. Relay не участвует в OIDC/SAML.', 'The web application uses the Ligament Core IdP and central MFA approval. Relay is not involved in OIDC/SAML.'),
+        badge: t('Строго через Core', 'Core only'),
+        nodes: ['node-sso', 'node-core', 'node-push', 'node-bot'],
+        lines: ['line-sso', 'line-push', 'line-bot'],
+        steps: [t('Веб-приложение', 'Web application'), 'Core IdP', t('Push или бот', 'Push or bot'), t('SSO-сессия', 'SSO session')]
       },
-      'sso': {
-        title_ru: 'Сценарий: Web SSO (OpenID Connect & SAML 2.0)',
-        title_en: 'Scenario: Web SSO (OpenID Connect & SAML 2.0)',
-        desc_ru: 'Единый вход Web SSO (OIDC / SAML) работает строго через Ligament Core: корпоративные сервисы, GitLab, 1С защищены централизованным MFA.',
-        desc_en: 'Unified web SSO (OIDC / SAML) operates strictly through Ligament Core: corporate apps, GitLab, 1C are protected with central MFA.',
-        badge_ru: 'OIDC / SAML • Строго через Core',
-        badge_en: 'OIDC / SAML • Core Only',
-        active_nodes: ['node-sso', 'node-core', 'node-push', 'node-bot'],
-        active_lines: ['line-sso', 'line-push', 'line-bot']
+      bastion: {
+        title: 'Bastion • RDP / SSH + 2FA',
+        desc: t('После 2FA Core передаёт RDP/SSH напрямую к доступному хосту либо через WSS-туннель и Relay к хосту филиала. Это два варианта доставки одного подключения.', 'After 2FA, Core forwards RDP/SSH directly to a reachable host or through the WSS tunnel and Relay to a branch host. These are two alternative delivery routes.'),
+        badge: t('Через Core или Core + Relay', 'Via Core or Core + Relay'),
+        nodes: ['node-bastion', 'node-core', 'node-push', 'node-host', 'node-relay', 'node-branch-lan'],
+        lines: ['line-bastion', 'line-push', 'line-core-host', 'line-relay', 'line-relay-lan'],
+        steps: ['Bastion', 'Core + 2FA', t('Хост Core или Relay', 'Core host or Relay'), t('Целевой хост', 'Target host')]
+      },
+      relay: {
+        title: t('Доступ к хостам филиала', 'Branch host access'),
+        desc: t('Relay инициирует исходящий WSS :443 к Core. После 2FA RDP/SSH-подключение идёт через этот канал до хоста филиала. Нужна связь WAN; при её полном обрыве удалённый туннель недоступен.', 'Relay initiates outbound WSS :443 to Core. After 2FA, the RDP/SSH connection uses this channel to reach a branch host. WAN connectivity is required; a complete outage makes the remote tunnel unavailable.'),
+        badge: 'WSS :443 • RDP :3389 / SSH :22',
+        nodes: ['node-bastion', 'node-core', 'node-push', 'node-relay', 'node-branch-lan'],
+        lines: ['line-bastion', 'line-push', 'line-relay', 'line-relay-lan'],
+        steps: ['Bastion', 'Core + 2FA', 'WSS :443 / Relay', t('Хост филиала', 'Branch host')]
+      },
+      'wifi-offline': {
+        title: t('Wi-Fi филиала при обрыве WAN', 'Branch Wi-Fi during a WAN outage'),
+        desc: t('Точки доступа используют локальный резервный RADIUS Relay и доступный кэш. Core, Push, SSO и удалённый RDP/SSH-туннель в этом аварийном сценарии не участвуют.', 'Access points use the local Relay backup RADIUS and available cached data. Core, Push, SSO and the remote RDP/SSH tunnel are not part of this offline scenario.'),
+        badge: t('WAN недоступен • локальный кэш', 'WAN unavailable • local cache'),
+        nodes: ['node-branch-wifi', 'node-relay'],
+        lines: ['line-relay-wifi'],
+        steps: [t('Wi-Fi филиала', 'Branch Wi-Fi'), 'Relay RADIUS', t('Локальный кэш', 'Local cache'), t('Доступ в Wi-Fi', 'Wi-Fi access')]
       }
     };
+    let current = 'all';
+    let zoom = 1;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
-    function applyScenario(scKey) {
-      const data = scenarios[scKey] || scenarios['all'];
-      if (infoTitle) infoTitle.textContent = isEn ? data.title_en : data.title_ru;
-      if (infoDesc) infoDesc.textContent = isEn ? data.desc_en : data.desc_ru;
-      if (infoBadge) infoBadge.textContent = isEn ? data.badge_en : data.badge_ru;
-
-      nodes.forEach(function (n) {
-        const id = n.getAttribute('id');
-        if (data.active_nodes.indexOf(id) !== -1) {
-          n.classList.remove('dimmed');
-          n.classList.add('highlighted');
-        } else {
-          n.classList.add('dimmed');
-          n.classList.remove('highlighted');
-        }
-      });
-
-      lines.forEach(function (l) {
-        const id = l.getAttribute('id');
-        if (data.active_lines.indexOf(id) !== -1) {
-          l.classList.remove('inactive');
-        } else {
-          l.classList.add('inactive');
-        }
-      });
+    function showInfo(data) {
+      title.textContent = data.title;
+      description.textContent = data.desc;
+      badge.textContent = data.badge;
     }
-
-    scenarioBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        scenarioBtns.forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        const sc = btn.getAttribute('data-scenario');
-        applyScenario(sc);
+    function centerNode(id, behavior) {
+      const node = document.getElementById(id);
+      if (!node) return;
+      const box = node.getBoundingClientRect();
+      const container = viewport.getBoundingClientRect();
+      viewport.scrollTo({left: viewport.scrollLeft + box.x + box.width / 2 - container.x - container.width / 2, behavior: behavior || motion});
+    }
+    function applyScenario(key) {
+      current = Object.prototype.hasOwnProperty.call(scenarios, key) ? key : 'all';
+      const data = scenarios[current];
+      showInfo(data);
+      route.replaceChildren();
+      data.steps.forEach(function (step) {
+        const item = document.createElement('li');
+        item.textContent = step;
+        route.appendChild(item);
+      });
+      buttons.forEach(function (button) {
+        const active = button.getAttribute('data-scenario') === current;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      nodes.forEach(function (node) {
+        const inactive = !data.nodes.includes(node.id);
+        node.classList.toggle('dimmed', inactive);
+        node.classList.remove('highlighted');
+        node.setAttribute('aria-pressed', 'false');
+        node.setAttribute('tabindex', current === 'wifi-offline' && inactive ? '-1' : '0');
+        node.setAttribute('aria-hidden', String(current === 'wifi-offline' && inactive));
+      });
+      lines.forEach(function (line) {
+        const inactive = !data.lines.includes(line.id);
+        line.classList.toggle('inactive', inactive);
+        line.parentElement.classList.toggle('inactive', inactive);
+      });
+      viewport.classList.toggle('is-offline', current === 'wifi-offline');
+      viewport.closest('.graph-wrapper').classList.toggle('offline-scenario', current === 'wifi-offline');
+      viewport.querySelector('svg').setAttribute('viewBox', current === 'wifi-offline' ? '0 520 1120 190' : '0 0 1120 710');
+      centerNode(current === 'wifi-offline' ? 'node-relay' : 'node-core');
+    }
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () { applyScenario(button.getAttribute('data-scenario')); });
+    });
+    nodes.forEach(function (node) {
+      function select() {
+        showInfo({title: node.dataset.title, desc: node.dataset.desc, badge: node.dataset.badge});
+        nodes.forEach(function (other) {
+          other.classList.toggle('highlighted', other === node);
+          other.setAttribute('aria-pressed', String(other === node));
+        });
+        centerNode(node.id);
+      }
+      node.addEventListener('click', select);
+      node.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(); }
+        if (event.key === 'Escape') { event.preventDefault(); applyScenario(current); }
       });
     });
-
-    // Node click
-    nodes.forEach(function (n) {
-      n.addEventListener('click', function () {
-        const descRu = n.getAttribute('data-desc-ru');
-        const descEn = n.getAttribute('data-desc-en');
-        const titleRu = n.getAttribute('data-title-ru');
-        const titleEn = n.getAttribute('data-title-en');
-        const badgeRu = n.getAttribute('data-badge-ru');
-        const badgeEn = n.getAttribute('data-badge-en');
-
-        if (titleRu && infoTitle) infoTitle.textContent = isEn ? titleEn : titleRu;
-        if (descRu && infoDesc) infoDesc.textContent = isEn ? descEn : descRu;
-        if (badgeRu && infoBadge) infoBadge.textContent = isEn ? badgeEn : badgeRu;
-
-        nodes.forEach(function (x) { x.classList.remove('highlighted'); });
-        n.classList.add('highlighted');
+    function updateZoom() {
+      viewport.style.setProperty('--graph-base-width', Math.max(960, viewport.clientWidth) + 'px');
+      viewport.style.setProperty('--graph-zoom', String(zoom));
+      document.getElementById('graph-zoom-value').textContent = Math.round(zoom * 100) + '%';
+      document.querySelector('[data-graph-zoom="out"]').disabled = zoom <= 0.75;
+      document.querySelector('[data-graph-zoom="in"]').disabled = zoom >= 1.5;
+    }
+    document.querySelectorAll('[data-graph-zoom]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const action = button.getAttribute('data-graph-zoom');
+        zoom = action === 'reset' ? 1 : Math.min(1.5, Math.max(0.75, Math.round((zoom + (action === 'in' ? 0.25 : -0.25)) * 100) / 100));
+        updateZoom();
+        centerNode(current === 'wifi-offline' ? 'node-relay' : 'node-core');
       });
     });
+    window.addEventListener('resize', function () {
+      updateZoom();
+      centerNode(current === 'wifi-offline' ? 'node-relay' : 'node-core', 'auto');
+    });
+    updateZoom();
+    applyScenario('all');
   }
 
   // 7. Robust Smooth Nav Scroll & Active ScrollSpy
