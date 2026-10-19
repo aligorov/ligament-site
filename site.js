@@ -5,6 +5,25 @@
 (function () {
   'use strict';
 
+  // 0. Language: follow the browser/system language, with an explicit RU/EN override.
+  function initLanguageRedirect() {
+    const path = window.location.pathname.replace(/\/+$/, '') || '/';
+    const isEnglishPage = path === '/en' || path.endsWith('/en/index.html');
+    const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+    const systemLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'ru';
+    const language = queryLanguage || systemLanguage;
+    const wantsEnglish = language.toLowerCase().startsWith('en');
+
+    if (isEnglishPage === wantsEnglish) return;
+
+    const target = new URL(wantsEnglish ? '/en/index.html' : '/index.html', window.location.origin);
+    if (queryLanguage) target.searchParams.set('lang', wantsEnglish ? 'en' : 'ru');
+    target.hash = window.location.hash;
+    window.location.replace(target.href);
+  }
+
+  initLanguageRedirect();
+
   // 1. Theme Toggle: Default to DARK for signature enterprise cyber aesthetic
   function initTheme() {
     const savedTheme = localStorage.getItem('theme');
