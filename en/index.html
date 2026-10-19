@@ -230,6 +230,12 @@
             <!-- Core -> Relay -->
             <path id="line-relay" class="flow-line" d="M 480 312 L 480 415" stroke="#10b981" stroke-width="2.5" />
 
+            <!-- Relay -> Branch LAN (RDP :3389 & SSH :22 Forwarding) -->
+            <path id="line-relay-lan" class="flow-line" d="M 380 448 L 240 448" stroke="#10b981" stroke-width="2.5" />
+
+            <!-- RADIUS Wi-Fi Backup (node-vpn <-> node-relay on WAN outage) -->
+            <path id="line-relay-vpn" class="flow-line" d="M 140 291 C 140 360, 310 438, 380 438" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6,4" />
+
             <!-- Core -> Factors -->
             <path id="line-push" class="flow-line" d="M 580 240 C 640 230, 640 141, 720 141" stroke="#34d399" stroke-width="2.5" />
             <path id="line-bot" class="flow-line" d="M 580 260 L 720 260" stroke="#38bdf8" stroke-width="2.5" />
@@ -262,21 +268,21 @@
                data-badge-en="LDAPS • Zero Database Migration">
               <rect class="node-bg" x="385" y="35" width="190" height="60" rx="12" ry="12" fill="#090d16" stroke="#818cf8" stroke-width="1.5" />
               <text x="480" y="60" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏢 Active Directory / IPA</text>
-              <text x="480" y="80" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">LDAPS Sync • Пользователи</text>
+              <text x="480" y="80" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">LDAPS Sync • Users</text>
             </g>
 
             <!-- INGRESS NODES (LEFT) -->
-            <!-- Windows Logon -->
+            <!-- Windows Logon & UAC -->
             <g id="node-win" class="graph-node-group"
-               data-title-ru="Windows Logon & RDP 2FA (Credential Provider)"
-               data-title-en="Windows Logon & RDP 2FA (Credential Provider)"
-               data-desc-ru="Нативная плитка LogonUI на Windows 10/11 и Server. Автоматический вход Auto-Logon за 0.4 сек после подтверждения на смартфоне."
-               data-desc-en="Native credential provider for Windows 10/11 & Server. Instant 0.4s auto-logon upon mobile confirmation."
+               data-title-ru="Windows Logon & UAC (Credential Provider)"
+               data-title-en="Windows Logon & UAC (Credential Provider)"
+               data-desc-ru="Credential Provider Ligament работает локально на рабочей станции и связывается напрямую с Core/AD. Auto-Logon за 0.4 сек после подтверждения на смартфоне; филиальный Relay этот сценарий не обслуживает."
+               data-desc-en="Ligament Credential Provider runs locally on the workstation and connects directly to Core/AD. Auto-logon takes 0.4s after mobile approval; the branch Relay is not involved."
                data-badge-ru="LogonUI • Auto-Logon • UAC"
                data-badge-en="LogonUI • Auto-Logon • UAC">
               <rect class="node-bg" x="40" y="110" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
-              <text x="140" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💻 Windows Logon & RDP</text>
-              <text x="140" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Auto-Logon • UAC • GPO MSI</text>
+              <text x="140" y="136" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💻 Windows Logon &amp; UAC</text>
+              <text x="140" y="156" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Локально через Core / AD</text>
             </g>
 
             <!-- RADIUS VPN & Wi-Fi -->
@@ -292,30 +298,44 @@
               <text x="140" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">MikroTik • Cisco • Push Holding</text>
             </g>
 
-            <!-- Web SSO & Bastion -->
+            <!-- Web SSO (Core only) -->
             <g id="node-sso" class="graph-node-group"
-               data-title-ru="Web SSO & Бастион (Zero-Trust)"
-               data-title-en="Web SSO & Bastion (Zero-Trust)"
-               data-desc-ru="IdP OIDC/SAML для веб-приложений и Web-SSH/RDP в браузере без публикации портов 22 и 3389 наружу в интернет."
-               data-desc-en="OIDC/SAML IdP for web applications and browser-based Web-SSH/RDP bastion with zero exposed external ports."
-               data-badge-ru="OIDC/SAML • Браузерный RDP"
-               data-badge-en="OIDC/SAML • In-Browser RDP">
+               data-title-ru="Web SSO (OIDC / SAML 2.0 — строго через Core)"
+               data-title-en="Web SSO (OIDC / SAML 2.0 — Core Only)"
+               data-desc-ru="Центральный IdP для веб-приложений. Web SSO по OIDC/SAML 2.0 работает строго через Ligament Core; филиальный Relay к SSO отношения не имеет."
+               data-desc-en="Central IdP for web applications. OIDC/SAML 2.0 Web SSO works strictly through Ligament Core; the branch Relay is not involved in SSO."
+               data-badge-ru="OIDC/SAML • Строго через Core"
+               data-badge-en="OIDC/SAML • Core Only">
               <rect class="node-bg" x="40" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#a855f7" stroke-width="1.5" />
-              <text x="140" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🌐 Web SSO & Бастион</text>
-              <text x="140" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">OIDC/SAML • Web-SSH • 3389 Off</text>
+              <text x="140" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🌐 Web SSO</text>
+              <text x="140" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">OIDC/SAML • Только Core</text>
+            </g>
+
+            <!-- Branch LAN Targets (RDP & SSH Forwarding) -->
+            <g id="node-branch-lan" class="graph-node-group"
+               data-title-ru="Хосты филиала (Проброс RDP / SSH)"
+               data-title-en="Branch Hosts (RDP / SSH Forwarding)"
+               data-desc-ru="Внутренние серверы филиала. Доступ к RDP (3389) и SSH (22) идёт через Relay по защищённому туннелю без открытия портов наружу и без белого IP."
+               data-desc-en="Internal branch servers. RDP (3389) and SSH (22) access is forwarded through Relay without exposing ports or requiring a public IP."
+               data-badge-ru="Проброс RDP/SSH • Без белого IP"
+               data-badge-en="RDP/SSH Forwarding • No Public IP">
+              <rect class="node-bg" x="40" y="415" width="200" height="66" rx="12" ry="12" fill="#090d16" stroke="#10b981" stroke-width="1.5" />
+              <text x="140" y="440" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🖥️ Branch Hosts</text>
+              <text x="140" y="461" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">RDP :3389 • SSH :22</text>
             </g>
 
             <!-- BOTTOM: OFFLINE BRANCH RELAY -->
             <g id="node-relay" class="graph-node-group"
-               data-title-ru="Автономный филиальный узел (Branch Relay)"
-               data-title-en="Autonomous Branch Relay Node"
-               data-desc-ru="Автономный демон на филиалах и складах. Хранит кэш ключей — при обрыве оптики и интернета сотрудники продолжают работать."
-               data-desc-en="Autonomous daemon on remote sites. Caches keys so workers continue logging in during total WAN fiber cuts."
-               data-badge-ru="100% Автономность при обрыве WAN"
-               data-badge-en="100% Offline WAN Survival">
+               data-title-ru="Филиальный Relay (RDP/SSH + резервный Wi-Fi RADIUS)"
+               data-title-en="Branch Relay (RDP/SSH + Backup Wi-Fi RADIUS)"
+               data-desc-ru="Relay решает две задачи: пробрасывает RDP (3389) и SSH (22) через исходящий WSS :443 к Core без белого IP и выступает резервным RADIUS для Wi-Fi 802.1X по локальному кэшу при обрыве WAN."
+               data-desc-en="Relay has two jobs: forward RDP (3389) and SSH (22) through an outbound WSS :443 tunnel to Core without a public IP, and provide cached 802.1X Wi-Fi RADIUS during WAN outages."
+               data-badge-ru="RDP/SSH WSS :443 • Резерв Wi-Fi RADIUS"
+               data-badge-en="RDP/SSH WSS :443 • Backup Wi-Fi RADIUS">
               <rect class="node-bg" x="380" y="415" width="200" height="65" rx="12" ry="12" fill="#090d16" stroke="#10b981" stroke-width="1.5" />
-              <text x="480" y="442" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏭 Офлайн Relay (Филиалы)</text>
-              <text x="480" y="462" fill="#10b981" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">Локальный кэш • Обрыв WAN</text>
+              <text x="480" y="442" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🏭 Branch Relay</text>
+              <text x="480" y="462" fill="#38bdf8" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui, sans-serif">RDP/SSH WSS :443</text>
+              <text x="480" y="477" fill="#10b981" font-size="10.5" font-weight="500" text-anchor="middle" font-family="system-ui, sans-serif">Backup Wi-Fi RADIUS</text>
             </g>
 
             <!-- FACTOR NODES (RIGHT) -->
@@ -342,7 +362,7 @@
                data-badge-en="Zero App Installation">
               <rect class="node-bg" x="720" y="229" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#38bdf8" stroke-width="1.5" />
               <text x="820" y="255" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">💬 Telegram / eXpress</text>
-              <text x="820" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Корп-боты • Нативно</text>
+              <text x="820" y="275" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Corporate bots • Native</text>
             </g>
 
             <!-- FIDO2 / YubiKey -->
@@ -355,7 +375,7 @@
                data-badge-en="FIDO2 • QR • Hardware Grade">
               <rect class="node-bg" x="720" y="348" width="200" height="62" rx="12" ry="12" fill="#090d16" stroke="#fbbf24" stroke-width="1.5" />
               <text x="820" y="374" fill="#fff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui, sans-serif">🔑 FIDO2 / YubiKey</text>
-              <text x="820" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Passkeys • Рутокен • QR</text>
+              <text x="820" y="394" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="system-ui, sans-serif">Passkeys • Rutoken • QR</text>
             </g>
           </svg>
         </div>
@@ -486,8 +506,8 @@
       <div class="tabs-nav">
         <button type="button" class="tab-btn active" data-tab="tab-workstations">💻 Workstations</button>
         <button type="button" class="tab-btn" data-tab="tab-radius">📡 RADIUS & Network</button>
-        <button type="button" class="tab-btn" data-tab="tab-sso">🌐 Web SSO & Bastion</button>
-        <button type="button" class="tab-btn" data-tab="tab-relay">🏭 Offline Relay</button>
+        <button type="button" class="tab-btn" data-tab="tab-sso">🌐 Web SSO (Core only)</button>
+        <button type="button" class="tab-btn" data-tab="tab-relay">🏭 Branch Relay (RDP/SSH &amp; Wi-Fi)</button>
       </div>
 
       <!-- Tab 1: Workstations -->
@@ -532,44 +552,44 @@
         </div>
       </div>
 
-      <!-- Tab 3: SSO & Bastion -->
+      <!-- Tab 3: Web SSO through Core -->
       <div id="tab-sso" class="tab-content">
         <div class="feature-tab-grid">
           <div class="feat-card">
-            <h4 class="feat-card-title">OIDC & SAML 2.0 IdP</h4>
-            <p class="feat-card-desc">Централизованный единый вход для корпоративных веб-сервисов (Nextcloud, GitLab, Битрикс24, 1С).</p>
-            <div class="tag-pills"><span class="tag-pill">OIDC</span><span class="tag-pill">SAML 2.0</span></div>
+            <h4 class="feat-card-title">OIDC &amp; SAML 2.0 — Core only</h4>
+            <p class="feat-card-desc">Central Web SSO for corporate services such as Nextcloud, GitLab, Bitrix24 and 1C. OIDC/SAML 2.0 authentication runs strictly through Ligament Core; Branch Relay is not involved.</p>
+            <div class="tag-pills"><span class="tag-pill">OIDC</span><span class="tag-pill">SAML 2.0</span><span class="tag-pill">Core only</span></div>
           </div>
           <div class="feat-card">
-            <h4 class="feat-card-title">Web-SSH & RDP Бастион</h4>
-            <p class="feat-card-desc">Доступ к серверам через защищенный веб-интерфейс в браузере без публикации портов 22 и 3389 наружу.</p>
+            <h4 class="feat-card-title">Core Web Bastion</h4>
+            <p class="feat-card-desc">Core provides browser-based Web-SSH/RDP access without exposing ports 22 or 3389 to the Internet. This is a Core service, separate from Branch Relay.</p>
             <div class="tag-pills"><span class="tag-pill">Bastion</span><span class="tag-pill">Zero Exposed Ports</span></div>
           </div>
           <div class="feat-card">
-            <h4 class="feat-card-title">Reverse Proxy с 2FA</h4>
-            <p class="feat-card-desc">Защита любых legacy веб-панелей и внутренних систем без необходимости изменять их исходный код.</p>
+            <h4 class="feat-card-title">Reverse Proxy with 2FA</h4>
+            <p class="feat-card-desc">Protect legacy web panels and internal systems through the central Core without changing their source code.</p>
             <div class="tag-pills"><span class="tag-pill">Proxy</span><span class="tag-pill">Legacy 2FA</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Tab 4: Offline Relay -->
+      <!-- Tab 4: Branch Relay -->
       <div id="tab-relay" class="tab-content">
         <div class="feature-tab-grid">
           <div class="feat-card">
-            <h4 class="feat-card-title">Автономия при обрыве оптики</h4>
-            <p class="feat-card-desc">Локальный Relay-узел на филиале позволяет сотрудникам входить в Windows даже при полном отсутствии интернета.</p>
-            <div class="tag-pills"><span class="tag-pill">Air-gapped</span><span class="tag-pill">WAN cut survival</span></div>
+            <h4 class="feat-card-title">Secure RDP &amp; SSH forwarding</h4>
+            <p class="feat-card-desc">The Relay opens an outbound WSS :443 tunnel to Core, forwarding RDP :3389 and SSH :22 to internal branch hosts without a public IP or exposed ports.</p>
+            <div class="tag-pills"><span class="tag-pill">RDP :3389</span><span class="tag-pill">SSH :22</span><span class="tag-pill">WSS :443</span></div>
           </div>
           <div class="feat-card">
-            <h4 class="feat-card-title">Кэширование ключей и сессий</h4>
-            <p class="feat-card-desc">Криптографический кэш синхронизируется с центром в фоновом режиме и изолирован от взлома.</p>
-            <div class="tag-pills"><span class="tag-pill">Local Cache</span><span class="tag-pill">Zero Latency</span></div>
+            <h4 class="feat-card-title">Backup RADIUS for branch Wi-Fi</h4>
+            <p class="feat-card-desc">During a WAN or fiber cut, the local Relay serves cached 802.1X WPA2/WPA3 Enterprise Wi-Fi authentication autonomously.</p>
+            <div class="tag-pills"><span class="tag-pill">Wi-Fi 802.1X</span><span class="tag-pill">WPA2/WPA3</span><span class="tag-pill">WAN cut survival</span></div>
           </div>
           <div class="feat-card">
-            <h4 class="feat-card-title">Двусторонний аудит</h4>
-            <p class="feat-card-desc">Все события входа в офлайне сохраняются в локальном журнале и передаются в центр при восстановлении связи.</p>
-            <div class="tag-pills"><span class="tag-pill">Audit Sync</span><span class="tag-pill">Integrity</span></div>
+            <h4 class="feat-card-title">Audit synchronization</h4>
+            <p class="feat-card-desc">RDP/SSH forwarding and Wi-Fi events are buffered locally and replicated to Core after connectivity returns. Relay does not handle Web SSO or Windows Logon.</p>
+            <div class="tag-pills"><span class="tag-pill">Audit Sync</span><span class="tag-pill">Core replication</span></div>
           </div>
         </div>
       </div>
@@ -705,7 +725,7 @@
           <h3 class="price-card-tier">Branch Relay</h3>
           <div class="price-card-price">$150</div>
           <div class="price-card-period">per branch node one-time</div>
-          <ul class="price-card-features"><li>Full offline WAN cut survival</li><li>Local cryptographic key cache</li><li>Unlimited users per relay node</li><li>Automatic audit replication</li><li>High latency / packet loss support</li></ul>
+          <ul class="price-card-features"><li>RDP :3389 and SSH :22 forwarding</li><li>Outbound WSS :443 tunnel without a public IP</li><li>Backup RADIUS for branch Wi-Fi</li><li>802.1X Wi-Fi authentication during WAN cuts</li><li>Automatic audit replication to Core</li></ul>
           <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
         </div>
       </div>
@@ -732,7 +752,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon & RDP Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Offline Autonomy</strong></td><td class="check-no">✕ (Fails on WAN outage)</td><td class="check-no">✕ (No Sync)</td><td class="col-highlight check-yes">✓ Autonomous Branch Relay</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram & eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$500 one-time or $2,400/yr</td></tr>
+            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon &amp; UAC Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Relay: RDP/SSH + Wi-Fi RADIUS</strong></td><td class="check-no">✕ (Requires public IP / fails on WAN)</td><td class="check-no">✕ (No forwarding or sync)</td><td class="col-highlight check-yes">✓ WSS :443 forwarding + cached 802.1X Wi-Fi</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram &amp; eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$500 one-time or $2,400/yr</td></tr>
           </tbody>
         </table>
       </div>
@@ -780,7 +800,7 @@
       <div class="faq-list">
         <details class="faq-item">
             <summary class="faq-question">What happens if the internet goes down or connection to the central server is cut?</summary>
-            <div class="faq-answer">When running a Ligament Branch Relay node, branch staff continue to log in smoothly to Windows and local networks. Authentication is handled locally via secure cached credentials. Once connectivity is restored, audit events automatically sync to the central server.</div>
+            <div class="faq-answer">Branch Relay has exactly two responsibilities: it forwards internal RDP (:3389) and SSH (:22) through an outbound WSS (:443) tunnel to Core without a public IP or exposed ports, and it provides cached 802.1X WPA2/WPA3 Enterprise Wi-Fi RADIUS during WAN outages. Web SSO (OIDC/SAML) and Windows Logon/UAC remain Core and workstation Credential Provider functions; Relay is not involved.</div>
           </details><details class="faq-item">
             <summary class="faq-question">Are employees forced to install a dedicated mobile app on their personal phones?</summary>
             <div class="faq-answer">No. Ligament supports approvals directly through Telegram or eXpress enterprise bots, hardware FIDO2/Passkey tokens (YubiKey), or generic TOTP authenticators.</div>
@@ -835,7 +855,7 @@
             <li><a href="#benefits">Windows Logon & RDP</a></li>
             <li><a href="#benefits">RADIUS (MikroTik / Cisco)</a></li>
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
-            <li><a href="#benefits">Branch Relay (Офлайн)</a></li>
+            <li><a href="#benefits">Branch Relay (RDP/SSH &amp; Wi-Fi)</a></li>
           </ul>
         </div>
         <div class="footer-col">
