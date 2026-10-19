@@ -642,6 +642,42 @@
         "caption": "Offline cryptographic license activation, hardware code and feature gates",
         "alt": "License status and activation interface"
       }
+    },
+    {
+      "id": "screen-dashboard-live",
+      "type": "image",
+      "file": "screen-dashboard.png",
+      "width": 810,
+      "height": 919,
+      "aspect_ratio": "810/919",
+      "section": "screenshots",
+      "status": "ready",
+      "ru": {"title": "Security Dashboard", "caption": "Сводка пользователей, challenge и состояния компонентов.", "alt": "Панель администратора Ligament"},
+      "en": {"title": "Security Dashboard", "caption": "Users, active challenges and component health at a glance.", "alt": "Ligament administrator dashboard"}
+    },
+    {
+      "id": "screen-factor-live",
+      "type": "image",
+      "file": "screen-factor.png",
+      "width": 810,
+      "height": 919,
+      "aspect_ratio": "810/919",
+      "section": "screenshots",
+      "status": "ready",
+      "ru": {"title": "Second Factor", "caption": "TOTP, push, passkeys и резервные коды в одном разделе.", "alt": "Управление вторым фактором Ligament"},
+      "en": {"title": "Second Factor", "caption": "TOTP, push, passkeys and backup codes in one place.", "alt": "Ligament second factor management"}
+    },
+    {
+      "id": "screen-apps-live",
+      "type": "image",
+      "file": "screen-apps.png",
+      "width": 810,
+      "height": 919,
+      "aspect_ratio": "810/919",
+      "section": "screenshots",
+      "status": "ready",
+      "ru": {"title": "Apps & Services", "caption": "Единый launchpad для SSO-приложений и сервисов за 2FA.", "alt": "Каталог приложений Ligament"},
+      "en": {"title": "Apps & Services", "caption": "A unified launchpad for SSO apps and 2FA-protected services.", "alt": "Ligament apps and services catalog"}
     }
   ]
 }

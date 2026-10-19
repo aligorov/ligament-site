@@ -409,6 +409,37 @@
     }
   }
 
+  // 8. Product screenshot slideshow
+  function initScreenshots() {
+    document.querySelectorAll('.screenshots-slideshow').forEach(function (show) {
+      const slides = show.querySelectorAll('.screenshot-card');
+      const controls = show.parentElement.querySelector('.slideshow-controls');
+      if (!slides.length || !controls) return;
+
+      const prev = controls.querySelector('[data-slide-prev]');
+      const next = controls.querySelector('[data-slide-next]');
+      const counter = controls.querySelector('[data-slide-counter]');
+      let index = 0;
+
+      function render() {
+        slides.forEach(function (slide, i) {
+          slide.classList.toggle('is-active', i === index);
+        });
+        if (counter) counter.textContent = (index + 1) + ' / ' + slides.length;
+      }
+
+      if (prev) prev.addEventListener('click', function () {
+        index = (index - 1 + slides.length) % slides.length;
+        render();
+      });
+      if (next) next.addEventListener('click', function () {
+        index = (index + 1) % slides.length;
+        render();
+      });
+      render();
+    });
+  }
+
   // Init all on load
   function initAll() {
     initTheme();
@@ -418,6 +449,7 @@
     initMockup();
     initGraph();
     initNav();
+    initScreenshots();
   }
 
   if (document.readyState === 'loading') {

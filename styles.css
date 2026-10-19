@@ -1,3 +1,236 @@
+/* Product screenshot gallery */
+.screenshots-section {
+  background: linear-gradient(180deg, transparent, rgba(99, 102, 241, 0.06));
+}
+
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.screenshots-slideshow {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.screenshots-slideshow .screenshot-card {
+  display: none;
+}
+
+.screenshots-slideshow .screenshot-card.is-active {
+  display: block;
+}
+
+.slideshow-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.slideshow-btn {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-card-solid);
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.slideshow-btn:hover,
+.slideshow-btn:focus-visible {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.slideshow-counter {
+  min-width: 58px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.screenshot-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-solid);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.18);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.screenshot-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-hover);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.28);
+}
+
+.screenshot-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 810 / 919;
+  object-fit: cover;
+  object-position: top center;
+  background: #f8fafc;
+}
+
+.screenshot-card figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px 20px;
+}
+
+.screenshot-card figcaption strong {
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.screenshot-card figcaption span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.screenshots-more {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.tour-page {
+  min-height: 100vh;
+  padding: 48px 0 80px;
+}
+
+.pwa-page {
+  min-height: 100vh;
+  padding: 64px 0 90px;
+}
+
+.pwa-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 410px);
+  align-items: center;
+  gap: 64px;
+}
+
+.pwa-layout .section-tag {
+  display: inline-block;
+  margin: 24px 0 14px;
+}
+
+.pwa-features {
+  display: grid;
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.pwa-features div {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-card-solid);
+}
+
+.pwa-features span {
+  color: var(--text-muted);
+}
+
+.pwa-shot {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-solid);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.2);
+}
+
+.pwa-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pwa-shot figcaption {
+  padding: 12px 16px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.pwa-slideshow {
+  max-width: 520px;
+}
+
+.pwa-slideshow .screenshot-card img {
+  aspect-ratio: 968 / 919;
+}
+
+@media (max-width: 800px) {
+  .pwa-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.tour-back {
+  display: inline-block;
+  margin-bottom: 32px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.tour-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.tour-grid figure {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-solid);
+}
+
+.tour-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 968 / 919;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.tour-grid figcaption {
+  padding: 14px 16px 16px;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .tour-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .tour-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .screenshots-grid {
+    grid-template-columns: 1fr;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+}
+
 /* ==========================================================================
    Ligament 2FA/MFA - Modern High-End Dark UI
    Zero dependencies | Pure CSS3 | Fast & Ultra Responsive

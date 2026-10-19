@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ligament PWA authenticator for browser-based push approvals and codes.">
+  <title>Ligament PWA Authenticator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="pwa-page">
+    <div class="container pwa-layout">
+      <div>
+        <a class="tour-back" href="index.html">← Back to Ligament</a>
+        <span class="section-tag">Standalone PWA</span>
+        <h1 class="section-title">Ligament Authenticator in the browser</h1>
+        <p class="section-desc">A separate installable web app for push approvals and one-time codes — without exposing account names, email addresses or internal links.</p>
+        <div class="pwa-features">
+          <div><strong>Push approvals</strong><span>Confirm sign-ins with number matching.</span></div>
+          <div><strong>TOTP codes</strong><span>Keep a universal offline fallback.</span></div>
+          <div><strong>Multi-device</strong><span>Use the same PWA flow on desktop and mobile.</span></div>
+        </div>
+        <a class="btn btn-primary" href="https://2fa.ligam.org/app">Open PWA →</a>
+      </div>
+      <div>
+        <div class="pwa-slideshow screenshots-slideshow">
+          <figure class="screenshot-card"><img src="assets/media/screen-pwa-live.png" alt="PWA requests tab" width="968" height="919"><figcaption><strong>Requests</strong><span>Push approval queue.</span></figcaption></figure>
+          <figure class="screenshot-card"><img src="assets/media/screen-pwa-messages.png" alt="PWA messages tab with redacted notifications" width="968" height="919"><figcaption><strong>Messages</strong><span>Security and service notifications.</span></figcaption></figure>
+          <figure class="screenshot-card"><img src="assets/media/screen-pwa-history.png" alt="PWA history tab with redacted sign-in history" width="968" height="919"><figcaption><strong>History</strong><span>Authentication history and outcomes.</span></figcaption></figure>
+          <figure class="screenshot-card"><img src="assets/media/screen-pwa-profile.png" alt="PWA profile tab with redacted user information" width="968" height="919"><figcaption><strong>Profile</strong><span>Device, passkey and push settings.</span></figcaption></figure>
+        </div>
+        <div class="slideshow-controls" aria-label="PWA tabs slideshow controls">
+          <button type="button" class="slideshow-btn" data-slide-prev aria-label="Previous PWA tab">←</button>
+          <span class="slideshow-counter" data-slide-counter>1 / 4</span>
+          <button type="button" class="slideshow-btn" data-slide-next aria-label="Next PWA tab">→</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
