@@ -92,8 +92,6 @@
   function initCalculator() {
     const range = document.getElementById('calc-users-range');
     const valueBadge = document.getElementById('calc-users-val');
-    const planSubBtn = document.getElementById('plan-sub');
-    const planLifeBtn = document.getElementById('plan-life');
     const priceOutput = document.getElementById('calc-price-output');
     const subOutput = document.getElementById('calc-sub-output');
     const presetBtns = document.querySelectorAll('.preset-btn');
@@ -101,7 +99,6 @@
     if (!range || !priceOutput) return;
 
     const isEn = document.documentElement.lang === 'en';
-    let activePlan = 'life';
     const moduleInputs = document.querySelectorAll('[data-module-price]');
     const relayInput = document.getElementById('calc-relays');
     const supportInput = document.getElementById('calc-support');
@@ -125,11 +122,11 @@
       const support = supportInput && supportInput.checked ? 500 : 0;
       const money = function (amount) { return '$' + amount.toLocaleString('en-US'); };
       const seats = users <= 5 ? 0 : Math.max(20, users);
-      const baseTotal = activePlan === 'sub' ? (users <= 5 ? 0 : users * 36) : seats * 15;
+      const baseTotal = seats * 15;
       const total = baseTotal + modulesTotal + support;
       priceOutput.textContent = (support ? (isEn ? 'from ' : 'от ') : '') + money(total);
       if (breakdown) breakdown.textContent = (isEn ? 'User licenses: ' : 'Лицензии пользователей: ') + money(baseTotal) + (isEn ? '; modules and Relay: ' : '; модули и Relay: ') + money(modulesTotal) + (isEn ? '; Support, first year: from ' : '; Support за первый год: от ') + money(support);
-      if (renewal) renewal.textContent = (isEn ? 'Optional annual update renewal from year two: ' : 'Продление обновлений со второго года, по желанию: ') + money((modulesTotal + (activePlan === 'life' ? baseTotal : 0)) * 0.2) + (activePlan === 'sub' && users > 5 ? (isEn ? '. User subscription renewal: ' : '. Продление пользовательской подписки: ') + money(baseTotal) + (isEn ? ' for 13 months' : ' за 13 месяцев') : '') + (support ? (isEn ? '. Support: from $500/year, final quote by agreement.' : '. Support: от $500/год, итог по договору.') : '');
+      if (renewal) renewal.textContent = (isEn ? 'Optional annual update renewal from year two: ' : 'Продление обновлений со второго года, по желанию: ') + money((modulesTotal + baseTotal) * 0.2) + (support ? (isEn ? '. Support: from $500/year, final quote by agreement.' : '. Support: от $500/год, итог по договору.') : '');
 
       if (users <= 5) {
         if (subOutput) {
@@ -140,18 +137,10 @@
         return;
       }
 
-      if (activePlan === 'sub') {
-        if (subOutput) {
-          subOutput.textContent = isEn
-            ? '$3 per user/month: 12 paid months + 1 month free ($36 per user for 13 months). Modules extra.'
-            : '$3/пользователь/мес: 12 месяцев оплаты + 1 месяц в подарок ($36 за 13 месяцев). Модули отдельно.';
-        }
-      } else {
-        if (subOutput) {
-          subOutput.textContent = isEn
-            ? seats + ' licenses × $15 one-time; minimum 20 licenses ($300). First year of updates included.'
-            : seats + ' лицензий × $15 разово; минимум 20 лицензий ($300). Первый год обновлений включён.';
-        }
+      if (subOutput) {
+        subOutput.textContent = isEn
+          ? seats + ' licenses × $15 one-time; minimum 20 licenses ($300). First year of updates included.'
+          : seats + ' лицензий × $15 разово; минимум 20 лицензий ($300). Первый год обновлений включён.';
       }
     }
 
@@ -169,21 +158,6 @@
         }
       });
     });
-
-    if (planSubBtn && planLifeBtn) {
-      planSubBtn.addEventListener('click', function () {
-        activePlan = 'sub';
-        planSubBtn.classList.add('active');
-        planLifeBtn.classList.remove('active');
-        update();
-      });
-      planLifeBtn.addEventListener('click', function () {
-        activePlan = 'life';
-        planLifeBtn.classList.add('active');
-        planSubBtn.classList.remove('active');
-        update();
-      });
-    }
 
     update();
   }

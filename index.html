@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=modules-1">
+  <link rel="stylesheet" href="styles.css?v=perpetual-2">
 </head>
 <body>
 
@@ -434,7 +434,7 @@
             <h3 class="debate-title">Ligament 2FA (On-Premise)</h3>
           </div>
           <ul class="debate-list">
-            <li><strong>100% On-Premise:</strong> Один Docker-контейнер на ваших серверах. Никаких внешних облачных зависимостей.</li><li><strong>Автономный Relay:</strong> Филиалы и заводы продолжают входить в систему даже при полном обрыве связи.</li><li><strong>Auto-Logon за 0.4 сек:</strong> Number Matching на экране: один тап на телефоне открывает Windows без клика.</li><li><strong>Честная цена:</strong> $0 Free до 5 польз., $3/мес подписка и 1 месяц в подарок при оплате за год, или $15 разово за бессрочную лицензию.</li>
+            <li><strong>100% On-Premise:</strong> Один Docker-контейнер на ваших серверах. Никаких внешних облачных зависимостей.</li><li><strong>Автономный Relay:</strong> Филиалы и заводы продолжают входить в систему даже при полном обрыве связи.</li><li><strong>Auto-Logon за 0.4 сек:</strong> Number Matching на экране: один тап на телефоне открывает Windows без клика.</li><li><strong>Честная цена:</strong> $0 Free до 5 пользователей; $15 за пользователя разово за бессрочную лицензию. Модули оплачиваются отдельно.</li>
           </ul>
         </div>
       </div>
@@ -649,7 +649,7 @@
       <div class="section-header">
         <span class="section-tag">Калькулятор окупаемости</span>
         <h2 class="section-title">Честная стоимость без скрытых платежей</h2>
-        <p class="section-desc">Бесплатно до 5 пользователей. Выберите подписку за $3 на пользователя в месяц с 1 месяцем в подарок при оплате за год или бессрочную лицензию за $15 разово. В бессрочной лицензии включен 1 год обновлений.</p>
+        <p class="section-desc">Бесплатно до 5 пользователей. Бессрочная лицензия — $15 за пользователя, минимальный пакет 20 пользователей ($300). Модули отдельно. Первый год обновлений включён.</p>
       </div>
 
       <!-- Modern Interactive Calculator -->
@@ -672,17 +672,6 @@
           </div>
         </div>
 
-        <div class="plan-switch-group">
-          <button type="button" id="plan-sub" class="plan-switch-btn">
-            <div class="plan-name">Годовая подписка ($3/мес/чел)</div>
-            <div class="plan-rate">12 месяцев оплаты + 1 месяц в подарок</div>
-          </button>
-          <button type="button" id="plan-life" class="plan-switch-btn active">
-            <div class="plan-name">Бессрочная лицензия ($15/чел разово)</div>
-            <div class="plan-rate">Навсегда; 1 год обновлений включен</div>
-          </button>
-        </div>
-
 <fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу.</p><div class="module-options"><label><input type="checkbox" data-module-price="500"> Trust — $500</label><label><input type="checkbox" data-module-price="750"> SSO — $750</label><label><input type="checkbox" data-module-price="1000"> Bastion — $1,000</label><label><input type="checkbox" data-module-price="2000"> SIEM — $2,000</label><label><input type="checkbox" data-module-price="1000"> PACS — $1,000</label></div><label for="calc-relays">Relay — $500 за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от $500/год</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Оценочная стоимость лицензии</div>
@@ -690,7 +679,7 @@
           <div id="calc-sub-output" class="calc-result-sub">50 лицензий × $15; модули отдельно</div><p id="calc-breakdown"></p><p id="calc-renewal"></p>
         </div>
 
-<p class="pricing-terms">База: Windows Logon/UAC, RADIUS и Notify. Бессрочная лицензия — $15 за пользователя, минимум 20 лицензий ($300). Лицензии пользователей и модулей включают 1 год обновлений; далее продление обновлений — 20% их стоимости в год, по желанию. Без продления приобретённая версия продолжает работать. Годовая подписка — $36 за пользователя за 13 месяцев. Support и внедрение оплачиваются отдельно.</p>
+<p class="pricing-terms">База: Windows Logon/UAC, RADIUS и Notify. Бессрочная лицензия — $15 за пользователя, минимум 20 лицензий ($300). Лицензии пользователей и модулей включают 1 год обновлений; далее продление обновлений — 20% их стоимости в год, по желанию. Без продления приобретённая версия продолжает работать. Support и внедрение оплачиваются отдельно.</p>
       </div>
 
       <!-- 4 Price Cards -->
@@ -702,16 +691,6 @@
           <div class="price-card-period">Бесплатно навсегда</div>
           <ul class="price-card-features"><li>До 5 активных пользователей</li><li>Полный функционал Windows Logon</li><li>RADIUS-сервер Wi-Fi и VPN</li><li>Notify включён; модули отдельно</li><li>Поддержка сообщества</li></ul>
           <a href="#quickstart" class="btn btn-outline">Начать бесплатно</a>
-        </div>
-
-        <!-- Standard -->
-        <div class="price-card featured">
-          <span class="featured-badge">Популярный</span>
-          <h3 class="price-card-tier">Standard (Подписка)</h3>
-          <div class="price-card-price">$3</div>
-          <div class="price-card-period">за пользователя в месяц • 1 месяц в подарок при оплате за год</div>
-          <ul class="price-card-features"><li>От 6 пользователей</li><li>Windows Logon/UAC + RADIUS + Notify</li><li>Support оплачивается отдельно</li><li>Регулярные обновления безопасности</li><li>$36 за пользователя за 13 месяцев</li></ul>
-          <a href="mailto:admin@ligam.org?subject=Standard%20License%20Request" class="btn btn-primary">Выбрать Standard</a>
         </div>
 
         <!-- Perpetual -->
@@ -770,7 +749,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>100% On-Premise (без облака)</strong></td><td class="check-no">✕ (Только SaaS-облако)</td><td class="check-no">✓ (Локально)</td><td class="col-highlight check-yes">✓ 100% On-Premise в Docker</td></tr><tr><td><strong>Защита Windows Logon & UAC</strong></td><td class="check-no">✓ (Сложная настройка)</td><td class="check-no">✕ (Нет интеграции)</td><td class="col-highlight check-yes">✓ Нативная плитка LogonUI</td></tr><tr><td><strong>Авто-вход Auto-Logon (0.4 сек)</strong></td><td class="check-no">✕ (Ручной клик и ввод)</td><td class="check-no">✕ (Ручной ввод 6 цифр)</td><td class="col-highlight check-yes">✓ Вход за 0.4с без клика</td></tr><tr><td><strong>Филиальный Relay (RDP/SSH + Wi-Fi)</strong></td><td class="check-no">✕ (Требует белых IP / падает без WAN)</td><td class="check-no">✕ (Нет связи)</td><td class="col-highlight check-yes">✓ Проброс RDP/SSH + Бэкап RADIUS Wi-Fi</td></tr><tr><td><strong>Защита от push-бомбинга</strong></td><td class="check-no">Ограниченно</td><td class="check-no">✕ (Уязвим к фишингу)</td><td class="col-highlight check-yes">✓ Number Matching на экране</td></tr><tr><td><strong>Корпоративные боты (Telegram/eXpress)</strong></td><td class="check-no">✕ (Нет)</td><td class="check-no">✕ (Нет)</td><td class="col-highlight check-yes">✓ Вход без мобильного приложения</td></tr><tr><td><strong>Стоимость за 100 пользователей</strong></td><td class="check-no">$7,200+ каждый год</td><td class="check-no">$0 (без управления)</td><td class="col-highlight check-yes">$1,500 разово или $3,600 за 13 месяцев; модули отдельно</td></tr>
+            <tr><td><strong>100% On-Premise (без облака)</strong></td><td class="check-no">✕ (Только SaaS-облако)</td><td class="check-no">✓ (Локально)</td><td class="col-highlight check-yes">✓ 100% On-Premise в Docker</td></tr><tr><td><strong>Защита Windows Logon & UAC</strong></td><td class="check-no">✓ (Сложная настройка)</td><td class="check-no">✕ (Нет интеграции)</td><td class="col-highlight check-yes">✓ Нативная плитка LogonUI</td></tr><tr><td><strong>Авто-вход Auto-Logon (0.4 сек)</strong></td><td class="check-no">✕ (Ручной клик и ввод)</td><td class="check-no">✕ (Ручной ввод 6 цифр)</td><td class="col-highlight check-yes">✓ Вход за 0.4с без клика</td></tr><tr><td><strong>Филиальный Relay (RDP/SSH + Wi-Fi)</strong></td><td class="check-no">✕ (Требует белых IP / падает без WAN)</td><td class="check-no">✕ (Нет связи)</td><td class="col-highlight check-yes">✓ Проброс RDP/SSH + Бэкап RADIUS Wi-Fi</td></tr><tr><td><strong>Защита от push-бомбинга</strong></td><td class="check-no">Ограниченно</td><td class="check-no">✕ (Уязвим к фишингу)</td><td class="col-highlight check-yes">✓ Number Matching на экране</td></tr><tr><td><strong>Корпоративные боты (Telegram/eXpress)</strong></td><td class="check-no">✕ (Нет)</td><td class="check-no">✕ (Нет)</td><td class="col-highlight check-yes">✓ Вход без мобильного приложения</td></tr><tr><td><strong>Стоимость за 100 пользователей</strong></td><td class="check-no">$7,200+ каждый год</td><td class="check-no">$0 (без управления)</td><td class="col-highlight check-yes">$1,500 разово; модули отдельно</td></tr>
           </tbody>
         </table>
       </div>
@@ -892,6 +871,6 @@
     </div>
   </footer>
 
-  <script src="site.js?v=modules-1"></script>
+  <script src="site.js?v=perpetual-2"></script>
 </body>
 </html>

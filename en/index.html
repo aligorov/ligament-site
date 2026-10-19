@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=modules-1">
+  <link rel="stylesheet" href="../styles.css?v=perpetual-2">
 </head>
 <body>
 
@@ -434,7 +434,7 @@
             <h3 class="debate-title">Ligament 2FA (On-Premise)</h3>
           </div>
           <ul class="debate-list">
-            <li><strong>100% On-Premise:</strong> Single Docker container on your servers. Zero external cloud dependencies.</li><li><strong>Autonomous Branch Relay:</strong> Remote branches & factories authenticate locally even during complete WAN cut.</li><li><strong>0.4s Auto-Logon:</strong> Number matching on login screen: 1 tap approves and unlocks Windows without click.</li><li><strong>Honest Pricing:</strong> $0 Free up to 5 users, $3/mo subscription with 1 month free when billed annually, or $15 one-time perpetual license.</li>
+            <li><strong>100% On-Premise:</strong> Single Docker container on your servers. Zero external cloud dependencies.</li><li><strong>Autonomous Branch Relay:</strong> Remote branches & factories authenticate locally even during complete WAN cut.</li><li><strong>0.4s Auto-Logon:</strong> Number matching on login screen: 1 tap approves and unlocks Windows without click.</li><li><strong>Honest Pricing:</strong> $0 Free up to 5 users; $15 per user for a perpetual license. Modules are purchased separately.</li>
           </ul>
         </div>
       </div>
@@ -649,7 +649,7 @@
       <div class="section-header">
         <span class="section-tag">ROI & TCO Calculator</span>
         <h2 class="section-title">Transparent Pricing Without Hidden Fees</h2>
-        <p class="section-desc">Free up to 5 users. Choose a $3 per-user monthly subscription with 1 month free when billed annually, or a $15 per-user perpetual license paid once. The first year of updates is included with the perpetual license.</p>
+        <p class="section-desc">Free up to 5 users. Perpetual license: $15 per user, minimum package 20 users ($300). Modules purchased separately. First year of updates included.</p>
       </div>
 
       <!-- Modern Interactive Calculator -->
@@ -672,17 +672,6 @@
           </div>
         </div>
 
-        <div class="plan-switch-group">
-          <button type="button" id="plan-sub" class="plan-switch-btn">
-            <div class="plan-name">Annual Subscription ($3/mo/user)</div>
-            <div class="plan-rate">12 paid months + 1 month free</div>
-          </button>
-          <button type="button" id="plan-life" class="plan-switch-btn active">
-            <div class="plan-name">Perpetual License ($15/user one-time)</div>
-            <div class="plan-rate">Lifetime license; 1 year of updates included</div>
-          </button>
-        </div>
-
 <fieldset class="license-options"><legend>Additional modules</legend><p>One-time per organization. Notify is included in the base.</p><div class="module-options"><label><input type="checkbox" data-module-price="500"> Trust — $500</label><label><input type="checkbox" data-module-price="750"> SSO — $750</label><label><input type="checkbox" data-module-price="1000"> Bastion — $1,000</label><label><input type="checkbox" data-module-price="2000"> SIEM — $2,000</label><label><input type="checkbox" data-module-price="1000"> PACS — $1,000</label></div><label for="calc-relays">Relay — $500 per node</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — from $500/year</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Estimated License Cost</div>
@@ -690,7 +679,7 @@
           <div id="calc-sub-output" class="calc-result-sub">50 licenses × $15; modules extra</div><p id="calc-breakdown"></p><p id="calc-renewal"></p>
         </div>
 
-<p class="pricing-terms">Base: Windows Logon/UAC, RADIUS and Notify. Perpetual: $15 per user, minimum 20 licenses ($300). User and module licenses include 1 year of updates; optional update renewal is 20% of their price annually. Without renewal the acquired version keeps working. Annual subscription: $36 per user for 13 months. Support and deployment are billed separately.</p>
+<p class="pricing-terms">Base: Windows Logon/UAC, RADIUS and Notify. Perpetual: $15 per user, minimum 20 licenses ($300). User and module licenses include 1 year of updates; optional update renewal is 20% of their price annually. Without renewal the acquired version keeps working. Support and deployment are billed separately.</p>
       </div>
 
       <!-- 4 Price Cards -->
@@ -702,16 +691,6 @@
           <div class="price-card-period">Free Forever</div>
           <ul class="price-card-features"><li>Up to 5 active users</li><li>Full Windows Logon & RDP</li><li>RADIUS Wi-Fi & VPN Server</li><li>Notify included; modules extra</li><li>Community support</li></ul>
           <a href="#quickstart" class="btn btn-outline">Начать бесплатно</a>
-        </div>
-
-        <!-- Standard -->
-        <div class="price-card featured">
-          <span class="featured-badge">Most Popular</span>
-          <h3 class="price-card-tier">Standard (Subscription)</h3>
-          <div class="price-card-price">$3</div>
-          <div class="price-card-period">per user / month • 1 month free when billed annually</div>
-          <ul class="price-card-features"><li>From 6 users and above</li><li>Windows Logon/UAC + RADIUS + Notify</li><li>Support billed separately</li><li>Continuous security updates</li><li>$36 per user for 13 months</li></ul>
-          <a href="mailto:admin@ligam.org?subject=Standard%20License%20Request" class="btn btn-primary">Выбрать Standard</a>
         </div>
 
         <!-- Perpetual -->
@@ -764,7 +743,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon &amp; UAC Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Relay: RDP/SSH + Wi-Fi RADIUS</strong></td><td class="check-no">✕ (Requires public IP / fails on WAN)</td><td class="check-no">✕ (No forwarding or sync)</td><td class="col-highlight check-yes">✓ WSS :443 forwarding + cached 802.1X Wi-Fi</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram &amp; eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$1,500 one-time or $3,600 for 13 months; modules extra</td></tr>
+            <tr><td><strong>100% On-Premise (No Cloud)</strong></td><td class="check-no">✕ (SaaS Cloud Only)</td><td class="check-no">✓ (Local)</td><td class="col-highlight check-yes">✓ 100% On-Premise in Docker</td></tr><tr><td><strong>Windows Logon &amp; UAC Protection</strong></td><td class="check-no">✓ (Complex Setup)</td><td class="check-no">✕ (No Support)</td><td class="col-highlight check-yes">✓ Native LogonUI Credential Provider</td></tr><tr><td><strong>0.4s Auto-Logon</strong></td><td class="check-no">✕ (Manual click required)</td><td class="check-no">✕ (Retype 6-digit code)</td><td class="col-highlight check-yes">✓ 0.4s Instant Auto-Logon</td></tr><tr><td><strong>Branch Relay: RDP/SSH + Wi-Fi RADIUS</strong></td><td class="check-no">✕ (Requires public IP / fails on WAN)</td><td class="check-no">✕ (No forwarding or sync)</td><td class="col-highlight check-yes">✓ WSS :443 forwarding + cached 802.1X Wi-Fi</td></tr><tr><td><strong>Anti-Push Bombing Defense</strong></td><td class="check-no">Limited</td><td class="check-no">✕ (Vulnerable to phishing)</td><td class="col-highlight check-yes">✓ Mandatory Number Matching</td></tr><tr><td><strong>Telegram &amp; eXpress Bots</strong></td><td class="check-no">✕ (No)</td><td class="check-no">✕ (No)</td><td class="col-highlight check-yes">✓ Zero App Installation Required</td></tr><tr><td><strong>Cost for 100 Users</strong></td><td class="check-no">$7,200+ every year</td><td class="check-no">$0 (Zero management)</td><td class="col-highlight check-yes">$1,500 one-time; modules extra</td></tr>
           </tbody>
         </table>
       </div>
@@ -886,6 +865,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=modules-1"></script>
+  <script src="../site.js?v=perpetual-2"></script>
 </body>
 </html>
