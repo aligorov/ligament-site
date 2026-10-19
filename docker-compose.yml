@@ -8,12 +8,15 @@ services:
     image: ligament-site:latest
     container_name: ligament-site
     restart: unless-stopped
-    ports:
-      # Привязка СТРОГО к 127.0.0.1 (локальный хост).
-      # Наружу в интернет порт НЕ светится, доступен только для локального Nginx/Caddy!
-      - "127.0.0.1:8088:80"
+    networks:
+      - crypto_bot_net
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  crypto_bot_net:
+    external: true
+    name: crypto-bot_bot-network
