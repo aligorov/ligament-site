@@ -75,7 +75,8 @@
     let activePlan = 'sub'; // 'sub' ($2/mo/user = $24/yr) or 'life' ($5/user one-time)
 
     function update() {
-      const users = parseInt(range.value, 10) || 5;
+      const raw = parseInt(range.value, 10) || 5;
+      const users = Math.min(10000, Math.max(5, raw));
       if (valueBadge) {
         valueBadge.textContent = users + (isEn ? ' users' : ' польз.');
       }
@@ -336,6 +337,7 @@
     function scrollToHash(hash) {
       if (!hash || hash === '#') return;
       const id = hash.substring(1);
+      if (!/^[a-zA-Z0-9_\-]+$/.test(id)) return;
       const target = document.getElementById(id);
       if (!target) return;
 

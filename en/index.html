@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
   <title>Ligament 2FA — On-Premise MFA for Windows Logon, RDP, RADIUS & SSO</title>
   <meta name="description" content="Self-hosted MFA platform in a single Docker container: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, bastion & physical access without cloud lock-in.">
   <meta name="theme-color" content="#07090e">
@@ -55,7 +58,7 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
-        <a href="../index.html" class="lang-switch" hreflang="ru" aria-label="Change language to RU">RU</a>
+        <a href="../index.html" class="lang-switch" hreflang="ru" aria-label="Language switch">RU</a>
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
         <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Request Demo</a>
       </div>
@@ -462,7 +465,7 @@
           <p style="color: #cbd5e1 !important;">Zero external telemetry, clean code, transparent architecture, and direct technical engineering support.</p>
         </div>
         <div class="founder-actions">
-          <a href="https://t.me/ligament_support" class="btn btn-secondary" target="_blank" rel="noopener">Telegram Support</a>
+          <a href="https://t.me/ligament_support" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Telegram Support</a>
           <a href="mailto:admin@ligam.org?subject=Question%20about%20Ligament" class="btn btn-primary">Contact Engineers</a>
         </div>
       </div>
@@ -794,7 +797,7 @@
           <h4>Contact</h4>
           <ul>
             <li><a href="mailto:admin@ligam.org">admin@ligam.org</a></li>
-            <li><a href="https://t.me/ligament_support" target="_blank" rel="noopener">Telegram Support</a></li>
+            <li><a href="https://t.me/ligament_support" target="_blank" rel="noopener noreferrer">Telegram Support</a></li>
             <li><a href="../assets/downloads/ligament-presentation.pdf" download>Presentation PDF</a></li>
           </ul>
         </div>
