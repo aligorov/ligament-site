@@ -424,10 +424,33 @@ button {
 .brand-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.brand-logo {
+  display: block;
+  width: 150px;
+  height: 41px;
+  object-fit: contain;
+  object-position: left center;
+}
+.brand-logo--light {
+  display: none;
+}
+[data-theme="light"] .brand-logo--dark {
+  display: none;
+}
+[data-theme="light"] .brand-logo--light {
+  display: block;
+}
+.brand-badge {
+  flex-shrink: 0;
+}
+.footer-col .brand-logo {
+  width: 136px;
+  height: 37px;
 }
 .brand-link img {
-  height: 32px;
   width: auto;
 }
 .brand-name {
