@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=perpetual-2">
+  <link rel="stylesheet" href="../styles.css?v=license-descriptions-3">
 </head>
 <body>
 
@@ -204,7 +204,7 @@
           <button type="button" class="graph-scenario-btn" data-scenario="windows">💻 Windows Auto-Logon</button>
           <button type="button" class="graph-scenario-btn" data-scenario="vpn">📡 RADIUS VPN & Wi-Fi</button>
           <button type="button" class="graph-scenario-btn" data-scenario="relay">🏭 Offline Branch Relay</button>
-          <button type="button" class="graph-scenario-btn" data-scenario="sso">🛡️ Web SSO & Bastion</button>
+          <button type="button" class="graph-scenario-btn" data-scenario="sso">🛡️ Web SSO</button>
         </div>
 
         <!-- SVG Network Graph -->
@@ -564,8 +564,8 @@
             <div class="tag-pills"><span class="tag-pill">OIDC</span><span class="tag-pill">SAML 2.0</span><span class="tag-pill">Core only</span></div>
           </div>
           <div class="feat-card">
-            <h4 class="feat-card-title">Core Web Bastion</h4>
-            <p class="feat-card-desc">Core provides browser-based Web-SSH/RDP access without exposing ports 22 or 3389 to the Internet. This is a Core service, separate from Branch Relay.</p>
+            <h4 class="feat-card-title">RDP / SSH Bastion with 2FA</h4>
+            <p class="feat-card-desc">Forward RDP and SSH through Ligament Core or a branch Relay to the target host with 2FA confirmation. Provides protected remote access to workstations and servers.</p>
             <div class="tag-pills"><span class="tag-pill">Bastion</span><span class="tag-pill">Zero Exposed Ports</span></div>
           </div>
           <div class="feat-card">
@@ -687,6 +687,7 @@
         <!-- Community -->
         <div class="price-card">
           <h3 class="price-card-tier">Community</h3>
+          <p class="license-description">Free base protection for up to 5 users: a second factor for Windows logon and UAC elevation, VPN and Wi-Fi authentication through RADIUS, and basic Notify notifications.</p>
           <div class="price-card-price">$0</div>
           <div class="price-card-period">Free Forever</div>
           <ul class="price-card-features"><li>Up to 5 active users</li><li>Full Windows Logon & RDP</li><li>RADIUS Wi-Fi & VPN Server</li><li>Notify included; modules extra</li><li>Community support</li></ul>
@@ -696,6 +697,7 @@
         <!-- Perpetual -->
         <div class="price-card">
           <h3 class="price-card-tier">Perpetual (Lifetime)</h3>
+          <p class="license-description">Base license for each protected user: Windows Logon/UAC, RADIUS for VPN and Wi-Fi, and Notify notifications. Purchased once, with a perpetual right to use the acquired version.</p>
           <div class="price-card-price">$15</div>
           <div class="price-card-period">per user one-time</div>
           <ul class="price-card-features"><li>Minimum 20 licenses — $300</li><li>Zero recurring monthly fees</li><li>Total infrastructure sovereignty</li><li>1 year of updates included</li><li>Optional updates after year one — 20% per year</li><li>Contractual price guarantee</li></ul>
@@ -705,19 +707,26 @@
       </div>
       <h3 class="section-title">Organization modules — separate from user licenses</h3>
       <div class="pricing-grid">
+<article class="price-card"><h3 class="price-card-tier">Notify</h3><p class="license-description">Basic authentication event notifications help you follow user sign-ins and access. Included in the base license at no extra charge.</p><div class="price-card-price">Included</div><div class="price-card-period">in the base user license</div></article>
         <!-- Relay -->
         <div class="price-card">
           <h3 class="price-card-tier">Branch Relay</h3>
+          <p class="license-description">A branch node that opens an outbound WSS tunnel to Core and forwards RDP/SSH connections to internal hosts without a public IP. During WAN outages it maintains local Wi-Fi authentication through cached backup RADIUS. Each node requires its own license.</p>
           <div class="price-card-price">$500</div>
           <div class="price-card-period">per branch node one-time</div>
           <ul class="price-card-features"><li>RDP :3389 and SSH :22 forwarding</li><li>Outbound WSS :443 tunnel without a public IP</li><li>Backup RADIUS for branch Wi-Fi</li><li>802.1X Wi-Fi authentication during WAN cuts</li><li>Automatic audit replication to Core</li></ul>
           <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
         </div>
-<article class="price-card"><h3 class="price-card-tier">Trust</h3><div class="price-card-price">$500</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Request module</a></article>
-<article class="price-card"><h3 class="price-card-tier">SSO</h3><div class="price-card-price">$750</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Request module</a></article>
-<article class="price-card"><h3 class="price-card-tier">Bastion</h3><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Request module</a></article>
-<article class="price-card"><h3 class="price-card-tier">SIEM</h3><div class="price-card-price">$2,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Request module</a></article>
-<article class="price-card"><h3 class="price-card-tier">PACS</h3><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">Trust</h3>
+          <p class="license-description">Device posture checks for access decisions: BitLocker, Microsoft Defender and the firewall. Helps consider workstation security alongside verification of the user’s identity.</p><div class="price-card-price">$500</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">SSO</h3>
+          <p class="license-description">Single sign-on to corporate web applications using OpenID Connect and SAML 2.0 with MFA. Users authenticate through Ligament Core; Branch Relay does not handle Web SSO.</p><div class="price-card-price">$750</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">Bastion</h3>
+          <p class="license-description">Forward RDP and SSH through Ligament Core or a branch Relay to the target host with 2FA confirmation. Provides protected remote access to workstations and servers.</p><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">SIEM</h3>
+          <p class="license-description">Integrates Ligament security and audit events with the organization’s SIEM, sending authentication and access events for centralized monitoring and incident investigation.</p><div class="price-card-price">$2,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Request module</a></article>
+<article class="price-card"><h3 class="price-card-tier">PACS</h3>
+          <p class="license-description">Integrates Ligament with a physical access control system. Connects user identity verification with access to premises; compatibility with a specific system is determined during deployment.</p><div class="price-card-price">$1,000</div><div class="price-card-period">per organization one-time</div><ul class="price-card-features"><li>Perpetual module license</li><li>1 year of updates; then optional 20%/year</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Request module</a></article>
 <article class="price-card"><h3 class="price-card-tier">Support</h3><div class="price-card-price">from $500</div><div class="price-card-period">per organization per year</div><p>Support service: scope, response times and SLA agreed in contract. Deployment quoted separately.</p><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Support">Discuss support</a></article>
       </div>
     </div>
@@ -865,6 +874,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=perpetual-2"></script>
+  <script src="../site.js?v=license-descriptions-3"></script>
 </body>
 </html>

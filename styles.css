@@ -1201,6 +1201,7 @@ button {
 .license-options input[type="number"] { width: 120px; padding: 10px; color: var(--text-main); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; }
 .license-options input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
 .pricing-terms, #calc-breakdown, #calc-renewal { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-top: 16px; }
+.license-description { margin: 12px 0 20px; color: var(--text-muted); font-size: 14px; line-height: 1.65; }
 .calc-wrapper {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
