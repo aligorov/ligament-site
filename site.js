@@ -264,6 +264,14 @@
         lines: lines.map(function (line) { return line.id; }),
         steps: [t('Входные сервисы', 'Ingress services'), 'Core + MFA', t('Приложения / хосты', 'Applications / hosts'), t('Relay: филиал / Wi-Fi резерв', 'Relay: branch / Wi-Fi backup')]
       },
+      portal: {
+        title: t('Внешний доступ к порталу с 2FA', 'External portal access with 2FA'),
+        desc: t('Портал открывается извне по HTTPS. Доступ защищён 2FA. Приложение пользователя соединяется с Core по HTTPS/WSS для запросов и подтверждений; Relay в этом маршруте не участвует.', 'The portal is accessed externally over HTTPS and protected by 2FA. The user app connects to Core over HTTPS/WSS for requests and approvals; Relay is not part of this route.'),
+        badge: 'HTTPS / WSS :443 • 2FA',
+        nodes: ['node-portal', 'node-core', 'node-push'],
+        lines: ['line-portal', 'line-push'],
+        steps: [t('Браузер извне', 'External browser'), 'HTTPS / Core', t('2FA • приложение HTTPS/WSS', '2FA • app HTTPS/WSS'), t('Доступ к порталу', 'Portal access')]
+      },
       windows: {
         title: 'Windows Logon / UAC',
         desc: t('Credential Provider на рабочей станции обращается к Core/AD. После подтверждения MFA выполняется локальный вход или повышение прав. Relay не участвует.', 'The workstation Credential Provider connects to Core/AD. MFA approval enables local logon or elevation. Relay is not involved.'),

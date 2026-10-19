@@ -2201,6 +2201,7 @@ button {
 #graph-zoom-value { min-width: 48px; text-align: center; color: #e2e8f0; font-size: 13px; }
 .graph-caption, .graph-boundaries { color: #cbd5e1; line-height: 1.65; font-size: 13px; }
 .graph-boundaries { margin-top: 16px; padding: 14px 16px; border-left: 3px solid #818cf8; background: #111827; }
+.graph-transport { margin-top: 16px; color: #e2e8f0; font-size: 13px; line-height: 1.65; }
 .graph-info-title { margin: 0 0 8px; }
 .graph-info-desc { margin: 0; }
 .graph-svg-container.is-offline { border-top: 1px dashed #fbbf24; }
