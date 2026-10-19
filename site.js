@@ -101,7 +101,7 @@
     if (!range || !priceOutput) return;
 
     const isEn = document.documentElement.lang === 'en';
-    let activePlan = 'sub'; // 'sub' ($2/mo/user = $24/yr) or 'life' ($15/user one-time)
+    let activePlan = 'sub'; // 'sub' ($3/mo/user, 11 paid months + 1 free) or 'life' ($15/user one-time)
 
     function update() {
       const raw = parseInt(range.value, 10) || 5;
@@ -121,12 +121,12 @@
       }
 
       if (activePlan === 'sub') {
-        const totalYear = users * 2 * 12; // $2/user/mo * 12 mo
+        const totalYear = users * 3 * 11; // $3/user/mo * 11 paid months; 1 month free
         priceOutput.textContent = '$' + totalYear.toLocaleString('en-US') + (isEn ? ' / yr' : ' / год');
         if (subOutput) {
           subOutput.textContent = isEn
-            ? 'Equivalent to $' + (users * 2) + '/mo ($2 per user/month, billed annually)'
-            : 'Равносильно $' + (users * 2) + ' в месяц ($2/пользователь, ежегодная оплата)';
+            ? 'Annual price: $3 per user/month, 11 paid months + 1 month free'
+            : 'Годовая цена: $3/пользователь/мес, оплачиваются 11 месяцев + 1 месяц в подарок';
         }
       } else {
         const totalLife = users * 15; // $15/user one-time
