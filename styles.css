@@ -113,7 +113,7 @@
 
 .pwa-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 410px);
+  grid-template-columns: minmax(280px, 0.82fr) minmax(420px, 1.18fr);
   align-items: center;
   gap: 64px;
 }
@@ -163,7 +163,9 @@
 }
 
 .pwa-slideshow {
-  max-width: 520px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .pwa-slideshow .screenshot-card img {
@@ -174,6 +176,10 @@
   .pwa-layout {
     grid-template-columns: 1fr;
     gap: 36px;
+  }
+
+  .pwa-page {
+    padding-top: 36px;
   }
 }
 
