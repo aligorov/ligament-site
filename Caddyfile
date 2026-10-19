@@ -1,0 +1,33 @@
+# Caddy configuration with automatic HTTPS & strict security headers
+ligam.org, www.ligam.org {
+    root * /var/www/ligament-site
+    file_server
+
+    encode gzip zstd
+
+    # Security Headers
+    header {
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), autoplay=(), interest-topic-ads=()"
+        Cross-Origin-Opener-Policy "same-origin"
+        Cross-Origin-Resource-Policy "same-origin"
+        -Server
+    }
+
+    # Static caching
+    @static {
+        file
+        path *.css *.js *.svg *.png *.jpg *.jpeg *.ico *.pdf *.webm *.mp4 *.woff2
+    }
+    header @static Cache-Control "public, max-age=2592000, immutable"
+
+    # Clean 404
+    handle_errors {
+        rewrite * /index.html
+        file_server
+    }
+}
