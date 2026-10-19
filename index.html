@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=localized-plans-4">
+  <link rel="stylesheet" href="styles.css?v=visual-fixes-5">
 </head>
 <body>
 
@@ -48,10 +48,10 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#" class="brand-link" aria-label="Ligament Security">
-        <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo.svg" alt="" width="150" height="41">
+        <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="150" height="41">
         <span class="brand-badge">On-Premise</span>
       </a>
-      <nav class="site-nav" aria-label="Main Navigation">
+      <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
         <a href="#architecture">Граф</a>
         <a href="#downloads">Скачать</a>
         <a href="#debate">Сравнение</a>
@@ -63,6 +63,7 @@
       </nav>
       <div class="header-actions">
         <a href="en/index.html?lang=en" class="lang-switch" hreflang="en" aria-label="Switch to English">EN</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Открыть меню">Меню</button>
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
         <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Запросить Demo</a>
       </div>
@@ -76,7 +77,7 @@
       <div class="hero-badge-pill">🛡️ 100% On-Premise в вашем контуре • 152-ФЗ / КИИ • Без облака</div>
       <h1 class="hero-title">Единый 2FA/MFA периметр <span>без зарубежных облаков</span></h1>
       <p class="hero-desc">Защитите Windows Logon, RDP, RADIUS (VPN/Wi-Fi) и Web SSO в одном Docker-контейнере. Вход за 0.4 секунды в один клик — без ручного ввода 6 цифр из SMS и задержек.</p>
-      
+
       <div class="hero-actions">
         <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary">Запросить 30-дневное Demo</a>
         <a href="#pricing" class="btn btn-secondary">Рассчитать окупаемость</a>
@@ -208,7 +209,8 @@
         </div>
 
         <!-- SVG Network Graph -->
-        <div class="graph-svg-container">
+        <p class="scroll-hint graph-scroll-hint">Схему можно прокручивать влево и вправо ↔</p>
+        <div class="graph-svg-container" tabindex="0" role="region" aria-label="Схема архитектуры, горизонтальная прокрутка">
           <svg class="graph-svg" viewBox="0 0 960 510" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="grad-core" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -224,7 +226,7 @@
             <!-- CONNECTION PATHS (FLOW LINES) -->
             <!-- AD -> Core -->
             <path id="line-ad" class="flow-line" d="M 480 83 L 480 195" stroke="#818cf8" stroke-width="2.5" />
-            
+
             <!-- Ingress -> Core -->
             <path id="line-win" class="flow-line" d="M 245 125 C 310 125, 310 215, 375 225" stroke="#38bdf8" stroke-width="2.5" />
             <path id="line-vpn" class="flow-line" d="M 245 230 L 375 230" stroke="#06b6d4" stroke-width="2.5" />
@@ -673,7 +675,7 @@
         </div>
 
 <div class="calc-row"><label for="calc-plan">Тариф и способ оплаты</label><select id="calc-plan"><option value="base-month">Base — 100 ₽/пользователь/месяц</option><option value="base-year">Base — 1 200 ₽ за 13 месяцев</option><option value="business-month" selected>Business — 250 ₽/пользователь/месяц</option><option value="business-year">Business — 3 000 ₽ за 13 месяцев</option><option value="perpetual">Base бессрочно — 1 500 ₽/пользователь</option></select><p>Платные лицензии — минимум 20 пользователей. Для бесплатного Community выберите 5 пользователей.</p></div>
-<fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу. В Business также включены Trust, SSO, Bastion и базовая передача событий в SIEM.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"> Trust — 50 000 ₽</label><label><input type="checkbox" data-module-price="750" data-module="sso"> SSO — 75 000 ₽</label><label><input type="checkbox" data-module-price="1000" data-module="bastion"> Bastion — 100 000 ₽</label><label><input type="checkbox" data-module-price="2000" data-module="siem"> SIEM Advanced — 200 000 ₽</label><label><input type="checkbox" data-module-price="1000" data-module="pacs"> PACS — 100 000 ₽</label></div><label for="calc-relays">Relay — 50 000 ₽ за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от 50 000 ₽/год</label></fieldset>
+<fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу. В Business также включены Trust, SSO, Bastion и базовая передача событий в SIEM.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"><span class="module-choice-text">Trust — 50 000 ₽</span></label><label><input type="checkbox" data-module-price="750" data-module="sso"><span class="module-choice-text">SSO — 75 000 ₽</span></label><label><input type="checkbox" data-module-price="1000" data-module="bastion"><span class="module-choice-text">Bastion — 100 000 ₽</span></label><label><input type="checkbox" data-module-price="2000" data-module="siem"> SIEM Advanced — 200 000 ₽</label><label><input type="checkbox" data-module-price="1000" data-module="pacs"> PACS — 100 000 ₽</label></div><label for="calc-relays">Relay — 50 000 ₽ за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от 50 000 ₽/год</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Стоимость выбранной конфигурации</div>
           <div id="calc-price-output" class="calc-result-price">12 500 ₽ / месяц</div>
@@ -710,13 +712,11 @@
       </div>
       <h3 class="section-title">Модули организации — отдельно от пользователей</h3>
       <div class="pricing-grid">
-<article class="price-card"><h3 class="price-card-tier">Notify</h3><p class="license-description">Базовые уведомления о событиях аутентификации: помогают узнавать о входах и отслеживать доступ пользователей. Включён в базовую лицензию без отдельной платы.</p><div class="price-card-price">Включён</div><div class="price-card-period">в базовую пользовательскую лицензию</div></article>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">Notify</h3><div class="price-card-price">Включён</div><div class="price-card-period">в базовую пользовательскую лицензию</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Базовые уведомления о событиях аутентификации: помогают узнавать о входах и отслеживать доступ пользователей. Включён в базовую лицензию без отдельной платы.</p></div></details>
         <!-- Relay -->
-        <div class="price-card">
-          <h3 class="price-card-tier">Branch Relay</h3>
-          <p class="license-description">Филиальный узел для доступа к внутренним хостам: создаёт исходящий WSS-туннель к Core и передаёт RDP/SSH-подключения в филиал без белого IP. При обрыве WAN сохраняет локальную авторизацию Wi-Fi через резервный RADIUS по кэшу. Для каждого узла нужна отдельная лицензия.</p>
-          <div class="price-card-price">50 000 ₽</div>
-          <div class="price-card-period">за филиальный узел разово</div>
+        <details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">Branch Relay</h3><div class="price-card-price">50 000 ₽</div><div class="price-card-period">за филиальный узел разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Филиальный узел для доступа к внутренним хостам: создаёт исходящий WSS-туннель к Core и передаёт RDP/SSH-подключения в филиал без белого IP. При обрыве WAN сохраняет локальную авторизацию Wi-Fi через резервный RADIUS по кэшу. Для каждого узла нужна отдельная лицензия.</p>
+
+
           <ul class="price-card-features">
             <li>Безопасный проброс RDP (:3389) и SSH (:22)</li>
             <li>Исходящий WSS :443 туннель без белого IP</li>
@@ -724,19 +724,13 @@
             <li>Авторизация Wi-Fi (802.1X) при обрыве WAN</li>
             <li>Автоматическая репликация аудита в Core</li>
           </ul>
-          <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a>
-        </div>
-<article class="price-card"><h3 class="price-card-tier">Trust</h3>
-          <p class="license-description">Проверка состояния устройства при предоставлении доступа: BitLocker, Microsoft Defender и брандмауэр. Помогает учитывать защищённость рабочего места вместе с подтверждением личности пользователя.</p><div class="price-card-price">50 000 ₽</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Запросить модуль</a></article>
-<article class="price-card"><h3 class="price-card-tier">SSO</h3>
-          <p class="license-description">Единый вход в корпоративные веб-приложения по OpenID Connect и SAML 2.0 с подтверждением MFA. Пользователь проходит аутентификацию через Ligament Core; филиальный Relay в Web SSO не участвует.</p><div class="price-card-price">75 000 ₽</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Запросить модуль</a></article>
-<article class="price-card"><h3 class="price-card-tier">Bastion</h3>
-          <p class="license-description">Проброс RDP и SSH через Ligament Core или филиальный Relay до целевого хоста с подтверждением 2FA. Даёт защищённый удалённый доступ к рабочим станциям и серверам.</p><div class="price-card-price">100 000 ₽</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Запросить модуль</a></article>
-<article class="price-card"><h3 class="price-card-tier">SIEM Advanced</h3>
-          <p class="license-description">Расширенная SIEM-интеграция по согласованному составу работ. Базовая передача событий включена в Business; отдельная лицензия Advanced не требуется для этой базовой функции.</p><div class="price-card-price">200 000 ₽</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Запросить модуль</a></article>
-<article class="price-card"><h3 class="price-card-tier">PACS</h3>
-          <p class="license-description">Интеграция Ligament с системой контроля физического доступа (СКУД). Связывает проверку личности пользователя со сценариями доступа в помещения; совместимость с конкретной СКУД определяется при внедрении.</p><div class="price-card-price">100 000 ₽</div><div class="price-card-period">на организацию разово</div><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Запросить модуль</a></article>
-<article class="price-card"><h3 class="price-card-tier">Support</h3><div class="price-card-price">от 50 000 ₽</div><div class="price-card-period">на организацию в год</div><p>Услуга сопровождения: объём работ, время реакции и SLA по договору. Внедрение оценивается отдельно.</p><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Support">Обсудить сопровождение</a></article>
+          <a href="mailto:admin@ligam.org?subject=Branch%20Relay%20License%20Request" class="btn btn-outline">Добавить Relay</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">Trust</h3><div class="price-card-price">50 000 ₽</div><div class="price-card-period">на организацию разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Проверка состояния устройства при предоставлении доступа: BitLocker, Microsoft Defender и брандмауэр. Помогает учитывать защищённость рабочего места вместе с подтверждением личности пользователя.</p><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Trust%20License">Запросить модуль</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">SSO</h3><div class="price-card-price">75 000 ₽</div><div class="price-card-period">на организацию разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Единый вход в корпоративные веб-приложения по OpenID Connect и SAML 2.0 с подтверждением MFA. Пользователь проходит аутентификацию через Ligament Core; филиальный Relay в Web SSO не участвует.</p><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SSO%20License">Запросить модуль</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">Bastion</h3><div class="price-card-price">100 000 ₽</div><div class="price-card-period">на организацию разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Проброс RDP и SSH через Ligament Core или филиальный Relay до целевого хоста с подтверждением 2FA. Даёт защищённый удалённый доступ к рабочим станциям и серверам.</p><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Bastion%20License">Запросить модуль</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">SIEM Advanced</h3><div class="price-card-price">200 000 ₽</div><div class="price-card-period">на организацию разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Расширенная SIEM-интеграция по согласованному составу работ. Базовая передача событий включена в Business; отдельная лицензия Advanced не требуется для этой базовой функции.</p><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=SIEM%20License">Запросить модуль</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">PACS</h3><div class="price-card-price">100 000 ₽</div><div class="price-card-period">на организацию разово</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p class="license-description">Интеграция Ligament с системой контроля физического доступа (СКУД). Связывает проверку личности пользователя со сценариями доступа в помещения; совместимость с конкретной СКУД определяется при внедрении.</p><ul class="price-card-features"><li>Бессрочная лицензия модуля</li><li>1 год обновлений; далее 20% в год</li></ul><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=PACS%20License">Запросить модуль</a></div></details>
+<details class="price-card module-card"><summary class="module-summary"><h3 class="price-card-tier">Support</h3><div class="price-card-price">от 50 000 ₽</div><div class="price-card-period">на организацию в год</div><span class="module-more">Подробнее</span></summary><div class="module-details"><p>Услуга сопровождения: объём работ, время реакции и SLA по договору. Внедрение оценивается отдельно.</p><a class="btn btn-outline" href="mailto:admin@ligam.org?subject=Support">Обсудить сопровождение</a></div></details>
       </div>
     </div>
   </section>
@@ -750,7 +744,8 @@
         <p class="section-desc">Наглядное сопоставление возможностей ключевых подходов к корпоративной аутентификации.</p>
       </div>
 
-      <div class="table-wrapper">
+      <p class="scroll-hint">Прокрутите таблицу вправо, чтобы увидеть все решения ↔</p>
+      <div class="table-wrapper" tabindex="0" role="region" aria-label="Сравнение решений, горизонтальная прокрутка">
         <table class="comp-table">
           <thead>
             <tr>
@@ -843,7 +838,7 @@
       <div class="footer-grid">
         <div class="footer-col">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-            <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo.svg" alt="" width="136" height="37">
+            <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="136" height="37">
           </div>
           <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 280px;">
             Надежная On-Premise 2FA платформа для защиты рабочих станций Windows, VPN, Wi-Fi и Web SSO.
@@ -883,6 +878,6 @@
     </div>
   </footer>
 
-  <script src="site.js?v=localized-plans-4"></script>
+  <script src="site.js?v=visual-fixes-5"></script>
 </body>
 </html>

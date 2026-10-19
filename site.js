@@ -110,6 +110,7 @@
     const breakdown = document.getElementById('calc-breakdown');
     const renewal = document.getElementById('calc-renewal');
     const included = ['trust', 'sso', 'bastion'];
+    const moduleSelections = new WeakMap();
 
     function update() {
       const users = Math.min(1000, Math.max(5, parseInt(range.value, 10) || 5));
@@ -123,8 +124,22 @@
       let moduleTotal = 0;
       modules.forEach(function (input) {
         const bundled = business && included.includes(input.getAttribute('data-module'));
+        if (bundled && !moduleSelections.has(input)) {
+          moduleSelections.set(input, input.checked);
+          input.checked = true;
+        } else if (!bundled && moduleSelections.has(input)) {
+          input.checked = moduleSelections.get(input);
+          moduleSelections.delete(input);
+        }
         input.disabled = bundled;
         input.closest('label').classList.toggle('module-included', bundled);
+        const label = input.closest('label').querySelector('.module-choice-text');
+        if (label) {
+          if (!label.dataset.normalLabel) label.dataset.normalLabel = label.textContent;
+          label.textContent = bundled
+            ? input.getAttribute('data-module').toUpperCase() + (isEn ? ' — included in Business' : ' — включён в Business')
+            : label.dataset.normalLabel;
+        }
         if (!bundled && input.checked) moduleTotal += Number(input.getAttribute('data-module-price')) || 0;
       });
       const relayCount = relay ? Math.min(1000, Math.max(0, Math.floor(Number(relay.value) || 0))) : 0;
@@ -351,6 +366,33 @@
   // 7. Robust Smooth Nav Scroll & Active ScrollSpy
   function initNav() {
     const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
+    const menuButton = document.querySelector('.menu-toggle');
+    const navigation = document.getElementById('site-navigation');
+    function closeMenu() {
+      if (!menuButton || !navigation) return;
+      menuButton.setAttribute('aria-expanded', 'false');
+      navigation.classList.remove('is-open');
+    }
+    if (menuButton && navigation) {
+      menuButton.addEventListener('click', function () {
+        const open = menuButton.getAttribute('aria-expanded') !== 'true';
+        menuButton.setAttribute('aria-expanded', String(open));
+        navigation.classList.toggle('is-open', open);
+      });
+      navigation.addEventListener('click', function (event) {
+        if (event.target.closest('a')) closeMenu();
+      });
+      document.addEventListener('click', function (event) {
+        if (!event.target.closest('.site-header')) closeMenu();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+          closeMenu();
+          menuButton.focus();
+        }
+      });
+      window.matchMedia('(min-width: 1341px)').addEventListener('change', closeMenu);
+    }
 
     function scrollToHash(hash) {
       if (!hash || hash === '#') return;
