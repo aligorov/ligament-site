@@ -5,11 +5,11 @@
 (function () {
   'use strict';
 
-  // 1. Theme Toggle
+  // 1. Theme Toggle: Default to DARK for signature enterprise cyber aesthetic
   function initTheme() {
     const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    // Always default to 'dark' unless user explicitly saved 'light'
+    const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
 
     document.documentElement.setAttribute('data-theme', initialTheme);
 
@@ -28,7 +28,6 @@
   function initTabs() {
     const tabGroups = document.querySelectorAll('.tabs-group');
     if (!tabGroups.length) {
-      // Fallback for standalone tab buttons
       const tabBtns = document.querySelectorAll('.tab-btn');
       const tabPanes = document.querySelectorAll('.tab-content');
       tabBtns.forEach(function (btn) {
@@ -178,8 +177,10 @@
       opt.addEventListener('click', function () {
         const num = opt.getAttribute('data-match');
         matchOpts.forEach(function (o) { o.classList.remove('active'); });
-        opt.classList.add('active');
+
         if (num === '42') {
+          // Success
+          opt.classList.add('active');
           winStatus.textContent = '';
           const dot = document.createElement('span');
           dot.className = 'pulse-dot';
@@ -207,8 +208,7 @@
     });
   }
 
-
-  // 7. Interactive Zero-Trust Topology Network Graph
+  // 6. Interactive Zero-Trust Topology Network Graph
   function initGraph() {
     const scenarioBtns = document.querySelectorAll('.graph-scenario-btn');
     const nodes = document.querySelectorAll('.graph-node-group');
@@ -329,25 +329,85 @@
     });
   }
 
-  // 6. Smooth Nav Scroll
+  // 7. Robust Smooth Nav Scroll & Active ScrollSpy
   function initNav() {
+    const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
+
+    function scrollToHash(hash) {
+      if (!hash || hash === '#') return;
+      const id = hash.substring(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      const header = document.querySelector('.site-header');
+      const headerOffset = header ? header.offsetHeight + 18 : 90;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth'
+      });
+    }
+
+    // Intercept clicks on internal anchors
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
       anchor.addEventListener('click', function (e) {
-        const id = this.getAttribute('href').substring(1);
-        if (!id) return;
+        const hash = this.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const id = hash.substring(1);
         const target = document.getElementById(id);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
+          scrollToHash(hash);
           if (history.pushState) {
-            history.pushState(null, null, '#' + id);
+            history.pushState(null, null, hash);
           }
         }
       });
     });
+
+    // Handle hash on initial load with slight delay to ensure layout is ready
+    if (window.location.hash) {
+      setTimeout(function () {
+        scrollToHash(window.location.hash);
+      }, 150);
+    }
+
+    // ScrollSpy to highlight active link in header
+    if (navLinks.length && 'IntersectionObserver' in window) {
+      const sectionMap = {};
+      navLinks.forEach(function (link) {
+        const id = link.getAttribute('href').substring(1);
+        const sec = document.getElementById(id);
+        if (sec) {
+          sectionMap[id] = link;
+        }
+      });
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            if (sectionMap[id]) {
+              navLinks.forEach(function (l) { l.classList.remove('active'); });
+              sectionMap[id].classList.add('active');
+            }
+          }
+        });
+      }, {
+        rootMargin: '-15% 0px -70% 0px',
+        threshold: 0
+      });
+
+      Object.keys(sectionMap).forEach(function (id) {
+        const sec = document.getElementById(id);
+        if (sec) observer.observe(sec);
+      });
+    }
   }
 
-  // Init on load
+  // Init all on load
   function initAll() {
     initTheme();
     initTabs();
