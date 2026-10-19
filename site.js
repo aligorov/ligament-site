@@ -88,77 +88,73 @@
     });
   }
 
-  // 3. Modern Interactive Calculator
+  // 3. Localized license and module calculator.
   function initCalculator() {
     const range = document.getElementById('calc-users-range');
-    const valueBadge = document.getElementById('calc-users-val');
-    const priceOutput = document.getElementById('calc-price-output');
-    const subOutput = document.getElementById('calc-sub-output');
-    const presetBtns = document.querySelectorAll('.preset-btn');
-
-    if (!range || !priceOutput) return;
+    const plan = document.getElementById('calc-plan');
+    const output = document.getElementById('calc-price-output');
+    if (!range || !plan || !output) return;
 
     const isEn = document.documentElement.lang === 'en';
-    const moduleInputs = document.querySelectorAll('[data-module-price]');
-    const relayInput = document.getElementById('calc-relays');
-    const supportInput = document.getElementById('calc-support');
+    const scale = isEn ? 1 : 100;
+    const money = function (amount) {
+      return new Intl.NumberFormat(isEn ? 'en-US' : 'ru-RU', {
+        style: 'currency', currency: isEn ? 'USD' : 'RUB', minimumFractionDigits: 0, maximumFractionDigits: 2
+      }).format(amount * scale);
+    };
+    const modules = document.querySelectorAll('[data-module-price]');
+    const relay = document.getElementById('calc-relays');
+    const support = document.getElementById('calc-support');
+    const value = document.getElementById('calc-users-val');
+    const detail = document.getElementById('calc-sub-output');
     const breakdown = document.getElementById('calc-breakdown');
     const renewal = document.getElementById('calc-renewal');
+    const included = ['trust', 'sso', 'bastion'];
 
     function update() {
-      const raw = parseInt(range.value, 10) || 5;
-      const users = Math.min(10000, Math.max(5, raw));
-      if (valueBadge) {
-        valueBadge.textContent = users + (isEn ? ' users' : ' польз.');
-      }
-
-      let modulesTotal = 0;
-      moduleInputs.forEach(function (input) {
-        if (input.checked) modulesTotal += Number(input.getAttribute('data-module-price')) || 0;
+      const users = Math.min(1000, Math.max(5, parseInt(range.value, 10) || 5));
+      const free = users <= 5;
+      const seats = free ? 0 : Math.max(20, users);
+      const perpetual = plan.value === 'perpetual';
+      const business = plan.value.startsWith('business-') && !free;
+      const annual = plan.value.endsWith('-year');
+      const rate = perpetual ? 15 : business ? 2.5 : 1;
+      const userTotal = seats * rate * (annual ? 12 : 1);
+      let moduleTotal = 0;
+      modules.forEach(function (input) {
+        const bundled = business && included.includes(input.getAttribute('data-module'));
+        input.disabled = bundled;
+        input.closest('label').classList.toggle('module-included', bundled);
+        if (!bundled && input.checked) moduleTotal += Number(input.getAttribute('data-module-price')) || 0;
       });
-      const relays = relayInput ? Math.min(1000, Math.max(0, Math.floor(Number(relayInput.value) || 0))) : 0;
-      if (relayInput) relayInput.value = String(relays);
-      modulesTotal += relays * 500;
-      const support = supportInput && supportInput.checked ? 500 : 0;
-      const money = function (amount) { return '$' + amount.toLocaleString('en-US'); };
-      const seats = users <= 5 ? 0 : Math.max(20, users);
-      const baseTotal = seats * 15;
-      const total = baseTotal + modulesTotal + support;
-      priceOutput.textContent = (support ? (isEn ? 'from ' : 'от ') : '') + money(total);
-      if (breakdown) breakdown.textContent = (isEn ? 'User licenses: ' : 'Лицензии пользователей: ') + money(baseTotal) + (isEn ? '; modules and Relay: ' : '; модули и Relay: ') + money(modulesTotal) + (isEn ? '; Support, first year: from ' : '; Support за первый год: от ') + money(support);
-      if (renewal) renewal.textContent = (isEn ? 'Optional annual update renewal from year two: ' : 'Продление обновлений со второго года, по желанию: ') + money((modulesTotal + baseTotal) * 0.2) + (support ? (isEn ? '. Support: from $500/year, final quote by agreement.' : '. Support: от $500/год, итог по договору.') : '');
-
-      if (users <= 5) {
-        if (subOutput) {
-          subOutput.textContent = isEn
-            ? 'Community: up to 5 users free for base features; selected modules billed separately'
-            : 'Community: до 5 пользователей бесплатно с базовыми функциями; выбранные модули отдельно';
-        }
-        return;
-      }
-
-      if (subOutput) {
-        subOutput.textContent = isEn
-          ? seats + ' licenses × $15 one-time; minimum 20 licenses ($300). First year of updates included.'
-          : seats + ' лицензий × $15 разово; минимум 20 лицензий ($300). Первый год обновлений включён.';
-      }
+      const relayCount = relay ? Math.min(1000, Math.max(0, Math.floor(Number(relay.value) || 0))) : 0;
+      if (relay) relay.value = String(relayCount);
+      moduleTotal += relayCount * 500;
+      const supportTotal = support && support.checked ? 500 : 0;
+      const total = userTotal + moduleTotal + supportTotal;
+      const suffix = perpetual || free ? (isEn ? ' one-time' : ' разово') : annual ? (isEn ? ' for 13 months' : ' за 13 месяцев') : (isEn ? ' first payment' : ' первый платёж');
+      output.textContent = (supportTotal ? (isEn ? 'from ' : 'от ') : '') + money(total) + suffix;
+      if (value) value.textContent = users + (isEn ? ' users' : ' польз.');
+      if (detail) detail.textContent = free
+        ? (isEn ? 'Community: base features free for up to 5 users. Selected modules billed separately.' : 'Community: базовые функции бесплатно до 5 пользователей. Выбранные модули отдельно.')
+        : seats + (isEn ? ' licenses; minimum 20. ' : ' лицензий; минимум 20. ') + (perpetual
+          ? (isEn ? 'Base perpetual; first year of updates included.' : 'Base бессрочно; первый год обновлений включён.')
+          : (business ? 'Business: Base + SSO + Trust + Bastion + ' + (isEn ? 'basic SIEM event forwarding. ' : 'базовая передача событий в SIEM. ') : 'Base: Windows Logon/UAC + RADIUS + Notify. ') + (annual ? (isEn ? '12 paid months + 1 month free.' : '12 месяцев оплаты + 1 месяц в подарок.') : (isEn ? 'Monthly billing; subscription updates included.' : 'Помесячная оплата; обновления подписки включены.')));
+      if (breakdown) breakdown.textContent = (isEn ? 'User licenses: ' : 'Лицензии пользователей: ') + money(userTotal) + (isEn ? '; one-time modules and Relay: ' : '; модули и Relay разово: ') + money(moduleTotal) + (supportTotal ? (isEn ? '; Support for 1 year: from ' : '; Support на 1 год: от ') + money(supportTotal) : '');
+      if (renewal) renewal.textContent = (perpetual || free ? '' : (isEn ? 'Recurring user subscription: ' : 'Продление пользовательской подписки: ') + money(userTotal) + (annual ? (isEn ? ' for 13 months. ' : ' за 13 месяцев. ') : (isEn ? '/month. ' : '/месяц. '))) + (isEn ? 'Optional updates for purchased perpetual licenses from year two: ' : 'Обновления приобретённых бессрочных лицензий со второго года, по желанию: ') + money((moduleTotal + (perpetual ? userTotal : 0)) * 0.2) + (isEn ? '/year.' : '/год.') + (supportTotal ? (isEn ? ' Support: from ' : ' Support: от ') + money(500) + (isEn ? '/year by agreement.' : '/год по договору.') : '');
     }
 
     range.addEventListener('input', update);
-    moduleInputs.forEach(function (input) { input.addEventListener('change', update); });
-    if (relayInput) relayInput.addEventListener('input', update);
-    if (supportInput) supportInput.addEventListener('change', update);
-
-    presetBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const count = parseInt(btn.getAttribute('data-count'), 10);
-        if (count) {
-          range.value = count;
-          update();
-        }
+    plan.addEventListener('change', update);
+    modules.forEach(function (input) { input.addEventListener('change', update); });
+    if (relay) relay.addEventListener('input', update);
+    if (support) support.addEventListener('change', update);
+    document.querySelectorAll('.preset-btn').forEach(function (button) {
+      button.addEventListener('click', function () {
+        range.value = button.getAttribute('data-count');
+        update();
       });
     });
-
     update();
   }
 
