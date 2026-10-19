@@ -32,12 +32,22 @@
 
     document.documentElement.setAttribute('data-theme', initialTheme);
 
+    function updateBrandLogos(theme) {
+      document.querySelectorAll('.brand-logo').forEach(function (logo) {
+        const source = logo.getAttribute('data-logo-' + theme);
+        if (source) logo.setAttribute('src', source);
+      });
+    }
+
+    updateBrandLogos(initialTheme);
+
     const toggleBtn = document.getElementById('theme-toggle');
     if (toggleBtn) {
       toggleBtn.addEventListener('click', function () {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', newTheme);
+        updateBrandLogos(newTheme);
         localStorage.setItem('theme', newTheme);
       });
     }

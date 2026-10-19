@@ -434,15 +434,6 @@ button {
   object-fit: contain;
   object-position: left center;
 }
-.brand-logo--light {
-  display: none;
-}
-[data-theme="light"] .brand-logo--dark {
-  display: none;
-}
-[data-theme="light"] .brand-logo--light {
-  display: block;
-}
 .brand-badge {
   flex-shrink: 0;
 }
