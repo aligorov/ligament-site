@@ -101,7 +101,7 @@
     if (!range || !priceOutput) return;
 
     const isEn = document.documentElement.lang === 'en';
-    let activePlan = 'sub'; // 'sub' ($2/mo/user = $24/yr) or 'life' ($5/user one-time)
+    let activePlan = 'sub'; // 'sub' ($2/mo/user = $24/yr) or 'life' ($10/user one-time)
 
     function update() {
       const raw = parseInt(range.value, 10) || 5;
@@ -129,12 +129,12 @@
             : 'Равносильно $' + (users * 2) + ' в месяц ($2/пользователь, ежегодная оплата)';
         }
       } else {
-        const totalLife = users * 5; // $5/user one-time
+        const totalLife = users * 10; // $10/user one-time
         priceOutput.textContent = '$' + totalLife.toLocaleString('en-US') + (isEn ? ' one-time' : ' разово');
         if (subOutput) {
           subOutput.textContent = isEn
-            ? 'Perpetual lifetime license without recurring monthly fees ($5 per user)'
-            : 'Бессрочная лицензия без регулярных платежей ($5/пользователь навсегда)';
+            ? 'Perpetual lifetime license: $10 per user one-time; 1 year of updates included, then renewed separately'
+            : 'Бессрочная лицензия: $10/пользователь разово; 1 год обновлений включен, далее обновления продлеваются отдельно';
         }
       }
     }
