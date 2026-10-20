@@ -32,7 +32,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=topology-transport-7">
+  <link rel="stylesheet" href="../styles.css?v=link-coming-soon-8">
 </head>
 <body>
 
@@ -102,6 +102,7 @@
         </div>
       </div>
 
+      <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — remote desktop in your infrastructure →</a>
       <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
       <div class="hero-mockup-wrapper">
         <div class="mockup-grid">
@@ -443,6 +444,18 @@
     </div>
   </section>
 
+  <!-- Ligament Link: planned product, not a released download -->
+  <section id="ligament-link" class="section link-section" aria-labelledby="link-heading">
+    <div class="container">
+      <div class="link-intro"><div><span class="link-status">Coming soon · In development</span><h2 id="link-heading" class="section-title">Ligament Link</h2><p class="link-lead">Remote desktop under your control</p><p class="link-description">We are developing an on-premise alternative to TeamViewer and AnyDesk within the Ligament 2FA ecosystem, for IT support, administration and access to an office PC from home.</p><div class="tag-pills"><span class="tag-pill">On-Premise</span><span class="tag-pill">Console Sharing</span><span class="tag-pill">2FA / Passkey / Push</span></div></div>
+      <aside class="link-roadmap" aria-label="Development status"><h3>What we are building</h3><p>One environment for device access, second-factor authentication, permission revocation and audit.</p><p class="link-disclaimer">The features below describe the development roadmap. Release timing, supported platforms, release scope and licensing will be announced separately.</p><a href="mailto:admin@ligam.org?subject=Ligament%20Link%20early%20access" class="btn btn-primary">Discuss early access</a></aside></div>
+      <h3 class="link-features-heading">Planned capabilities</h3>
+      <div class="link-features"><article class="link-feature"><h4>Shared desktop</h4><p>Console sharing lets the operator and employee see the same desktop and work together without opening a separate RDP session.</p></article><article class="link-feature"><h4>Unattended access</h4><p>Planned access to locked PCs, login-screen interaction and Ctrl+Alt+Del. Access follows assigned permissions and the 2FA policy.</p></article><article class="link-feature"><h4>Your own infrastructure</h4><p>Planned deployment of servers, relays and keys within the organization’s infrastructure. Screen and file traffic stays within that deployment.</p></article><article class="link-feature"><h4>HTTPS / WSS :443</h4><p>Secure outbound connections to your infrastructure, without inbound port forwarding on workstations. Connectivity depends on network policies and proxy configuration.</p></article><article class="link-feature"><h4>Central access revocation</h4><p>Planned centralized access control and termination of active sessions from Ligament 2FA when a user is blocked or a permission is revoked.</p></article><article class="link-feature"><h4>Device inventory and audit</h4><p>Planned Windows/Linux device inventory with status and connection logs: user, source device, target host, time and access mode. Event integration with SIEM.</p></article></div>
+      <div class="link-use-cases"><p><strong>For security teams:</strong> managed access instead of untracked remote connections.</p><p><strong>For IT teams:</strong> help employees in their current console and service devices without the user present.</p><p><strong>For employees:</strong> access the familiar office desktop with 2FA, without a mandatory separate office VPN.</p></div>
+      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion provides RDP/SSH forwarding through Core or Relay. Ligament Link is being developed for shared-console access and remote assistance as a separate product direction.</p>
+    </div>
+  </section>
+
   <!-- Downloads Section -->
   <section id="downloads" class="section downloads-section">
     <div class="container">
@@ -696,6 +709,7 @@
             <li><a href="#benefits">RADIUS (MikroTik / Cisco)</a></li>
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
             <li><a href="#benefits">Branch Relay (RDP/SSH &amp; Wi-Fi)</a></li>
+            <li><a href="#ligament-link">Ligament Link — Coming soon</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -714,6 +728,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=topology-transport-7"></script>
+  <script src="../site.js?v=link-coming-soon-8"></script>
 </body>
 </html>
