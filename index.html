@@ -6,7 +6,6 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
   <title>Ligament 2FA — On-Premise MFA для Windows Logon, RDP, RADIUS и SSO</title>
   <meta name="description" content="Автономная 2FA/MFA платформа в одном Docker-контейнере: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, бастион и СКУД без облачных зависимостей.">
   <meta name="theme-color" content="#07090e">
@@ -64,7 +63,7 @@
       <div class="header-actions">
         <a href="en/index.html?lang=en" class="lang-switch" hreflang="en" aria-label="Switch to English">EN</a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Открыть меню">Меню</button>
-        <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
+        <button type="button" id="theme-toggle" class="theme-btn" aria-label="Переключить тему">🌓</button>
         <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Запросить Demo</a>
       </div>
     </div>
@@ -351,15 +350,15 @@
       </div>
 
       <!-- Tabs Navigation -->
-      <div class="tabs-nav">
-        <button type="button" class="tab-btn active" data-tab="tab-workstations">💻 Рабочие станции</button>
-        <button type="button" class="tab-btn" data-tab="tab-radius">📡 Сеть и RADIUS</button>
-        <button type="button" class="tab-btn" data-tab="tab-sso">🌐 Web SSO (OIDC в Core)</button>
-        <button type="button" class="tab-btn" data-tab="tab-relay">🏭 Филиал: Relay (RDP/SSH & Wi-Fi)</button>
+      <div class="tabs-nav" role="tablist" aria-label="Векторы защиты">
+        <button type="button" id="tab-btn-workstations" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-workstations" data-tab="tab-workstations">💻 Рабочие станции</button>
+        <button type="button" id="tab-btn-radius" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-radius" data-tab="tab-radius" tabindex="-1">📡 Сеть и RADIUS</button>
+        <button type="button" id="tab-btn-sso" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-sso" data-tab="tab-sso" tabindex="-1">🌐 Web SSO (OIDC в Core)</button>
+        <button type="button" id="tab-btn-relay" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-relay" data-tab="tab-relay" tabindex="-1">🏭 Филиал: Relay (RDP/SSH & Wi-Fi)</button>
       </div>
 
       <!-- Tab 1: Workstations -->
-      <div id="tab-workstations" class="tab-content active">
+      <div id="tab-workstations" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-workstations">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">Windows Auto-Logon</h4>
@@ -380,7 +379,7 @@
       </div>
 
       <!-- Tab 2: RADIUS -->
-      <div id="tab-radius" class="tab-content">
+      <div id="tab-radius" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-radius">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">RADIUS Push Holding (RFC 5080)</h4>
@@ -401,7 +400,7 @@
       </div>
 
       <!-- Tab 3: SSO through Core; Bastion through Core or Relay -->
-      <div id="tab-sso" class="tab-content">
+      <div id="tab-sso" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-sso">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">OIDC & SAML 2.0 (Строго через Core)</h4>
@@ -422,7 +421,7 @@
       </div>
 
       <!-- Tab 4: Branch Relay -->
-      <div id="tab-relay" class="tab-content">
+      <div id="tab-relay" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-relay">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">Безопасный проброс RDP и SSH</h4>
@@ -530,7 +529,7 @@
         </div>
 
 <div class="calc-row"><label for="calc-plan">Тариф и способ оплаты</label><select id="calc-plan"><option value="base-month">Base — 100 ₽/пользователь/месяц</option><option value="base-year">Base — 1 200 ₽ за 13 месяцев</option><option value="business-month" selected>Business — 250 ₽/пользователь/месяц</option><option value="business-year">Business — 3 000 ₽ за 13 месяцев</option><option value="perpetual">Base бессрочно — 1 500 ₽/пользователь</option></select><p>Платные лицензии — минимум 20 пользователей. Для бесплатного Community выберите 5 пользователей.</p></div>
-<fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу. В Business также включены Trust, SSO, Bastion и базовая передача событий в SIEM.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"><span class="module-choice-text">Trust — 50 000 ₽</span></label><label><input type="checkbox" data-module-price="750" data-module="sso"><span class="module-choice-text">SSO — 75 000 ₽</span></label><label><input type="checkbox" data-module-price="1000" data-module="bastion"><span class="module-choice-text">Bastion — 100 000 ₽</span></label><label><input type="checkbox" data-module-price="2000" data-module="siem"> SIEM Advanced — 200 000 ₽</label><label><input type="checkbox" data-module-price="1000" data-module="pacs"> PACS — 100 000 ₽</label></div><label for="calc-relays">Relay — 50 000 ₽ за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от 50 000 ₽/год</label></fieldset>
+<fieldset class="license-options"><legend>Дополнительные модули</legend><p>На организацию разово. Notify включён в базу. В Business также включены Trust, SSO, Bastion и базовая передача событий в SIEM.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"><span class="module-choice-text">Trust — 50 000 ₽</span></label><label><input type="checkbox" data-module-price="750" data-module="sso"><span class="module-choice-text">SSO — 75 000 ₽</span></label><label><input type="checkbox" data-module-price="1000" data-module="bastion"><span class="module-choice-text">Bastion — 100 000 ₽</span></label><label><input type="checkbox" data-module-price="2000" data-module="siem"><span class="module-choice-text">SIEM Advanced — 200 000 ₽</span></label><label><input type="checkbox" data-module-price="1000" data-module="pacs"><span class="module-choice-text">PACS — 100 000 ₽</span></label></div><label for="calc-relays">Relay — 50 000 ₽ за узел</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — от 50 000 ₽/год</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Стоимость выбранной конфигурации</div>
           <div id="calc-price-output" class="calc-result-price">12 500 ₽ / месяц</div>

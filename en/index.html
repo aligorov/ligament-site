@@ -6,7 +6,6 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
   <title>Ligament 2FA — On-Premise MFA for Windows Logon, RDP, RADIUS & SSO</title>
   <meta name="description" content="Self-hosted MFA platform in a single Docker container: Windows logon, RDP, RADIUS Wi-Fi/VPN, SSO OIDC/SAML, bastion & physical access without cloud lock-in.">
   <meta name="theme-color" content="#07090e">
@@ -64,7 +63,7 @@
       <div class="header-actions">
         <a href="../index.html?lang=ru" class="lang-switch" hreflang="ru" aria-label="Переключить на русский">RU</a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Open menu">Menu</button>
-        <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
+        <button type="button" id="theme-toggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
         <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Request Demo</a>
       </div>
     </div>
@@ -351,15 +350,15 @@
       </div>
 
       <!-- Tabs Navigation -->
-      <div class="tabs-nav">
-        <button type="button" class="tab-btn active" data-tab="tab-workstations">💻 Workstations</button>
-        <button type="button" class="tab-btn" data-tab="tab-radius">📡 RADIUS & Network</button>
-        <button type="button" class="tab-btn" data-tab="tab-sso">🌐 Web SSO (Core only)</button>
-        <button type="button" class="tab-btn" data-tab="tab-relay">🏭 Branch Relay (RDP/SSH &amp; Wi-Fi)</button>
+      <div class="tabs-nav" role="tablist" aria-label="Protection vectors">
+        <button type="button" id="tab-btn-workstations" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-workstations" data-tab="tab-workstations">💻 Workstations</button>
+        <button type="button" id="tab-btn-radius" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-radius" data-tab="tab-radius" tabindex="-1">📡 RADIUS & Network</button>
+        <button type="button" id="tab-btn-sso" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-sso" data-tab="tab-sso" tabindex="-1">🌐 Web SSO (Core only)</button>
+        <button type="button" id="tab-btn-relay" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-relay" data-tab="tab-relay" tabindex="-1">🏭 Branch Relay (RDP/SSH &amp; Wi-Fi)</button>
       </div>
 
       <!-- Tab 1: Workstations -->
-      <div id="tab-workstations" class="tab-content active">
+      <div id="tab-workstations" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-workstations">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">Windows Auto-Logon</h4>
@@ -380,7 +379,7 @@
       </div>
 
       <!-- Tab 2: RADIUS -->
-      <div id="tab-radius" class="tab-content">
+      <div id="tab-radius" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-radius">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">RADIUS Push Holding (RFC 5080)</h4>
@@ -401,7 +400,7 @@
       </div>
 
       <!-- Tab 3: Web SSO through Core -->
-      <div id="tab-sso" class="tab-content">
+      <div id="tab-sso" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-sso">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">OIDC &amp; SAML 2.0 — Core only</h4>
@@ -422,7 +421,7 @@
       </div>
 
       <!-- Tab 4: Branch Relay -->
-      <div id="tab-relay" class="tab-content">
+      <div id="tab-relay" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-relay">
         <div class="feature-tab-grid">
           <div class="feat-card">
             <h4 class="feat-card-title">Secure RDP &amp; SSH forwarding</h4>
@@ -530,7 +529,7 @@
         </div>
 
 <div class="calc-row"><label for="calc-plan">Plan and billing</label><select id="calc-plan"><option value="base-month">Base — $1/user/month</option><option value="base-year">Base — $12 for 13 months</option><option value="business-month" selected>Business — $2.50/user/month</option><option value="business-year">Business — $30 for 13 months</option><option value="perpetual">Base perpetual — $15/user</option></select><p>Paid licenses: minimum 20 users. Select 5 users for free Community.</p></div>
-<fieldset class="license-options"><legend>Additional modules</legend><p>One-time per organization. Notify is included in the base. Business also includes Trust, SSO, Bastion and basic SIEM event forwarding.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"><span class="module-choice-text">Trust — $500</span></label><label><input type="checkbox" data-module-price="750" data-module="sso"><span class="module-choice-text">SSO — $750</span></label><label><input type="checkbox" data-module-price="1000" data-module="bastion"><span class="module-choice-text">Bastion — $1,000</span></label><label><input type="checkbox" data-module-price="2000" data-module="siem"> SIEM Advanced — $2,000</label><label><input type="checkbox" data-module-price="1000" data-module="pacs"> PACS — $1,000</label></div><label for="calc-relays">Relay — $500 per node</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — from $500/year</label></fieldset>
+<fieldset class="license-options"><legend>Additional modules</legend><p>One-time per organization. Notify is included in the base. Business also includes Trust, SSO, Bastion and basic SIEM event forwarding.</p><div class="module-options"><label><input type="checkbox" data-module-price="500" data-module="trust"><span class="module-choice-text">Trust — $500</span></label><label><input type="checkbox" data-module-price="750" data-module="sso"><span class="module-choice-text">SSO — $750</span></label><label><input type="checkbox" data-module-price="1000" data-module="bastion"><span class="module-choice-text">Bastion — $1,000</span></label><label><input type="checkbox" data-module-price="2000" data-module="siem"><span class="module-choice-text">SIEM Advanced — $2,000</span></label><label><input type="checkbox" data-module-price="1000" data-module="pacs"><span class="module-choice-text">PACS — $1,000</span></label></div><label for="calc-relays">Relay — $500 per node</label><input id="calc-relays" type="number" min="0" max="1000" step="1" value="0"><label><input id="calc-support" type="checkbox"> Support — from $500/year</label></fieldset>
         <div class="calc-result-box">
           <div class="calc-result-title">Selected configuration cost</div>
           <div id="calc-price-output" class="calc-result-price">$125 / month</div>

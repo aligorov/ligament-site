@@ -25,9 +25,10 @@ ligam.org, www.ligam.org {
     }
     header @static Cache-Control "public, max-age=2592000, immutable"
 
-    # Clean 404
+    # Error pages: serve the branded page with the ORIGINAL error status
+    # (a rewrite to index would turn 404 into a soft-404 and hurt SEO)
     handle_errors {
-        rewrite * /index.html
+        rewrite * /404.html
         file_server
     }
 }

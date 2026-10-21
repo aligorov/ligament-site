@@ -2169,7 +2169,12 @@ button {
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .flow-line { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Audited topology: explicit routes, outbound tunnel and isolated Wi-Fi backup. */
@@ -2251,4 +2256,47 @@ button {
   .graph-offline-mobile strong, .graph-offline-mobile div span { display: block; }
   .graph-offline-mobile div span { color: #cbd5e1; font-size: 13px; margin-top: 6px; }
   .offline-scenario .graph-svg, .offline-scenario .graph-zoom, .offline-scenario .graph-scroll-hint { display: none; }
+}
+
+/* Language suggestion bar (no auto-redirect — visitor stays in control) */
+.lang-suggest-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(92vw, 460px);
+  padding: 10px 12px 10px 18px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-full, 999px);
+  background: var(--bg-card-solid, #121826);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.lang-suggest-bar .lang-switch {
+  color: var(--text-main, #f8fafc);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.lang-suggest-bar .lang-switch:hover { color: var(--accent, #06b6d4); }
+.lang-suggest-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-full, 999px);
+  background: transparent;
+  color: var(--text-muted, #94a3b8);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.lang-suggest-close:hover { color: var(--text-main, #f8fafc); border-color: var(--accent, #06b6d4); }
+@media (max-width: 560px) {
+  .lang-suggest-bar { bottom: 10px; padding-left: 14px; }
+  .lang-suggest-bar .lang-switch { font-size: 13px; }
 }

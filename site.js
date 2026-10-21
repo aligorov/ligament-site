@@ -5,32 +5,91 @@
 (function () {
   'use strict';
 
-  // 0. Language: follow the browser/system language, with an explicit RU/EN override.
-  function initLanguageRedirect() {
-    const path = window.location.pathname.replace(/\/+$/, '') || '/';
-    const isEnglishPage = path === '/en' || path.endsWith('/en/index.html');
-    const queryLanguage = new URLSearchParams(window.location.search).get('lang');
-    const systemLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'ru';
-    const language = queryLanguage || systemLanguage;
-    const wantsEnglish = language.toLowerCase().startsWith('en');
+  // 0. Language: remember explicit choices (?lang= or RU/EN switcher),
+  // never auto-redirect — show a dismissible one-click suggestion instead.
+  function initLanguage() {
+    const isEn = document.documentElement.lang === 'en';
+    const params = new URLSearchParams(window.location.search);
+    const queryLanguage = params.get('lang');
 
-    if (isEnglishPage === wantsEnglish) return;
+    function rememberLanguage(lang) {
+      try {
+        localStorage.setItem('lang', lang);
+        localStorage.removeItem('lang-suggestion-dismissed');
+      } catch (e) {}
+    }
 
-    const target = new URL(wantsEnglish ? '/en/index.html' : '/index.html', window.location.origin);
-    if (queryLanguage) target.searchParams.set('lang', wantsEnglish ? 'en' : 'ru');
-    target.hash = window.location.hash;
-    window.location.replace(target.href);
+    if (queryLanguage) {
+      rememberLanguage(queryLanguage.toLowerCase().startsWith('en') ? 'en' : 'ru');
+    }
+
+    let preferred;
+    try { preferred = localStorage.getItem('lang'); } catch (e) {}
+    if (!preferred) {
+      const systemLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+      preferred = systemLanguage.toLowerCase().startsWith('en') ? 'en' : 'ru';
+    }
+    const wantsEnglish = preferred.toLowerCase().startsWith('en');
+    if (wantsEnglish === isEn) return;
+
+    let dismissed = false;
+    try { dismissed = localStorage.getItem('lang-suggestion-dismissed') === '1'; } catch (e) {}
+    if (dismissed) return;
+
+    const indexFile = isEn ? '/en/index.html' : '/index.html';
+    const searchWithoutLang = new URLSearchParams(window.location.search);
+    searchWithoutLang.delete('lang');
+    const cleanSearch = searchWithoutLang.toString();
+    const href = window.location.origin + indexFile + (cleanSearch ? '?' + cleanSearch : '') + window.location.hash;
+
+    const bar = document.createElement('aside');
+    bar.className = 'lang-suggest-bar';
+    bar.setAttribute('role', 'note');
+    bar.setAttribute('aria-label', isEn ? 'Language suggestion' : 'Предложение языка');
+
+    const link = document.createElement('a');
+    link.className = 'lang-switch';
+    link.setAttribute('hreflang', wantsEnglish ? 'en' : 'ru');
+    link.href = href;
+    link.textContent = wantsEnglish ? '🇬🇧 Switch to English' : '🇷🇺 Переключиться на русский';
+
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'lang-suggest-close';
+    close.setAttribute('aria-label', isEn ? 'Hide language suggestion' : 'Скрыть предложение языка');
+    close.textContent = '✕';
+    close.addEventListener('click', function () {
+      bar.remove();
+      try { localStorage.setItem('lang-suggestion-dismissed', '1'); } catch (e) {}
+    });
+
+    bar.appendChild(link);
+    bar.appendChild(close);
+    document.body.appendChild(bar);
+
+    document.querySelectorAll('.lang-switch').forEach(function (switcher) {
+      switcher.addEventListener('click', function () {
+        rememberLanguage(switcher.getAttribute('hreflang') || (isEn ? 'ru' : 'en'));
+      });
+    });
   }
 
-  initLanguageRedirect();
+  initLanguage();
 
   // 1. Theme Toggle: Default to DARK for signature enterprise cyber aesthetic
+  const THEME_META_COLORS = { dark: '#07090e', light: '#f1f5f9' };
+  function applyThemeMeta(theme) {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', THEME_META_COLORS[theme] || THEME_META_COLORS.dark);
+  }
+
   function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     // Always default to 'dark' unless user explicitly saved 'light'
     const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
 
     document.documentElement.setAttribute('data-theme', initialTheme);
+    applyThemeMeta(initialTheme);
 
     function updateBrandLogos(theme) {
       document.querySelectorAll('.brand-logo').forEach(function (logo) {
@@ -47,44 +106,74 @@
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', newTheme);
+        applyThemeMeta(newTheme);
         updateBrandLogos(newTheme);
         localStorage.setItem('theme', newTheme);
       });
     }
   }
 
-  // 2. Interactive Scoped Tabs
+  // 2. Interactive Scoped Tabs (WAI-ARIA tab pattern)
   function initTabs() {
-    const tabGroups = document.querySelectorAll('.tabs-group');
-    if (!tabGroups.length) {
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabPanes = document.querySelectorAll('.tab-content');
-      tabBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const targetId = btn.getAttribute('data-tab');
-          tabBtns.forEach(function (b) { b.classList.remove('active'); });
-          tabPanes.forEach(function (p) { p.classList.remove('active'); });
-          btn.classList.add('active');
-          const targetPane = document.getElementById(targetId);
-          if (targetPane) targetPane.classList.add('active');
+    function select(buttons, panes, active) {
+      buttons.forEach(function (btn) {
+        const isActive = btn === active;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+      panes.forEach(function (pane) {
+        pane.classList.toggle('active', pane.id === active.getAttribute('data-tab'));
+      });
+    }
+
+    function bind(buttons, panes) {
+      if (!buttons.length) return;
+      const initial = Array.prototype.find.call(buttons, function (btn) {
+        return btn.classList.contains('active');
+      }) || buttons[0];
+      select(buttons, panes, initial);
+      buttons.forEach(function (btn, index) {
+        btn.addEventListener('click', function () { select(buttons, panes, btn); });
+        btn.addEventListener('keydown', function (event) {
+          let target = null;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+            target = buttons[(index + 1) % buttons.length];
+          } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+            target = buttons[(index - 1 + buttons.length) % buttons.length];
+          } else if (event.key === 'Home') {
+            target = buttons[0];
+          } else if (event.key === 'End') {
+            target = buttons[buttons.length - 1];
+          }
+          if (target) {
+            event.preventDefault();
+            target.focus();
+            select(buttons, panes, target);
+          }
         });
+      });
+    }
+
+    const tabGroups = document.querySelectorAll('.tabs-group');
+    if (tabGroups.length) {
+      tabGroups.forEach(function (group) {
+        bind(group.querySelectorAll('.tab-btn'), group.querySelectorAll('.tab-content'));
       });
       return;
     }
 
-    tabGroups.forEach(function (group) {
-      const btns = group.querySelectorAll('.tab-btn');
-      const panes = group.querySelectorAll('.tab-content');
-      btns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const targetId = btn.getAttribute('data-tab');
-          btns.forEach(function (b) { b.classList.remove('active'); });
-          panes.forEach(function (p) { p.classList.remove('active'); });
-          btn.classList.add('active');
-          const target = group.querySelector('#' + targetId);
-          if (target) target.classList.add('active');
+    document.querySelectorAll('.tabs-nav').forEach(function (nav) {
+      const buttons = nav.querySelectorAll('.tab-btn');
+      const paneIds = (function () {
+        const registry = {};
+        buttons.forEach(function (btn) {
+          const pane = document.getElementById(btn.getAttribute('data-tab'));
+          if (pane) registry[pane.id] = pane;
         });
-      });
+        return Object.keys(registry).map(function (id) { return registry[id]; });
+      })();
+      bind(buttons, paneIds.length ? paneIds : document.querySelectorAll('.tab-content'));
     });
   }
 
@@ -173,8 +262,41 @@
     update();
   }
 
-  // 4. Copy-to-Clipboard
+  // 4. Copy-to-Clipboard (with legacy fallback + failure feedback)
   function initClipboard() {
+    const isEn = document.documentElement.lang === 'en';
+
+    function legacyCopy(text) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.setAttribute('aria-hidden', 'true');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(area);
+      return copied;
+    }
+
+    function acknowledge(btn, ok) {
+      const originalText = btn.textContent;
+      btn.textContent = ok
+        ? (btn.getAttribute('data-copied-label') || (isEn ? '✓ Copied!' : '✓ Скопировано!'))
+        : (isEn ? '✕ Copy failed' : '✕ Не удалось');
+      btn.setAttribute('disabled', 'disabled');
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.removeAttribute('disabled');
+      }, 2000);
+    }
+
+    document.querySelectorAll('[data-copy]').forEach(function (btn) {
+      btn.setAttribute('aria-live', 'polite');
+    });
+
     document.addEventListener('click', function (e) {
       const btn = e.target.closest('[data-copy]');
       if (!btn) return;
@@ -182,18 +304,14 @@
       const text = btn.getAttribute('data-copy');
       if (!text) return;
 
-      navigator.clipboard.writeText(text).then(function () {
-        const originalText = btn.textContent;
-        const isEn = document.documentElement.lang === 'en';
-        const feedback = btn.getAttribute('data-copied-label') || (isEn ? '✓ Copied!' : '✓ Скопировано!');
-        btn.textContent = feedback;
-        btn.setAttribute('disabled', 'disabled');
-
-        setTimeout(function () {
-          btn.textContent = originalText;
-          btn.removeAttribute('disabled');
-        }, 2000);
-      }).catch(function () {});
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { acknowledge(btn, true); },
+          function () { acknowledge(btn, legacyCopy(text)); }
+        );
+      } else {
+        acknowledge(btn, legacyCopy(text));
+      }
     });
   }
 

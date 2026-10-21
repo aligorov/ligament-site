@@ -3,7 +3,7 @@
 Официальный статический презентационный сайт-лендинг продукта **Ligament** (on-premise MFA/2FA платформа для корпоративной инфраструктуры).
 
 Сайт построен по принципу **нулевых внешних зависимостей**:
-- Чистый HTML5 + CSS3 + легковесный Vanilla JS (`site.js` ≤ 5 КБ).
+- Чистый HTML5 + CSS3 + Vanilla JS без зависимостей и сборщиков (`site.js` ~34 КБ, ~10 КБ gzip; Node.js/npm не требуются).
 - Без внешних CDN, веб-шрифтов, сторонних трекеров и сборщиков (Node.js/npm не требуются).
 - Строгая политика безопасности CSP (`connect-src 'none'`, без инлайн-скриптов и `innerHTML`).
 - Две полноценные статические языковые версии: `index.html` (RU, канонический) и `en/index.html` (EN).
@@ -17,10 +17,13 @@ ligament-site/
 ├── index.html                 # Русская версия (канонический URL)
 ├── en/
 │   └── index.html             # Английская версия (hreflang-пара)
+├── 404.html                   # Брендированная страница ошибки (сохраняет статус 404)
 ├── styles.css                 # Единый файл стилей (CSS3 переменные, темная/светлая темы)
-├── site.js                    # Vanilla JS (переключение тем, калькулятор, буфер обмена)
+├── site.js                    # Vanilla JS (язык, темы, калькулятор, граф, буфер обмена)
 ├── robots.txt                 # Директивы для поисковых систем
 ├── sitemap.xml                # Карта сайта с разметкой hreflang
+├── nginx.conf                 # Контейнерный Nginx (error_page, кэш, gzip)
+├── Caddyfile                  # Альтернатива Nginx: авто-HTTPS + заголовки
 ├── security-headers.conf      # Готовый сниппет заголовков безопасности для Nginx
 ├── assets/
 │   ├── brand/                 # SVG-логотипы (вариант 01 Связка), favicon, og-image
@@ -48,10 +51,10 @@ python3 -m http.server 8080
 
 Проверьте:
 - Навигацию по якорным ссылкам (`#features`, `#pricing`, `#comparison`, `#install` и т.д.).
-- Переключение языка (сохраняет текущий якорь).
+- Переключение языка (сохраняет текущий якорь; выбор запоминается в `localStorage`, вместо принудительного редиректа показывается открываемая подсказка).
 - Переключение темы (светлая/тёмная, сохраняется в `localStorage`).
-- Интерактивный калькулятор стоимости лицензии.
-- Копирование адреса USDT-кошелька и консольных команд в буфер обмена.
+- Интерактивный калькулятор стоимости лицензии (табы работают с клавиатуры: стрелки/Home/End).
+- Копирование адреса USDT-кошелька и консольных команд в буфер обмена (с резервным режимом для не-HTTPS).
 
 ---
 
@@ -62,11 +65,15 @@ python3 -m http.server 8080
 
 ```nginx
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+    http2 on;
     server_name ligam.org www.ligam.org;
 
     root /var/www/ligament-site;
     index index.html;
+
+    # Брендированная 404 с сохранением статуса (без soft-404)
+    error_page 404 /404.html;
 
     # Подключение строгих заголовков безопасности (CSP, HSTS, X-Frame-Options)
     include /var/www/ligament-site/security-headers.conf;
@@ -75,10 +82,9 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    # Кэширование статических ассетов
+    # Кэширование статических ассетов (один Cache-Control без дублей)
     location ~* \.(css|js|svg|png|jpg|ico|pdf|webm|mp4)$ {
-        expires 30d;
-        add_header Cache-Control "public, no-transform";
+        add_header Cache-Control "public, max-age=2592000, immutable, no-transform";
         include /var/www/ligament-site/security-headers.conf;
     }
 }

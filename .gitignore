@@ -38,6 +38,11 @@ dist/
 build/
 .cache/
 
+# Local tooling & generated artifacts (not part of the published site)
+output/
+.playwright-cli/
+graphify-out/
+
 # Logs & temp
 *.log
 npm-debug.log*
