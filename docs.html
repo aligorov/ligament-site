@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Руководство по установке и настройке — Ligament 2FA</title>
+  <meta name="description" content="Пошаговая инструкция по развертыванию On-Premise платформы Ligament 2FA: Docker, PostgreSQL, Active Directory, RADIUS, Windows Logon и мобильные клиенты.">
+  <meta name="theme-color" content="#07090e">
+
+  <link rel="canonical" href="https://ligam.org/docs.html">
+  <link rel="alternate" hreflang="ru" href="https://ligam.org/docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://ligam.org/docs.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ligam.org/docs.html">
+  <meta property="og:title" content="Руководство по установке и настройке — Ligament 2FA">
+  <meta property="og:description" content="Пошаговая инструкция по развертыванию On-Premise платформы Ligament 2FA: Docker, PostgreSQL, Active Directory, RADIUS, Windows Logon и мобильные клиенты.">
+  <meta property="og:image" content="https://ligam.org/assets/brand/og-image-ru.png">
+
+  <link rel="icon" type="image/png" href="assets/brand/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
+  <link rel="stylesheet" href="styles.css?v=link-coming-soon-8">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <aside class="announcement-bar" role="complementary">
+    <div class="container announcement-inner">
+      <span>📚 <strong>Документация:</strong> Официальное техническое руководство администратора платформы Ligament.</span>
+      <a href="index.html" class="announcement-link">← Вернуться на главную</a>
+    </div>
+  </aside>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link" aria-label="Ligament Security">
+        <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="150" height="41">
+        <span class="brand-badge">Docs</span>
+      </a>
+      <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
+        <a href="index.html#architecture">Граф</a>
+        <a href="index.html#interface">Интерфейс</a>
+        <a href="index.html#downloads">Скачать</a>
+        <a href="index.html#pricing">Цены</a>
+        <a href="docs.html" class="active">Документация</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Открыть меню">Меню</button>
+        <button type="button" id="theme-toggle" class="theme-btn" aria-label="Переключить тему">🌓</button>
+        <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Запросить Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Docs Hero -->
+  <section class="docs-hero">
+    <div class="container docs-hero-inner">
+      <nav class="docs-breadcrumb" aria-label="Хлебные крошки">
+        <a href="index.html">Главная</a>
+        <span class="docs-breadcrumb-sep">/</span>
+        <span>Документация</span>
+        <span class="docs-breadcrumb-sep">/</span>
+        <span style="color: var(--text-main);">Установка и первоначальная настройка</span>
+      </nav>
+      <h1 class="docs-hero-title">Установка и настройка <span>Ligament 2FA</span></h1>
+      <p class="docs-hero-desc">Практическое руководство администратора по быстрому развёртыванию ядра Ligament Core в Docker, подключению службы каталогов Active Directory/FreeIPA, настройке факторов аутентификации и раскатке клиентских модулей.</p>
+      <div class="docs-hero-meta">
+        <span class="docs-hero-tag">🛡️ 100% On-Premise</span>
+        <span class="docs-hero-tag">📦 Docker Hub</span>
+        <span class="docs-hero-tag">🔒 Air-Gapped Ready</span>
+        <span class="docs-hero-tag">⚡ Релиз 1.1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <div class="container docs-layout">
+    <!-- Sticky Sidebar Table of Contents -->
+    <aside class="docs-sidebar" aria-label="Оглавление документации">
+      <div class="docs-nav-group">
+        <div class="docs-nav-title">Развёртывание</div>
+        <ul class="docs-nav-list">
+          <li><a href="#requirements" class="docs-nav-link"><span class="docs-nav-badge">1</span> Требования и порты</a></li>
+          <li><a href="#docker-install" class="docs-nav-link"><span class="docs-nav-badge">2</span> Установка в Docker</a></li>
+          <li><a href="#first-login" class="docs-nav-link"><span class="docs-nav-badge">3</span> Первый вход и Break-Glass</a></li>
+          <li><a href="#licensing" class="docs-nav-link"><span class="docs-nav-badge">4</span> Лицензия и квоты</a></li>
+        </ul>
+      </div>
+
+      <div class="docs-nav-group">
+        <div class="docs-nav-title">Конфигурация</div>
+        <ul class="docs-nav-list">
+          <li><a href="#domain-ssl" class="docs-nav-link"><span class="docs-nav-badge">5</span> Домен и SSL/TLS</a></li>
+          <li><a href="#active-directory" class="docs-nav-link"><span class="docs-nav-badge">6</span> Active Directory / FreeIPA</a></li>
+          <li><a href="#mfa-factors" class="docs-nav-link"><span class="docs-nav-badge">7</span> Факторы 2FA</a></li>
+        </ul>
+      </div>
+
+      <div class="docs-nav-group">
+        <div class="docs-nav-title">Периметр и агенты</div>
+        <ul class="docs-nav-list">
+          <li><a href="#radius-setup" class="docs-nav-link"><span class="docs-nav-badge">8</span> RADIUS (MikroTik / Wi-Fi)</a></li>
+          <li><a href="#windows-agent" class="docs-nav-link"><span class="docs-nav-badge">9</span> Windows Logon (MSI + GPO)</a></li>
+          <li><a href="#workstation-clients" class="docs-nav-link"><span class="docs-nav-badge">10</span> Клиенты и онбординг</a></li>
+          <li><a href="#branch-relay" class="docs-nav-link"><span class="docs-nav-badge">11</span> Филиальный Relay</a></li>
+        </ul>
+      </div>
+
+      <div class="docs-nav-group">
+        <div class="docs-nav-title">Эксплуатация</div>
+        <ul class="docs-nav-list">
+          <li><a href="#maintenance" class="docs-nav-link"><span class="docs-nav-badge">12</span> Аудит, бэкап и Healthz</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <article class="docs-content">
+      <!-- Section 1 -->
+      <section id="requirements" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">1</div>
+          <h2 class="docs-section-title">Архитектура и системные требования</h2>
+        </div>
+        <p class="docs-p">Ligament функционирует полностью автономно внутри закрытого корпоративного периметра (<strong>100% On-Premise</strong>). Все мастер-ключи, базы учётных записей, хэши паролей и журналы аудита хранятся строго в вашей СУБД PostgreSQL. Решение не обращается к внешним облакам и полностью поддерживает работу в изолированных сегментах (Air-Gapped).</p>
+
+        <h3 class="docs-subhead">Минимальные аппаратные ресурсы</h3>
+        <ul class="docs-list">
+          <li><strong>Процессор (CPU):</strong> 1 виртуальное или физическое ядро (x86_64 или ARM64).</li>
+          <li><strong>Оперативная память (RAM):</strong> 1 ГБ (рекомендуется 2 ГБ при нагрузках от 500 активных сотрудников).</li>
+          <li><strong>Дисковое пространство:</strong> 10 ГБ на SSD/NVMe (для ОС, Docker-образов и базы данных).</li>
+          <li><strong>Поддерживаемые ОС:</strong> Astra Linux (SE 1.7 / CE), РЕД ОС (7.3 / 8), Альт (p9 / p10), Ubuntu Server 22.04/24.04, Debian 12, Rocky/AlmaLinux 9.</li>
+        </ul>
+
+        <h3 class="docs-subhead">Сетевые порты платформы</h3>
+        <div class="docs-table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Порт</th>
+                <th>Протокол</th>
+                <th>Назначение</th>
+                <th>Область видимости</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>80</code></td>
+                <td>TCP</td>
+                <td>Редирект на HTTPS и ACME HTTP-01 challenge</td>
+                <td>Внешний / Внутренний</td>
+              </tr>
+              <tr>
+                <td><code>8080</code></td>
+                <td>TCP</td>
+                <td>Веб-консоль управления, кабинет пользователя, REST API, WebSSO</td>
+                <td>Внутренний или через Reverse Proxy</td>
+              </tr>
+              <tr>
+                <td><code>443</code></td>
+                <td>TCP</td>
+                <td>Защищённый HTTPS/WSS (клиентские агенты, релеи, WebAuthn)</td>
+                <td>Рабочие станции, филиалы</td>
+              </tr>
+              <tr>
+                <td><code>1812</code></td>
+                <td>UDP</td>
+                <td>RADIUS Authentication (MikroTik, VPN, Wi-Fi 802.1X)</td>
+                <td>Сетевые маршрутизаторы, точки доступа</td>
+              </tr>
+              <tr>
+                <td><code>1813</code></td>
+                <td>UDP</td>
+                <td>RADIUS Accounting (учёт сетевых сессий и трафика)</td>
+                <td>Сетевые маршрутизаторы</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section id="docker-install" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">2</div>
+          <h2 class="docs-section-title">Способы установки сервера Ligament Core</h2>
+        </div>
+        <p class="docs-p">Все компоненты Ligament Core поставляются в виде готового Docker-образа в официальном репозитории Docker Hub <code>aligorov/ligament_2fa</code>. Компиляция и локальная сборка не требуются.</p>
+
+        <h3 class="docs-subhead">Вариант А: Автоматический скрипт одной командой (Рекомендуется)</h3>
+        <p class="docs-p">Инсталлятор автоматически проверяет наличие Docker Engine, сканирует порты 80/8080 (TCP) и 1812/1813 (UDP), генерирует криптографически стойкий пароль PostgreSQL в <code>.env</code> (с правами 0600), запускает контейнеры и ожидает готовности эндпоинта <code>/healthz</code>.</p>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">bash — быстрая установка скриптом</span>
+            <button type="button" class="copy-btn" data-copy="mkdir -p /opt/ligament && cd /opt/ligament && curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh && chmod +x install.sh && ./install.sh">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>mkdir -p /opt/ligament &amp;&amp; cd /opt/ligament
+curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh
+chmod +x install.sh &amp;&amp; ./install.sh</code></pre>
+        </div>
+
+        <div class="docs-callout docs-callout-info">
+          <p><strong>Полезные параметры запуска скрипта:</strong></p>
+          <p><code>./install.sh --http-port 8080</code> — использовать непривилегированный порт 8080 без необходимости прав root.<br>
+          <code>./install.sh --tag v1.1.73</code> — зафиксировать конкретную стабильную версию контейнера.<br>
+          <code>./install.sh --fresh</code> — выполнить чистый перезапуск при наличии старой базы данных прошлого развёртывания.</p>
+        </div>
+
+        <h3 class="docs-subhead">Вариант Б: Ручной запуск через Docker Compose</h3>
+        <p class="docs-p">Создайте файл <code>docker-compose.yml</code> в рабочем каталоге <code>/opt/ligament</code>:</p>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">yaml — docker-compose.yml</span>
+            <button type="button" class="copy-btn" data-copy="services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: twofa
+      POSTGRES_PASSWORD: &quot;${TWOFA_PG_PASSWORD:?Задайте пароль БД в .env}&quot;
+      POSTGRES_DB: twofa
+    volumes:
+      - twofa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U twofa -d twofa&quot;]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  twofa:
+    image: aligorov/ligament_2fa:latest
+    hostname: ligament-auth
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      TWOFA_DB_DSN: &quot;postgres://twofa:${TWOFA_PG_PASSWORD}@db:5432/twofa&quot;
+      TRUSTED_PROXIES: &quot;127.0.0.0/8,::1/128,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16&quot;
+    ports:
+      - &quot;80:8080&quot;
+      - &quot;8080:8080&quot;
+      - &quot;1812:1812/udp&quot;
+      - &quot;1813:1813/udp&quot;
+    volumes:
+      - /etc/machine-id:/etc/host-machine-id:ro
+    restart: unless-stopped
+
+volumes:
+  twofa_pgdata:">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: twofa
+      POSTGRES_PASSWORD: "${TWOFA_PG_PASSWORD:?Задайте пароль БД в .env}"
+      POSTGRES_DB: twofa
+    volumes:
+      - twofa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U twofa -d twofa"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  twofa:
+    image: aligorov/ligament_2fa:latest
+    hostname: ligament-auth
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      TWOFA_DB_DSN: "postgres://twofa:${TWOFA_PG_PASSWORD}@db:5432/twofa"
+      TRUSTED_PROXIES: "127.0.0.0/8,::1/128,172.16.0.0/12,10.0.0.0/8,192.168.0.0/16"
+    ports:
+      - "80:8080"
+      - "8080:8080"
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    volumes:
+      - /etc/machine-id:/etc/host-machine-id:ro
+    restart: unless-stopped
+
+volumes:
+  twofa_pgdata:</code></pre>
+        </div>
+
+        <p class="docs-p">Сгенерируйте файл <code>.env</code> с надёжным паролем и запустите стек:</p>
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">bash — запуск стека</span>
+            <button type="button" class="copy-btn" data-copy="echo &quot;TWOFA_PG_PASSWORD=$(openssl rand -hex 24)&quot; > .env &amp;&amp; chmod 600 .env &amp;&amp; docker compose up -d">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>echo "TWOFA_PG_PASSWORD=$(openssl rand -hex 24)" > .env
+chmod 600 .env
+docker compose up -d</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="first-login" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">3</div>
+          <h2 class="docs-section-title">Первый вход администратора и безопасность</h2>
+        </div>
+        <p class="docs-p">В целях безопасности первичный пароль администратора <strong>не печатается в stdout логах</strong> Docker, чтобы предотвратить его утечку в централизованные системы сбора журналов (ELK/Graylog/Loki).</p>
+        <p class="docs-p">При первом старте система автоматически генерирует временный пароль и 5 одноразовых кодов аварийного восстановления доступа (Break-Glass recovery codes). Извлеките их на хост:</p>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">bash — получение первичного пароля</span>
+            <button type="button" class="copy-btn" data-copy="docker cp $(docker compose ps -q twofa):/home/nonroot/admin_password.txt . &amp;&amp; docker cp $(docker compose ps -q twofa):/home/nonroot/admin_recovery_codes.txt . &amp;&amp; cat admin_password.txt">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code># Забрать сгенерированный пароль администратора:
+docker cp $(docker compose ps -q twofa):/home/nonroot/admin_password.txt .
+
+# Забрать 5 одноразовых break-glass кодов восстановления:
+docker cp $(docker compose ps -q twofa):/home/nonroot/admin_recovery_codes.txt .
+
+# Просмотреть пароль:
+cat admin_password.txt</code></pre>
+        </div>
+
+        <div class="docs-callout docs-callout-warning">
+          <p><strong>Обязательные действия сразу после входа:</strong></p>
+          <p>1. Откройте веб-интерфейс <code>http://IP-адрес-сервера:8080</code> (логин: <code>admin</code>).<br>
+          2. Сохраните <code>admin_recovery_codes.txt</code> в корпоративный сейф паролей (KeePass / Vault).<br>
+          3. <strong>Удалите файл <code>admin_password.txt</code></strong> с сервера командой <code>rm -f admin_password.txt</code>.<br>
+          4. В профиле учётной записи установите постоянный пароль и подключите двухфакторную аутентификацию (TOTP или Telegram).</p>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="licensing" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">4</div>
+          <h2 class="docs-section-title">Активация лицензии и квоты пользователей</h2>
+        </div>
+        <p class="docs-p">Из коробки сервер запускается в бесплатной редакции <strong>Community</strong> — до 5 активных пользователей навсегда без ограничения срока действия.</p>
+        <p class="docs-p">Для расширения штата пользователей или активации корпоративных модулей (OpenID Connect / SAML SSO, Бастион, Windows Logon UAC elevation, Branch Relay):</p>
+
+        <ul class="docs-list">
+          <li>Перейдите в панель управления: <strong>/admin → Лицензия</strong>.</li>
+          <li>Вставьте полученный лицензионный ключ (подписанный криптографический блок Base64 на алгоритме Ed25519) в текстовое поле.</li>
+          <li>Нажмите кнопку <strong>«Сохранить лицензию»</strong>.</li>
+        </ul>
+
+        <div class="docs-callout docs-callout-tip">
+          <p><strong>Мгновенное применение без интернета:</strong></p>
+          <p>Лицензия проверяется локальной математической подписью открытым ключом вендора. Она активируется моментально без перезагрузки контейнеров и без необходимости выхода сервера в интернет.</p>
+        </div>
+      </section>
+      <!-- Section 5 -->
+      <section id="domain-ssl" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">5</div>
+          <h2 class="docs-section-title">Настройка домена и SSL/TLS</h2>
+        </div>
+        <p class="docs-p">Корректный внешний URL необходим для корректной генерации ссылок подтверждения входа, WebSSO перенаправлений и валидации WebAuthn / Passkeys.</p>
+        <p class="docs-p">В веб-интерфейсе перейдите в <strong>/admin → Настройки → Домен и шаблоны</strong> и укажите базовый адрес вашей инсталляции:</p>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">json — server.domain</span>
+            <button type="button" class="copy-btn" data-copy="&quot;server.domain&quot;: &quot;https://auth.company.corp&quot;">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>"server.domain": "https://auth.company.corp"</code></pre>
+        </div>
+
+        <h3 class="docs-subhead">Схемы организации HTTPS:</h3>
+        <ul class="docs-list">
+          <li><strong>Внешний Reverse Proxy (Nginx, Caddy, Traefik, HAProxy):</strong> Рекомендуемый промышленный способ. Контейнер Ligament принимает локальный HTTP-трафик на порту 8080, а TLS-сертификаты терминируются на корпоративном шлюзе. Обязательно передавайте заголовки <code>X-Forwarded-For</code> и <code>X-Forwarded-Proto: https</code>.</li>
+          <li><strong>Встроенный ACME (Let's Encrypt):</strong> При прямой доступности портов 80 и 443 из сети Интернет включите авто-заказ сертификата в <strong>/admin → Настройки → SSL/TLS</strong> (переменные <code>acme.domain</code> и <code>acme.email</code>).</li>
+        </ul>
+      </section>
+
+      <!-- Section 6 -->
+      <section id="active-directory" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">6</div>
+          <h2 class="docs-section-title">Интеграция с Active Directory и FreeIPA</h2>
+        </div>
+        <p class="docs-p">Ligament поддерживает сквозную аутентификацию сотрудников по каталогу пользователей Active Directory или FreeIPA через защищённый протокол LDAPS.</p>
+        <p class="docs-p">В разделе панели <strong>/admin → Настройки → Служба каталогов (LDAP)</strong> задайте конфигурацию подключения:</p>
+
+        <div class="docs-table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Параметр</th>
+                <th>Пример значения</th>
+                <th>Описание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>enabled</code></td>
+                <td><code>true</code></td>
+                <td>Включение модуля синхронизации с доменом</td>
+              </tr>
+              <tr>
+                <td><code>url</code></td>
+                <td><code>ldaps://dc1.company.corp:636</code></td>
+                <td>Защищённый адрес контроллера домена</td>
+              </tr>
+              <tr>
+                <td><code>bind_dn</code></td>
+                <td><code>CN=svc-ligament,OU=Services,DC=company,DC=corp</code></td>
+                <td>Служебная учётная запись для поиска пользователей</td>
+              </tr>
+              <tr>
+                <td><code>bind_password</code></td>
+                <td><code>••••••••••••</code></td>
+                <td>Пароль служебной учётной записи</td>
+              </tr>
+              <tr>
+                <td><code>base_dn</code></td>
+                <td><code>DC=company,DC=corp</code></td>
+                <td>Базовый корень дерева Active Directory</td>
+              </tr>
+              <tr>
+                <td><code>user_filter</code></td>
+                <td><code>(&amp;(objectCategory=person)(sAMAccountName={login}))</code></td>
+                <td>Фильтр поиска целевого сотрудника по логину</td>
+              </tr>
+              <tr>
+                <td><code>cache_passwords</code></td>
+                <td><code>true</code></td>
+                <td>Шифрование проверенных паролей для Wi-Fi PEAP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="docs-callout docs-callout-info">
+          <p><strong>Зачем нужно кэширование паролей (cache_passwords):</strong></p>
+          <p>При подключении к корпоративному Wi-Fi по стандарту WPA2/WPA3 Enterprise (EAP-PEAP / MS-CHAPv2) протокол требует сверки NT-хэша пароля на стороне RADIUS. Ligament безопасно шифрует проверенный доменный пароль мастер-ключом сервера в таблице <code>users.password_enc</code>, что позволяет сотрудникам входить в Wi-Fi сеть без изменения схемы Active Directory.</p>
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="mfa-factors" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">7</div>
+          <h2 class="docs-section-title">Настройка каналов доставки второго фактора (MFA)</h2>
+        </div>
+        <p class="docs-p">В разделе <strong>/admin → Настройки</strong> настройте удобные для вашей компании каналы подтверждения:</p>
+
+        <h3 class="docs-subhead">1. Telegram-бот (Подтверждение в 1 клик и Number Matching)</h3>
+        <p class="docs-p">Сотрудники могут подтверждать вход кнопкой прямо в корпоративном мессенджере без необходимости установки мобильных приложений:</p>
+        <ul class="docs-list">
+          <li>Создайте бота в Telegram через официального <code>@BotFather</code> (команда <code>/newbot</code>).</li>
+          <li>Вставьте полученный токен в <strong>/admin → Настройки → Telegram → telegram.bot_token</strong>.</li>
+          <li>Сотрудники связывают бота со своей учётной записью, сканируя QR-код из личного кабинета.</li>
+        </ul>
+
+        <h3 class="docs-subhead">2. Корпоративный почтовый сервер (SMTP)</h3>
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">json — настройка SMTP</span>
+            <button type="button" class="copy-btn" data-copy="{&quot;host&quot;:&quot;mail.company.corp&quot;,&quot;port&quot;:587,&quot;starttls&quot;:true,&quot;user&quot;:&quot;auth-noreply@company.corp&quot;,&quot;password&quot;:&quot;P@ssw0rd&quot;,&quot;from&quot;:&quot;auth-noreply@company.corp&quot;,&quot;subject&quot;:&quot;Код подтверждения входа&quot;}">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>{
+  "host": "mail.company.corp",
+  "port": 587,
+  "starttls": true,
+  "user": "auth-noreply@company.corp",
+  "password": "PasswordHere",
+  "from": "auth-noreply@company.corp",
+  "subject": "Код подтверждения входа"
+}</code></pre>
+        </div>
+
+        <h3 class="docs-subhead">3. SMS-шлюзы и Голосовая доставка (TTS)</h3>
+        <p class="docs-p">Поддерживаются встроенные пресеты: SMS.RU, SMS-Центр (smsc.ru), Devino Telecom, МегаФон Таргет, протокол SMPP и аппаратные USB-модемы.</p>
+
+        <h3 class="docs-subhead">4. Аппаратные FIDO2/Passkey токены (WebAuthn)</h3>
+        <p class="docs-p">Аппаратные USB-ключи (Рутокен MFA, YubiKey) и встроенные биометрические датчики (Windows Hello, Touch ID) работают нативно по открытым стандартам FIDO Alliance.</p>
+      </section>
+
+      <!-- Section 8 -->
+      <section id="radius-setup" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">8</div>
+          <h2 class="docs-section-title">Настройка RADIUS (MikroTik RouterOS, VPN, Wi-Fi 802.1X)</h2>
+        </div>
+        <p class="docs-p">Ligament Core содержит высокопроизводительный встроенный RADIUS-сервер (порты UDP 1812 — аутентификация, 1813 — аккаунтинг). В разделе <strong>/admin → Настройки → RADIUS</strong> задайте секретный ключ <code>radius.secret</code>.</p>
+
+        <h3 class="docs-subhead">Интеграция с MikroTik RouterOS</h3>
+        <p class="docs-p">Выполните команды в терминале RouterOS для защиты входа в маршрутизатор, VPN-серверов и беспроводной сети:</p>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">routeros — настройка RADIUS в MikroTik</span>
+            <button type="button" class="copy-btn" data-copy="/radius add address=192.168.1.10 secret=&quot;ВашСекретныйКлюч&quot; service=login,ppp,wireless timeout=5s
+/user aaa set use-radius=yes
+/ppp aaa set use-radius=yes accounting=yes
+/radius incoming set accept=yes">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code># Подключение сервера Ligament как RADIUS-провайдера:
+/radius add address=192.168.1.10 secret="ВашСекретныйКлюч" service=login,ppp,wireless timeout=5s
+
+# Включение RADIUS для входа администраторов в WinBox / SSH:
+/user aaa set use-radius=yes
+
+# Включение 2FA для VPN-туннелей (L2TP / SSTP / OpenVPN / PPTP):
+/ppp aaa set use-radius=yes accounting=yes
+
+# Включение принудительного разрыва сессий (RFC 3576 CoA / Disconnect):
+/radius incoming set accept=yes</code></pre>
+        </div>
+      </section>
+      <!-- Section 9 -->
+      <section id="windows-agent" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">9</div>
+          <h2 class="docs-section-title">Развёртывание агентов Windows Logon &amp; RDP (MSI + GPO)</h2>
+        </div>
+        <p class="docs-p">Модуль <strong>Ligament Windows Credential Provider</strong> интегрируется напрямую в экран блокировки Windows (LogonUI) для защиты локальных консолей и терминальных RDP-сессий с поддержкой мгновенного <strong>Auto-Logon</strong>.</p>
+
+        <h3 class="docs-subhead">Реальный интерфейс входа пользователя в Windows</h3>
+        <p class="docs-p">Ниже представлены скриншоты работы нативного провайдера на экране входа в систему:</p>
+
+        <div class="logon-gallery-grid" style="margin-bottom: 32px;">
+          <!-- Card 1: Windows Logon screen -->
+          <figure class="logon-gallery-card">
+            <div class="logon-img-wrap">
+              <img src="assets/media/screen-windows-logon.png" alt="Экран входа Windows LogonUI с Ligament 2FA" width="923" height="738" loading="lazy">
+            </div>
+            <figcaption>
+              <strong>Нативный экран входа Windows LogonUI</strong>
+              <span>Интеграция в системный экран блокировки. Пользователь вводит корпоративный логин/пароль и выбирает способ подтверждения: Push в приложение (число), бот в Telegram или Passkey.</span>
+            </figcaption>
+          </figure>
+
+          <!-- Card 2: Passkey QR-code -->
+          <figure class="logon-gallery-card">
+            <div class="logon-img-wrap">
+              <img src="assets/media/screen-windows-passkey-qr.png" alt="Вход в Windows по Passkey через QR-код" width="796" height="717" loading="lazy">
+            </div>
+            <figcaption>
+              <strong>Вход по Passkey (Динамический QR-код)</strong>
+              <span>Сотрудник сканирует динамический QR-код на экране монитора камерой смартфона. Биометрическая верификация Face ID / Touch ID мгновенно разблокирует рабочий стол без ввода цифр.</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <h3 class="docs-subhead">Централизованная раскатка через Active Directory GPO:</h3>
+        <ol class="docs-list">
+          <li>Скачайте релизный пакет <code>Ligament-2FA-Windows-x64.msi</code> и административные шаблоны <code>Ligament2FA.admx</code> / <code>Ligament2FA.adml</code> из <a href="index.html#downloads" style="color: var(--accent); text-decoration: underline;">раздела загрузок</a>.</li>
+          <li>Скопируйте <code>Ligament2FA.admx</code> в каталог Центрального хранилища шаблонов: <code>\\domain.corp\SYSVOL\domain.corp\Policies\PolicyDefinitions\</code>.</li>
+          <li>Скопируйте языковой файл <code>Ligament2FA.adml</code> в подпапку <code>PolicyDefinitions\ru-RU\</code> (или <code>en-US\</code>).</li>
+          <li>В консоли управления групповыми политиками (<code>gpmc.msc</code>) настройте параметры:
+            <ul style="margin-top: 8px;">
+              <li><strong>Server URL:</strong> <code>https://auth.company.corp:8080</code></li>
+              <li><strong>2FA Mode:</strong> <code>RDP and Local Console</code> (или <code>RDP Only</code>)</li>
+              <li><strong>Auto-Logon:</strong> <code>Enabled</code> (мгновенная разблокировка экрана после push-подтверждения)</li>
+              <li><strong>Number Matching:</strong> <code>Enabled</code> (отображение контрольного числа на экране)</li>
+              <li><strong>Fail Mode:</strong> <code>Fail-Open</code> (резервный доступ при аварии сети) или <code>Fail-Close</code> (строгая изоляция).</li>
+            </ul>
+          </li>
+          <li>Назначьте фоновую установку MSI-пакета в разделе <strong>Конфигурация компьютера → Политики → Установка программ</strong>.</li>
+        </ol>
+      </section>
+
+      <!-- Section 10 -->
+      <section id="workstation-clients" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">10</div>
+          <h2 class="docs-section-title">Подключение сотрудников и клиентские приложения</h2>
+        </div>
+        <p class="docs-p">Процедура первого подключения (онбординга) сотрудника максимально автоматизирована и занимает менее 1 минуты:</p>
+
+        <ul class="docs-list">
+          <li>Сотрудник открывает портал <code>https://auth.company.corp/</code> и входит с доменными учётными данными.</li>
+          <li>На экране отображается динамический QR-код привязки.</li>
+          <li>Сотрудник сканирует код в мобильном приложении <strong>Ligament Authenticator</strong> (Android/iOS) либо нажимает кнопку перехода в корпоративный Telegram-бот.</li>
+          <li>Устройство надёжно привязано: все последующие входы в Windows, VPN или веб-портал подтверждаются в один клик.</li>
+        </ul>
+
+        <h3 class="docs-subhead">Десктопный клиент Ligament 2FA Authenticator</h3>
+        <p class="docs-p">Для рабочих станций сотрудников под управлением Windows и российских ОС Linux (Astra Linux Special Edition 1.7, РЕД ОС 7.3/8, Альт Рабочая станция p9/p10) доступно графическое приложение аутентификации:</p>
+
+        <div style="max-width: 480px; margin: 24px 0;">
+          <figure class="logon-gallery-card">
+            <div class="logon-img-wrap logon-img-wrap-contain" style="height: 380px;">
+              <img src="assets/media/screen-authenticator-login.png" alt="Вход в приложение Ligament 2FA Authenticator" width="367" height="565" loading="lazy">
+            </div>
+            <figcaption>
+              <strong>Вход в приложение Ligament 2FA Authenticator</strong>
+              <span>Окно авторизации рабочего места сотрудника: безопасный ввод учётных данных домена, поддержка системного трея, фоновые push-уведомления и регистрация протокола <code>x-scheme-handler/ligament</code>.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Section 11 -->
+      <section id="branch-relay" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">11</div>
+          <h2 class="docs-section-title">Развёртывание узлов Ligament Relay в филиалах</h2>
+        </div>
+        <p class="docs-p">Для удалённых подразделений, складов и филиалов с нестабильным доступом в интернет узел <strong>Ligament Relay</strong> решает две ключевые задачи:</p>
+
+        <ul class="docs-list">
+          <li><strong>Безопасный проброс RDP и SSH:</strong> Relay поднимает защищённый исходящий WSS-туннель (порт 443) к Core, позволяя администраторам подключаться к серверам филиала без белого IP и без открытия портов 3389/22 наружу.</li>
+          <li><strong>Резервный RADIUS для Wi-Fi:</strong> При полном обрыве интернет-канала локальный Relay выступает автономным RADIUS-сервером: корпоративный Wi-Fi (802.1X WPA2/WPA3 Enterprise) продолжает авторизовывать сотрудников по локальному кэшу.</li>
+        </ul>
+
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">yaml — docker-compose.relay.yml</span>
+            <button type="button" class="copy-btn" data-copy="services:
+  relay:
+    image: aligorov/ligament_relay:latest
+    restart: unless-stopped
+    ports:
+      - &quot;1812:1812/udp&quot;
+    environment:
+      CORE_URL: &quot;https://auth.company.corp&quot;
+      RELAY_SECRET: &quot;ПарольФилиалаИзПанели&quot;">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>services:
+  relay:
+    image: aligorov/ligament_relay:latest
+    restart: unless-stopped
+    ports:
+      - "1812:1812/udp"
+    environment:
+      CORE_URL: "https://auth.company.corp"
+      RELAY_SECRET: "ПарольФилиалаИзПанелиАдминистратора"</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 12 -->
+      <section id="maintenance" class="docs-section">
+        <div class="docs-step-header">
+          <div class="docs-step-num">12</div>
+          <h2 class="docs-section-title">Диагностика, мониторинг и резервное копирование</h2>
+        </div>
+
+        <h3 class="docs-subhead">Проверка готовности сервиса (Healthcheck)</h3>
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">bash — проверка healthz</span>
+            <button type="button" class="copy-btn" data-copy="curl -I http://localhost:8080/healthz">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code>curl -I http://localhost:8080/healthz
+# Ответ: HTTP/1.1 200 OK</code></pre>
+        </div>
+
+        <h3 class="docs-subhead">Журнал аудита событий безопасности</h3>
+        <p class="docs-p">В разделе консоли <strong>/admin/audit</strong> в режиме реального времени отображаются все события периметра:</p>
+        <ul class="docs-list">
+          <li>Успешные и отклонённые попытки входа в Windows, VPN, Wi-Fi и веб-сервисы.</li>
+          <li>IP-адрес источника, имя рабочей станции, используемый фактор 2FA и контрольное число.</li>
+          <li>Срабатывания защитного механизма Fail2Ban при подборе паролей.</li>
+        </ul>
+
+        <h3 class="docs-subhead">Резервное копирование базы данных PostgreSQL</h3>
+        <p class="docs-p">Для создания резервной копии базы выполните команду (рекомендуется настроить по cron):</p>
+        <div class="docs-code-card">
+          <div class="docs-code-header">
+            <span class="docs-code-title">bash — бэкап PostgreSQL</span>
+            <button type="button" class="copy-btn" data-copy="docker compose exec -T db pg_dump -U twofa twofa | gzip > &quot;ligament_backup_$(date +%F_%H%M).sql.gz&quot;">Скопировать</button>
+          </div>
+          <pre class="docs-code-pre"><code># Создание сжатого дампа базы данных:
+docker compose exec -T db pg_dump -U twofa twofa | gzip > "ligament_backup_$(date +%F_%H%M).sql.gz"
+
+# Восстановление базы из дампа:
+gunzip < ligament_backup_YYYY-MM-DD.sql.gz | docker compose exec -T db psql -U twofa twofa</code></pre>
+        </div>
+
+        <!-- Help Callout -->
+        <div class="docs-callout docs-callout-info" style="margin-top: 40px;">
+          <p><strong>Нужна помощь с пилотным внедрением?</strong></p>
+          <p>Инженеры технической поддержки помогут настроить интеграцию с вашей инфраструктурой Active Directory и сетевым оборудованием. Напишите нам на <a href="mailto:admin@ligam.org" style="color: var(--accent); font-weight: 600;">admin@ligam.org</a> или в Telegram <a href="https://t.me/ligament_support" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">@ligament_support</a>.</p>
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="136" height="37">
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 280px;">
+            Надежная On-Premise 2FA платформа для защиты рабочих станций Windows, VPN, Wi-Fi и Web SSO.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Навигация</h4>
+          <ul>
+            <li><a href="index.html#architecture">Граф периметра</a></li>
+            <li><a href="index.html#interface">Интерфейс входа</a></li>
+            <li><a href="docs.html">Документация</a></li>
+            <li><a href="index.html#pricing">Цены &amp; TCO</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Интеграции</h4>
+          <ul>
+            <li><a href="index.html#benefits">Windows Logon &amp; RDP</a></li>
+            <li><a href="index.html#benefits">RADIUS (MikroTik / Cisco)</a></li>
+            <li><a href="index.html#benefits">SSO OIDC &amp; SAML 2.0</a></li>
+            <li><a href="index.html#benefits">Branch Relay (Офлайн)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href="mailto:admin@ligam.org">admin@ligam.org</a></li>
+            <li><a href="https://t.me/ligament_support" target="_blank" rel="noopener noreferrer">Telegram Support</a></li>
+            <li><a href="assets/downloads/ligament-presentation.pdf" download>Presentation PDF</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Ligament Security. Все права защищены.</div>
+        <div style="color: var(--text-subtle);">Zero Cloud • 100% On-Premise • 152-ФЗ / КИИ</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js?v=link-coming-soon-8"></script>
+</body>
+</html>

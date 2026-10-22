@@ -666,6 +666,51 @@
     });
   }
 
+  // Docs Table of Contents active link spy
+  function initDocsToc() {
+    const sidebar = document.querySelector('.docs-sidebar');
+    if (!sidebar) return;
+
+    const links = sidebar.querySelectorAll('.docs-nav-link');
+    const sections = Array.from(links).map(function (link) {
+      const href = link.getAttribute('href');
+      return href && href.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+    }).filter(Boolean);
+
+    if (!sections.length) return;
+
+    function updateActive() {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const offset = 140;
+      let current = null;
+
+      for (let i = 0; i < sections.length; i++) {
+        const top = sections[i].offsetTop - offset;
+        if (scrollY >= top) {
+          current = sections[i];
+        } else {
+          break;
+        }
+      }
+
+      if (!current && sections.length > 0) {
+        current = sections[0];
+      }
+
+      links.forEach(function (link) {
+        const href = link.getAttribute('href');
+        if (href && current && href === '#' + current.id) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  }
+
   // Init all on load
   function initAll() {
     initTheme();
@@ -676,6 +721,7 @@
     initGraph();
     initNav();
     initScreenshots();
+    initDocsToc();
   }
 
   if (document.readyState === 'loading') {

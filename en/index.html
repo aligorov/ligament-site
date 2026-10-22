@@ -52,12 +52,14 @@
       </a>
       <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
         <a href="#architecture">Topology</a>
+        <a href="#interface">Logon UI</a>
         <a href="#downloads">Downloads</a>
         <a href="#debate">Why Ligament</a>
         <a href="#personas">Solutions</a>
         <a href="#benefits">Modules</a>
         <a href="#pricing">Pricing</a>
         <a href="#quickstart">Quickstart</a>
+        <a href="../docs.html">Docs</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
@@ -455,6 +457,52 @@
     </div>
   </section>
 
+  <!-- Windows Logon Screenshots Section -->
+  <section id="interface" class="section screenshots-section" aria-labelledby="interface-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Logon UI</span>
+        <h2 id="interface-heading" class="section-title">Native Windows Logon with Ligament 2FA</h2>
+        <p class="section-desc">Workstation and RDP authentication: native LogonUI tile, instant Auto-Logon, Passkey verification via QR code and desktop companion client.</p>
+      </div>
+
+      <div class="logon-gallery-grid">
+        <!-- Card 1: Windows Logon Credential Provider -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap">
+            <img src="../assets/media/screen-windows-logon.png" alt="Windows LogonUI screen with Ligament Enterprise 2FA" width="923" height="738" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>🪟 Native Windows LogonUI (Auto-Logon)</strong>
+            <span>Credential Provider module integrates into the Windows lock screen. Staff members enter credentials and verify access via Mobile Push (Number Matching), Telegram, or Passkey.</span>
+          </figcaption>
+        </figure>
+
+        <!-- Card 2: Passkey QR-code -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap">
+            <img src="../assets/media/screen-windows-passkey-qr.png" alt="Windows Passkey QR code sign-in" width="796" height="717" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>🔑 Passkey Sign-in (QR Code)</strong>
+            <span>Instant biometric authentication (Face ID / Touch ID) by scanning a dynamic QR code on the monitor with a smartphone camera, eliminating manual 6-digit typing.</span>
+          </figcaption>
+        </figure>
+
+        <!-- Card 3: Authenticator Client -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap logon-img-wrap-contain">
+            <img src="../assets/media/screen-authenticator-desktop.png" alt="Ligament 2FA Authenticator desktop client" width="367" height="565" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>💻 Ligament Authenticator Client</strong>
+            <span>Cross-platform client for Windows and Linux (Astra, Red OS, Alt Linux): workstation pairing, background push notifications, and network status monitoring.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- Downloads Section -->
   <section id="downloads" class="section downloads-section">
     <div class="container">
@@ -637,6 +685,13 @@
           <p class="step-desc">Create a standard Active Directory GPO with ADMX templates for silent background workstation enrollment.</p>
         </div>
       </div>
+
+      <div style="text-align: center; margin-top: 36px;">
+        <a href="../docs.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px;">
+          <span>📖 Full Deployment & Setup Guide (Docs)</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -696,6 +751,8 @@
           <h4>Navigation</h4>
           <ul>
             <li><a href="#architecture">Topology Graph</a></li>
+            <li><a href="#interface">Logon UI Screens</a></li>
+            <li><a href="../docs.html">Documentation</a></li>
             <li><a href="#debate">Why Ligament</a></li>
             <li><a href="#benefits">Features</a></li>
             <li><a href="#pricing">Pricing & TCO</a></li>

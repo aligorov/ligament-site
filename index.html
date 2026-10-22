@@ -52,12 +52,14 @@
       </a>
       <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
         <a href="#architecture">Граф</a>
+        <a href="#interface">Интерфейс</a>
         <a href="#downloads">Скачать</a>
         <a href="#debate">Сравнение</a>
         <a href="#personas">Для кого</a>
         <a href="#benefits">Модули</a>
         <a href="#pricing">Цены</a>
         <a href="#quickstart">Быстрый старт</a>
+        <a href="docs.html">Документация</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
@@ -455,6 +457,52 @@
     </div>
   </section>
 
+  <!-- Windows Logon Screenshots Section -->
+  <section id="interface" class="section screenshots-section" aria-labelledby="interface-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Интерфейс входа</span>
+        <h2 id="interface-heading" class="section-title">Нативный экран Windows Logon с Ligament 2FA</h2>
+        <p class="section-desc">Вход на рабочие станции Windows 10/11 и Server RDP: нативная плитка LogonUI, мгновенный Auto-Logon, подтверждение Passkey по QR-коду и корпоративный клиент.</p>
+      </div>
+
+      <div class="logon-gallery-grid">
+        <!-- Card 1: Windows Logon Credential Provider -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap">
+            <img src="assets/media/screen-windows-logon.png" alt="Экран входа Windows LogonUI с Ligament Enterprise 2FA" width="923" height="738" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>🪟 Нативный Windows LogonUI (Auto-Logon)</strong>
+            <span>Модуль Credential Provider интегрируется в экран блокировки Windows. Пользователь вводит пароль и подтверждает вход через Push (Number Matching), Telegram или Passkey.</span>
+          </figcaption>
+        </figure>
+
+        <!-- Card 2: Passkey QR-code -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap">
+            <img src="assets/media/screen-windows-passkey-qr.png" alt="Вход в Windows по Passkey с помощью QR-кода" width="796" height="717" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>🔑 Вход по Passkey (QR-код)</strong>
+            <span>Мгновенный вход по сканированию динамического QR-кода камерой смартфона. Биометрическая верификация Face ID / Touch ID без ручного ввода одноразовых кодов.</span>
+          </figcaption>
+        </figure>
+
+        <!-- Card 3: Authenticator Client -->
+        <figure class="logon-gallery-card">
+          <div class="logon-img-wrap logon-img-wrap-contain">
+            <img src="assets/media/screen-authenticator-desktop.png" alt="Десктопный клиент Ligament 2FA Authenticator" width="367" height="565" loading="lazy">
+          </div>
+          <figcaption>
+            <strong>💻 Клиент Ligament Authenticator</strong>
+            <span>Графический клиент для рабочих станций Windows и Linux (Astra Linux, РЕД ОС, Альт): авторизация рабочего места, фоновые уведомления и статус связи.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- Downloads Section -->
   <section id="downloads" class="section downloads-section">
     <div class="container">
@@ -643,6 +691,13 @@
           <p class="step-desc">Создайте политику GPO с готовым ADMX-шаблоном. Нативная плитка входа установится на компьютеры автоматически.</p>
         </div>
       </div>
+
+      <div style="text-align: center; margin-top: 36px;">
+        <a href="docs.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px;">
+          <span>📖 Полное руководство по установке и настройке (Docs)</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -702,6 +757,8 @@
           <h4>Навигация</h4>
           <ul>
             <li><a href="#architecture">Граф периметра</a></li>
+            <li><a href="#interface">Интерфейс входа</a></li>
+            <li><a href="docs.html">Документация</a></li>
             <li><a href="#debate">Критика и спор</a></li>
             <li><a href="#benefits">Возможности</a></li>
             <li><a href="#pricing">Цены & TCO</a></li>
