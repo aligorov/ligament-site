@@ -666,12 +666,12 @@
     });
   }
 
-  // Docs Table of Contents active link spy
+  // Docs / Wiki Table of Contents active link spy
   function initDocsToc() {
-    const sidebar = document.querySelector('.docs-sidebar');
+    const sidebar = document.querySelector('.docs-sidebar, .wiki-sidebar');
     if (!sidebar) return;
 
-    const links = sidebar.querySelectorAll('.docs-nav-link');
+    const links = sidebar.querySelectorAll('.docs-nav-link, .wiki-nav-item');
     const sections = Array.from(links).map(function (link) {
       const href = link.getAttribute('href');
       return href && href.startsWith('#') ? document.getElementById(href.slice(1)) : null;
@@ -711,6 +711,23 @@
     updateActive();
   }
 
+  // Client-side quick filter for Wiki
+  function initWikiSearch() {
+    const searchInput = document.getElementById('wiki-search');
+    const sidebar = document.getElementById('wiki-nav-sidebar');
+    if (!searchInput || !sidebar) return;
+
+    searchInput.addEventListener('input', function () {
+      const q = searchInput.value.trim().toLowerCase();
+      const items = sidebar.querySelectorAll('.wiki-nav-item');
+      items.forEach(function (item) {
+        const text = item.textContent.toLowerCase();
+        const match = !q || text.includes(q);
+        item.style.display = match ? 'flex' : 'none';
+      });
+    });
+  }
+
   // Init all on load
   function initAll() {
     initTheme();
@@ -722,6 +739,7 @@
     initNav();
     initScreenshots();
     initDocsToc();
+    initWikiSearch();
   }
 
   if (document.readyState === 'loading') {

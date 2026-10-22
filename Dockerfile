@@ -8,7 +8,7 @@ COPY security-headers.conf /etc/nginx/security-headers.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy static website files
-COPY *.html styles.css site.js robots.txt sitemap.xml /usr/share/nginx/html/
+COPY *.html *.css site.js robots.txt sitemap.xml /usr/share/nginx/html/
 COPY en/ /usr/share/nginx/html/en/
 COPY assets/ /usr/share/nginx/html/assets/
 

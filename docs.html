@@ -5,179 +5,230 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'none'; form-action 'self' https:; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Руководство по установке и настройке — Ligament 2FA</title>
-  <meta name="description" content="Пошаговая инструкция по развертыванию On-Premise платформы Ligament 2FA: Docker, PostgreSQL, Active Directory, RADIUS, Windows Logon и мобильные клиенты.">
+  <title>База знаний &amp; Документация — Ligament 2FA Wiki</title>
+  <meta name="description" content="Официальная техническая документация и Wiki платформы Ligament 2FA: установка Docker, Active Directory, RADIUS, Windows Logon и клиентские приложения.">
   <meta name="theme-color" content="#07090e">
-
-  <link rel="canonical" href="https://ligam.org/docs.html">
-  <link rel="alternate" hreflang="ru" href="https://ligam.org/docs.html">
-  <link rel="alternate" hreflang="x-default" href="https://ligam.org/docs.html">
-
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://ligam.org/docs.html">
-  <meta property="og:title" content="Руководство по установке и настройке — Ligament 2FA">
-  <meta property="og:description" content="Пошаговая инструкция по развертыванию On-Premise платформы Ligament 2FA: Docker, PostgreSQL, Active Directory, RADIUS, Windows Logon и мобильные клиенты.">
-  <meta property="og:image" content="https://ligam.org/assets/brand/og-image-ru.png">
-
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
-  <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=link-coming-soon-8">
+  <link rel="stylesheet" href="docs.css?v=2.1">
+  <style>
+/* Wiki Portal Styles Inlined for Guaranteed Render */
+:root {
+  --wiki-bg: #090d16;
+  --wiki-sidebar-bg: #0d1322;
+  --wiki-card-bg: #111827;
+  --wiki-border: rgba(255, 255, 255, 0.08);
+  --wiki-border-focus: #6366f1;
+  --wiki-text-title: #f8fafc;
+  --wiki-text-body: #cbd5e1;
+  --wiki-text-muted: #94a3b8;
+  --wiki-accent: #06b6d4;
+  --wiki-primary: #6366f1;
+  --wiki-code-bg: #050811;
+  --wiki-code-header: #0d121f;
+  --wiki-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --wiki-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+[data-theme="light"] {
+  --wiki-bg: #f8fafc;
+  --wiki-sidebar-bg: #ffffff;
+  --wiki-card-bg: #ffffff;
+  --wiki-border: rgba(15, 23, 42, 0.1);
+  --wiki-border-focus: #4f46e5;
+  --wiki-text-title: #0f172a;
+  --wiki-text-body: #334155;
+  --wiki-text-muted: #64748b;
+  --wiki-accent: #0284c7;
+  --wiki-primary: #4f46e5;
+  --wiki-code-bg: #0f172a;
+  --wiki-code-header: #1e293b;
+}
+.wiki-page { background-color: var(--wiki-bg); color: var(--wiki-text-body); font-family: var(--wiki-font-sans); line-height: 1.65; min-height: 100vh; margin: 0; padding: 0; }
+.wiki-header { position: sticky; top: 0; z-index: 100; height: 64px; background: var(--wiki-sidebar-bg); border-bottom: 1px solid var(--wiki-border); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+.wiki-brand-wrap { display: flex; align-items: center; gap: 12px; }
+.wiki-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 999px; background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+.wiki-search-box { flex: 1; max-width: 440px; margin: 0 32px; position: relative; }
+.wiki-search-input { width: 100%; height: 38px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--wiki-border); border-radius: 8px; padding: 0 14px 0 36px; font-size: 13.5px; color: var(--wiki-text-title); outline: none; transition: all 0.2s; box-sizing: border-box; }
+[data-theme="light"] .wiki-search-input { background: #f1f5f9; }
+.wiki-search-input:focus { border-color: var(--wiki-primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+.wiki-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--wiki-text-muted); font-size: 14px; pointer-events: none; }
+.wiki-header-actions { display: flex; align-items: center; gap: 12px; }
+.wiki-layout { display: flex; min-height: calc(100vh - 64px); }
+.wiki-sidebar { width: 300px; flex-shrink: 0; background: var(--wiki-sidebar-bg); border-right: 1px solid var(--wiki-border); position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; padding: 24px 16px 40px; box-sizing: border-box; scrollbar-width: thin; }
+.wiki-nav-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--wiki-text-muted); padding: 12px 10px 6px; margin-top: 12px; }
+.wiki-nav-category:first-child { margin-top: 0; }
+.wiki-nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-size: 13.5px; color: var(--wiki-text-body); text-decoration: none; border-radius: 6px; margin-bottom: 2px; transition: all 0.15s ease; line-height: 1.4; }
+.wiki-nav-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--wiki-text-title); }
+[data-theme="light"] .wiki-nav-item:hover { background: rgba(15, 23, 42, 0.05); }
+.wiki-nav-item.active { background: var(--wiki-primary); color: #ffffff !important; font-weight: 600; box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35); }
+.wiki-nav-icon { font-size: 15px; flex-shrink: 0; }
+.wiki-main { flex: 1; min-width: 0; padding: 40px 48px 100px; max-width: 960px; margin: 0 auto; box-sizing: border-box; }
+@media (max-width: 900px) {
+  .wiki-layout { flex-direction: column; }
+  .wiki-sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--wiki-border); }
+  .wiki-main { padding: 24px 20px 60px; }
+  .wiki-search-box { display: none; }
+}
+.wiki-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--wiki-text-muted); margin-bottom: 20px; }
+.wiki-breadcrumb a { color: var(--wiki-text-muted); text-decoration: none; }
+.wiki-breadcrumb a:hover { color: var(--wiki-accent); }
+.wiki-title { font-size: clamp(28px, 3.5vw, 40px); font-weight: 800; letter-spacing: -0.025em; color: var(--wiki-text-title); line-height: 1.25; margin: 0 0 16px; }
+.wiki-lead { font-size: 17px; line-height: 1.7; color: var(--wiki-text-muted); margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--wiki-border); }
+.wiki-section { margin-bottom: 64px; scroll-margin-top: 84px; }
+.wiki-section-heading { display: flex; align-items: center; gap: 14px; font-size: clamp(22px, 2.5vw, 26px); font-weight: 700; color: var(--wiki-text-title); margin: 0 0 18px; padding-top: 16px; border-top: 1px dashed var(--wiki-border); }
+.wiki-step-number { flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--wiki-primary), var(--wiki-accent)); color: #fff; font-size: 15px; font-weight: 800; display: grid; place-items: center; }
+.wiki-subheading { font-size: 18px; font-weight: 700; color: var(--wiki-text-title); margin: 32px 0 14px; }
+.wiki-callout { padding: 16px 20px; border-radius: 10px; margin: 24px 0; font-size: 14.5px; line-height: 1.6; border-left: 4px solid; display: flex; gap: 14px; }
+.wiki-callout-icon { font-size: 20px; flex-shrink: 0; line-height: 1.4; }
+.wiki-callout-body p { margin: 0 0 6px; }
+.wiki-callout-body p:last-child { margin-bottom: 0; }
+.wiki-callout-info { background: rgba(6, 182, 212, 0.08); border-color: #06b6d4; }
+.wiki-callout-warning { background: rgba(245, 158, 11, 0.08); border-color: #f59e0b; }
+.wiki-callout-tip { background: rgba(16, 185, 129, 0.08); border-color: #10b981; }
+.wiki-code-card { margin: 22px 0 28px; border-radius: 10px; background: #060913; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35); }
+.wiki-code-topbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #0f1629; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.wiki-code-title { display: flex; align-items: center; gap: 8px; font-family: var(--wiki-font-mono); font-size: 12px; color: #94a3b8; }
+.wiki-code-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.wiki-dot-red { background: #ef4444; }
+.wiki-dot-yellow { background: #f59e0b; }
+.wiki-dot-green { background: #10b981; }
+.wiki-copy-btn { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); color: #c7d2fe; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.wiki-copy-btn:hover { background: var(--wiki-primary); color: #ffffff; }
+.wiki-pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--wiki-font-mono); font-size: 13.5px; line-height: 1.65; color: #e2e8f0; }
+.wiki-pre code { font-family: inherit; }
+.wiki-table-wrapper { overflow-x: auto; margin: 24px 0; border: 1px solid var(--wiki-border); border-radius: 10px; background: var(--wiki-card-bg); }
+.wiki-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+.wiki-table th, .wiki-table td { padding: 12px 18px; border-bottom: 1px solid var(--wiki-border); line-height: 1.5; }
+.wiki-table th { background: rgba(255, 255, 255, 0.03); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--wiki-text-muted); }
+[data-theme="light"] .wiki-table th { background: #f8fafc; }
+.wiki-table code { font-family: var(--wiki-font-mono); font-size: 12.5px; background: rgba(99, 102, 241, 0.12); color: #818cf8; padding: 2px 6px; border-radius: 4px; }
+.wiki-media-frame { margin: 28px 0; border: 1px solid var(--wiki-border); border-radius: 12px; overflow: hidden; background: var(--wiki-card-bg); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25); }
+.wiki-media-img-box { background: #080c16; display: flex; align-items: center; justify-content: center; padding: 16px; border-bottom: 1px solid var(--wiki-border); }
+.wiki-media-img-box img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
+.wiki-media-caption { padding: 16px 20px; font-size: 14px; color: var(--wiki-text-muted); line-height: 1.6; }
+.wiki-media-caption strong { display: block; font-size: 15px; color: var(--wiki-text-title); margin-bottom: 4px; }
+  </style>
 </head>
-<body>
+<body class="wiki-page">
 
-  <!-- Announcement Bar -->
-  <aside class="announcement-bar" role="complementary">
-    <div class="container announcement-inner">
-      <span>📚 <strong>Документация:</strong> Официальное техническое руководство администратора платформы Ligament.</span>
-      <a href="index.html" class="announcement-link">← Вернуться на главную</a>
-    </div>
-  </aside>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand-link" aria-label="Ligament Security">
-        <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="150" height="41">
-        <span class="brand-badge">Docs</span>
+  <!-- Wiki Navigation Top Header -->
+  <header class="wiki-header">
+    <div class="wiki-brand-wrap">
+      <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="Ligament" width="130" height="36">
       </a>
-      <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
-        <a href="index.html#architecture">Граф</a>
-        <a href="index.html#interface">Интерфейс</a>
-        <a href="index.html#downloads">Скачать</a>
-        <a href="index.html#pricing">Цены</a>
-        <a href="docs.html" class="active">Документация</a>
-        <a href="index.html#faq">FAQ</a>
-      </nav>
-      <div class="header-actions">
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="Открыть меню">Меню</button>
-        <button type="button" id="theme-toggle" class="theme-btn" aria-label="Переключить тему">🌓</button>
-        <a href="mailto:admin@ligam.org?subject=Demo%20license%20request" class="btn btn-primary btn-header">Запросить Demo</a>
-      </div>
+      <span class="wiki-badge">Wiki · Docs</span>
+    </div>
+
+    <!-- Quick Search Input -->
+    <div class="wiki-search-box">
+      <span class="wiki-search-icon">🔍</span>
+      <input type="search" id="wiki-search" class="wiki-search-input" placeholder="Поиск по документации (например: active directory, docker, radius)..." aria-label="Поиск по разделам">
+    </div>
+
+    <!-- Actions -->
+    <div class="wiki-header-actions">
+      <button type="button" id="theme-toggle" class="wiki-copy-btn" style="padding: 6px 12px;" aria-label="Переключить тему">🌓 Тема</button>
+      <a href="index.html" class="wiki-copy-btn" style="text-decoration: none;">← На главный сайт</a>
     </div>
   </header>
 
-  <!-- Docs Hero -->
-  <section class="docs-hero">
-    <div class="container docs-hero-inner">
-      <nav class="docs-breadcrumb" aria-label="Хлебные крошки">
-        <a href="index.html">Главная</a>
-        <span class="docs-breadcrumb-sep">/</span>
-        <span>Документация</span>
-        <span class="docs-breadcrumb-sep">/</span>
-        <span style="color: var(--text-main);">Установка и первоначальная настройка</span>
-      </nav>
-      <h1 class="docs-hero-title">Установка и настройка <span>Ligament 2FA</span></h1>
-      <p class="docs-hero-desc">Практическое руководство администратора по быстрому развёртыванию ядра Ligament Core в Docker, подключению службы каталогов Active Directory/FreeIPA, настройке факторов аутентификации и раскатке клиентских модулей.</p>
-      <div class="docs-hero-meta">
-        <span class="docs-hero-tag">🛡️ 100% On-Premise</span>
-        <span class="docs-hero-tag">📦 Docker Hub</span>
-        <span class="docs-hero-tag">🔒 Air-Gapped Ready</span>
-        <span class="docs-hero-tag">⚡ Релиз 1.1</span>
-      </div>
-    </div>
-  </section>
+  <!-- Two-Column Wiki Layout -->
+  <div class="wiki-layout">
+    <!-- Left Fixed Navigation Sidebar -->
+    <aside class="wiki-sidebar" id="wiki-nav-sidebar">
+      <div class="wiki-nav-category">🚀 Развёртывание сервера</div>
+      <a href="#requirements" class="wiki-nav-item active"><span class="wiki-nav-icon">📦</span> 1. Системные требования</a>
+      <a href="#docker-install" class="wiki-nav-item"><span class="wiki-nav-icon">🐳</span> 2. Установка в Docker</a>
+      <a href="#first-login" class="wiki-nav-item"><span class="wiki-nav-icon">🔑</span> 3. Первый вход и Break-Glass</a>
+      <a href="#licensing" class="wiki-nav-item"><span class="wiki-nav-icon">📜</span> 4. Лицензия и Air-Gapped</a>
 
-  <!-- Main Content Layout -->
-  <div class="container docs-layout">
-    <!-- Sticky Sidebar Table of Contents -->
-    <aside class="docs-sidebar" aria-label="Оглавление документации">
-      <div class="docs-nav-group">
-        <div class="docs-nav-title">Развёртывание</div>
-        <ul class="docs-nav-list">
-          <li><a href="#requirements" class="docs-nav-link"><span class="docs-nav-badge">1</span> Требования и порты</a></li>
-          <li><a href="#docker-install" class="docs-nav-link"><span class="docs-nav-badge">2</span> Установка в Docker</a></li>
-          <li><a href="#first-login" class="docs-nav-link"><span class="docs-nav-badge">3</span> Первый вход и Break-Glass</a></li>
-          <li><a href="#licensing" class="docs-nav-link"><span class="docs-nav-badge">4</span> Лицензия и квоты</a></li>
-        </ul>
-      </div>
+      <div class="wiki-nav-category">⚙️ Конфигурация ядра</div>
+      <a href="#domain-ssl" class="wiki-nav-item"><span class="wiki-nav-icon">🌐</span> 5. Домен и SSL/TLS</a>
+      <a href="#active-directory" class="wiki-nav-item"><span class="wiki-nav-icon">👥</span> 6. Active Directory / FreeIPA</a>
+      <a href="#mfa-factors" class="wiki-nav-item"><span class="wiki-nav-icon">📲</span> 7. Факторы 2FA (Telegram, SMS, SMTP)</a>
 
-      <div class="docs-nav-group">
-        <div class="docs-nav-title">Конфигурация</div>
-        <ul class="docs-nav-list">
-          <li><a href="#domain-ssl" class="docs-nav-link"><span class="docs-nav-badge">5</span> Домен и SSL/TLS</a></li>
-          <li><a href="#active-directory" class="docs-nav-link"><span class="docs-nav-badge">6</span> Active Directory / FreeIPA</a></li>
-          <li><a href="#mfa-factors" class="docs-nav-link"><span class="docs-nav-badge">7</span> Факторы 2FA</a></li>
-        </ul>
-      </div>
+      <div class="wiki-nav-category">🛡️ Периметр и рабочие места</div>
+      <a href="#radius-setup" class="wiki-nav-item"><span class="wiki-nav-icon">📡</span> 8. RADIUS (MikroTik, Wi-Fi 802.1X)</a>
+      <a href="#windows-agent" class="wiki-nav-item"><span class="wiki-nav-icon">🪟</span> 9. Windows Logon &amp; GPO (Скриншоты)</a>
+      <a href="#workstation-clients" class="wiki-nav-item"><span class="wiki-nav-icon">💻</span> 10. Клиенты и онбординг (Скриншоты)</a>
+      <a href="#branch-relay" class="wiki-nav-item"><span class="wiki-nav-icon">⚡</span> 11. Филиальный Relay (Офлайн)</a>
 
-      <div class="docs-nav-group">
-        <div class="docs-nav-title">Периметр и агенты</div>
-        <ul class="docs-nav-list">
-          <li><a href="#radius-setup" class="docs-nav-link"><span class="docs-nav-badge">8</span> RADIUS (MikroTik / Wi-Fi)</a></li>
-          <li><a href="#windows-agent" class="docs-nav-link"><span class="docs-nav-badge">9</span> Windows Logon (MSI + GPO)</a></li>
-          <li><a href="#workstation-clients" class="docs-nav-link"><span class="docs-nav-badge">10</span> Клиенты и онбординг</a></li>
-          <li><a href="#branch-relay" class="docs-nav-link"><span class="docs-nav-badge">11</span> Филиальный Relay</a></li>
-        </ul>
-      </div>
-
-      <div class="docs-nav-group">
-        <div class="docs-nav-title">Эксплуатация</div>
-        <ul class="docs-nav-list">
-          <li><a href="#maintenance" class="docs-nav-link"><span class="docs-nav-badge">12</span> Аудит, бэкап и Healthz</a></li>
-        </ul>
-      </div>
+      <div class="wiki-nav-category">📊 Эксплуатация</div>
+      <a href="#maintenance" class="wiki-nav-item"><span class="wiki-nav-icon">🔍</span> 12. Мониторинг, аудит и бэкап</a>
     </aside>
 
-    <!-- Main Content -->
-    <article class="docs-content">
+    <!-- Main Wiki Content Area -->
+    <main class="wiki-main">
+      <nav class="wiki-breadcrumb">
+        <a href="index.html">Главная</a>
+        <span>/</span>
+        <a href="docs.html">Wiki</a>
+        <span>/</span>
+        <span style="color: var(--wiki-text-title);">Развёртывание и администрирование</span>
+      </nav>
+
+      <h1 class="wiki-title">Руководство по установке и настройке Ligament 2FA</h1>
+      <p class="wiki-lead">Официальное пошаговое техническое руководство администратора информационной безопасности по развёртыванию ядра Ligament Core в Docker, интеграции со службой каталогов Active Directory/FreeIPA, настройке факторов аутентификации и централизованной раскатке клиентских агентов.</p>
       <!-- Section 1 -->
-      <section id="requirements" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">1</div>
-          <h2 class="docs-section-title">Архитектура и системные требования</h2>
+      <section id="requirements" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">1</div>
+          <span>Архитектура и системные требования</span>
         </div>
-        <p class="docs-p">Ligament функционирует полностью автономно внутри закрытого корпоративного периметра (<strong>100% On-Premise</strong>). Все мастер-ключи, базы учётных записей, хэши паролей и журналы аудита хранятся строго в вашей СУБД PostgreSQL. Решение не обращается к внешним облакам и полностью поддерживает работу в изолированных сегментах (Air-Gapped).</p>
+        <p>Платформа <strong>Ligament</strong> функционирует полностью автономно внутри вашего изолированного контура (<strong>100% On-Premise</strong>). Все мастер-ключи шифрования, база данных пользователей, сессии и журналы аудита безопасности хранятся в защищённой реляционной СУБД PostgreSQL. Решение не обращается к внешним серверам и готово к работе в сетях без интернета (Air-Gapped).</p>
 
-        <h3 class="docs-subhead">Минимальные аппаратные ресурсы</h3>
-        <ul class="docs-list">
-          <li><strong>Процессор (CPU):</strong> 1 виртуальное или физическое ядро (x86_64 или ARM64).</li>
-          <li><strong>Оперативная память (RAM):</strong> 1 ГБ (рекомендуется 2 ГБ при нагрузках от 500 активных сотрудников).</li>
-          <li><strong>Дисковое пространство:</strong> 10 ГБ на SSD/NVMe (для ОС, Docker-образов и базы данных).</li>
-          <li><strong>Поддерживаемые ОС:</strong> Astra Linux (SE 1.7 / CE), РЕД ОС (7.3 / 8), Альт (p9 / p10), Ubuntu Server 22.04/24.04, Debian 12, Rocky/AlmaLinux 9.</li>
-        </ul>
+        <div class="wiki-callout wiki-callout-info">
+          <span class="wiki-callout-icon">💡</span>
+          <div class="wiki-callout-body">
+            <p><strong>Минимальные требования к хосту:</strong></p>
+            <p>• <strong>CPU:</strong> 1 ядро x86_64 или ARM64.<br>
+            • <strong>RAM:</strong> 1 ГБ (рекомендуется 2 ГБ для сред от 500 пользователей).<br>
+            • <strong>Диск:</strong> 10 ГБ SSD/NVMe под ОС, образы и базу PostgreSQL.<br>
+            • <strong>ОС:</strong> Astra Linux (SE 1.7 / CE), РЕД ОС (7.3 / 8), Альт Сервер, Ubuntu 22.04/24.04, Debian 12, Rocky Linux 9.</p>
+          </div>
+        </div>
 
-        <h3 class="docs-subhead">Сетевые порты платформы</h3>
-        <div class="docs-table-wrapper">
-          <table class="docs-table">
+        <h3 class="wiki-subheading">Таблица сетевых портов</h3>
+        <div class="wiki-table-wrapper">
+          <table class="wiki-table">
             <thead>
               <tr>
                 <th>Порт</th>
                 <th>Протокол</th>
+                <th>Служба</th>
                 <th>Назначение</th>
-                <th>Область видимости</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><code>80</code></td>
                 <td>TCP</td>
-                <td>Редирект на HTTPS и ACME HTTP-01 challenge</td>
-                <td>Внешний / Внутренний</td>
+                <td>HTTP</td>
+                <td>Редирект на HTTPS и ACME HTTP-01 challenge Let's Encrypt</td>
               </tr>
               <tr>
                 <td><code>8080</code></td>
                 <td>TCP</td>
-                <td>Веб-консоль управления, кабинет пользователя, REST API, WebSSO</td>
-                <td>Внутренний или через Reverse Proxy</td>
+                <td>Web UI / API</td>
+                <td>Панель администратора, кабинет пользователя, REST API, WebSSO</td>
               </tr>
               <tr>
                 <td><code>443</code></td>
                 <td>TCP</td>
-                <td>Защищённый HTTPS/WSS (клиентские агенты, релеи, WebAuthn)</td>
-                <td>Рабочие станции, филиалы</td>
+                <td>HTTPS / WSS</td>
+                <td>Защищённый доступ клиентов, филиальных релеев и WebAuthn/Passkey</td>
               </tr>
               <tr>
                 <td><code>1812</code></td>
                 <td>UDP</td>
-                <td>RADIUS Authentication (MikroTik, VPN, Wi-Fi 802.1X)</td>
-                <td>Сетевые маршрутизаторы, точки доступа</td>
+                <td>RADIUS Auth</td>
+                <td>Аутентификация MikroTik, VPN (OpenVPN, WireGuard), Wi-Fi 802.1X</td>
               </tr>
               <tr>
                 <td><code>1813</code></td>
                 <td>UDP</td>
-                <td>RADIUS Accounting (учёт сетевых сессий и трафика)</td>
-                <td>Сетевые маршрутизаторы</td>
+                <td>RADIUS Acct</td>
+                <td>Учёт сетевого времени и трафика клиентских сессий</td>
               </tr>
             </tbody>
           </table>
@@ -185,45 +236,48 @@
       </section>
 
       <!-- Section 2 -->
-      <section id="docker-install" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">2</div>
-          <h2 class="docs-section-title">Способы установки сервера Ligament Core</h2>
+      <section id="docker-install" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">2</div>
+          <span>Установка сервера Ligament Core в Docker</span>
         </div>
-        <p class="docs-p">Все компоненты Ligament Core поставляются в виде готового Docker-образа в официальном репозитории Docker Hub <code>aligorov/ligament_2fa</code>. Компиляция и локальная сборка не требуются.</p>
+        <p>Ядро платформы упаковано в официальный оптимизированный образ Docker Hub <code>aligorov/ligament_2fa</code>. Для установки не требуются компиляторы и утилиты сборки.</p>
 
-        <h3 class="docs-subhead">Вариант А: Автоматический скрипт одной командой (Рекомендуется)</h3>
-        <p class="docs-p">Инсталлятор автоматически проверяет наличие Docker Engine, сканирует порты 80/8080 (TCP) и 1812/1813 (UDP), генерирует криптографически стойкий пароль PostgreSQL в <code>.env</code> (с правами 0600), запускает контейнеры и ожидает готовности эндпоинта <code>/healthz</code>.</p>
+        <h3 class="wiki-subheading">Вариант А: Быстрый старт официальным скриптом (Рекомендуется)</h3>
+        <p>Скрипт проверяет Docker, тестирует свободность портов 80/8080 (TCP) и 1812/1813 (UDP), генерирует надёжный пароль PostgreSQL в <code>.env</code> (с правами 0600), разворачивает контейнеры и выгружает первичные ключи.</p>
 
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">bash — быстрая установка скриптом</span>
-            <button type="button" class="copy-btn" data-copy="mkdir -p /opt/ligament && cd /opt/ligament && curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh && chmod +x install.sh && ./install.sh">Скопировать</button>
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">
+              <span class="wiki-code-dot wiki-dot-red"></span>
+              <span class="wiki-code-dot wiki-dot-yellow"></span>
+              <span class="wiki-code-dot wiki-dot-green"></span>
+              bash — авто-установка скриптом
+            </span>
+            <button type="button" class="wiki-copy-btn" data-copy="mkdir -p /opt/ligament &amp;&amp; cd /opt/ligament &amp;&amp; curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh &amp;&amp; chmod +x install.sh &amp;&amp; ./install.sh">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code>mkdir -p /opt/ligament &amp;&amp; cd /opt/ligament
+          <pre class="wiki-pre"><code>mkdir -p /opt/ligament &amp;&amp; cd /opt/ligament
 curl -fsSL https://raw.githubusercontent.com/aligorov/ligament/main/install.sh -o install.sh
 chmod +x install.sh &amp;&amp; ./install.sh</code></pre>
         </div>
 
-        <div class="docs-callout docs-callout-info">
-          <p><strong>Полезные параметры запуска скрипта:</strong></p>
-          <p><code>./install.sh --http-port 8080</code> — использовать непривилегированный порт 8080 без необходимости прав root.<br>
-          <code>./install.sh --tag v1.1.73</code> — зафиксировать конкретную стабильную версию контейнера.<br>
-          <code>./install.sh --fresh</code> — выполнить чистый перезапуск при наличии старой базы данных прошлого развёртывания.</p>
-        </div>
+        <h3 class="wiki-subheading">Вариант Б: Ручное развёртывание через Docker Compose</h3>
+        <p>Создайте каталог <code>/opt/ligament</code> и сохраните файл <code>docker-compose.yml</code>:</p>
 
-        <h3 class="docs-subhead">Вариант Б: Ручной запуск через Docker Compose</h3>
-        <p class="docs-p">Создайте файл <code>docker-compose.yml</code> в рабочем каталоге <code>/opt/ligament</code>:</p>
-
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">yaml — docker-compose.yml</span>
-            <button type="button" class="copy-btn" data-copy="services:
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">
+              <span class="wiki-code-dot wiki-dot-red"></span>
+              <span class="wiki-code-dot wiki-dot-yellow"></span>
+              <span class="wiki-code-dot wiki-dot-green"></span>
+              yaml — docker-compose.yml
+            </span>
+            <button type="button" class="wiki-copy-btn" data-copy="services:
   db:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: twofa
-      POSTGRES_PASSWORD: &quot;${TWOFA_PG_PASSWORD:?Задайте пароль БД в .env}&quot;
+      POSTGRES_PASSWORD: &quot;${TWOFA_PG_PASSWORD:?Укажите TWOFA_PG_PASSWORD в .env}&quot;
       POSTGRES_DB: twofa
     volumes:
       - twofa_pgdata:/var/lib/postgresql/data
@@ -255,12 +309,12 @@ chmod +x install.sh &amp;&amp; ./install.sh</code></pre>
 volumes:
   twofa_pgdata:">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code>services:
+          <pre class="wiki-pre"><code>services:
   db:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: twofa
-      POSTGRES_PASSWORD: "${TWOFA_PG_PASSWORD:?Задайте пароль БД в .env}"
+      POSTGRES_PASSWORD: "${TWOFA_PG_PASSWORD:?Укажите TWOFA_PG_PASSWORD в .env}"
       POSTGRES_DB: twofa
     volumes:
       - twofa_pgdata:/var/lib/postgresql/data
@@ -293,447 +347,248 @@ volumes:
   twofa_pgdata:</code></pre>
         </div>
 
-        <p class="docs-p">Сгенерируйте файл <code>.env</code> с надёжным паролем и запустите стек:</p>
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">bash — запуск стека</span>
-            <button type="button" class="copy-btn" data-copy="echo &quot;TWOFA_PG_PASSWORD=$(openssl rand -hex 24)&quot; > .env &amp;&amp; chmod 600 .env &amp;&amp; docker compose up -d">Скопировать</button>
+        <p>Сгенерируйте файл <code>.env</code> и запустите стек:</p>
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">bash — запуск контейнеров</span>
+            <button type="button" class="wiki-copy-btn" data-copy="echo &quot;TWOFA_PG_PASSWORD=$(openssl rand -hex 24)&quot; > .env &amp;&amp; chmod 600 .env &amp;&amp; docker compose up -d">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code>echo "TWOFA_PG_PASSWORD=$(openssl rand -hex 24)" > .env
+          <pre class="wiki-pre"><code>echo "TWOFA_PG_PASSWORD=$(openssl rand -hex 24)" > .env
 chmod 600 .env
 docker compose up -d</code></pre>
         </div>
       </section>
 
       <!-- Section 3 -->
-      <section id="first-login" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">3</div>
-          <h2 class="docs-section-title">Первый вход администратора и безопасность</h2>
+      <section id="first-login" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">3</div>
+          <span>Первый вход администратора и безопасность</span>
         </div>
-        <p class="docs-p">В целях безопасности первичный пароль администратора <strong>не печатается в stdout логах</strong> Docker, чтобы предотвратить его утечку в централизованные системы сбора журналов (ELK/Graylog/Loki).</p>
-        <p class="docs-p">При первом старте система автоматически генерирует временный пароль и 5 одноразовых кодов аварийного восстановления доступа (Break-Glass recovery codes). Извлеките их на хост:</p>
+        <p>Пароль администратора <strong>никогда не пишется в консольные логи контейнера</strong>. При первом запуске система создаёт учётную запись <code>admin</code>, записывает первичный пароль в <code>admin_password.txt</code> и создаёт 5 одноразовых кодов аварийного восстановления <code>admin_recovery_codes.txt</code>.</p>
 
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">bash — получение первичного пароля</span>
-            <button type="button" class="copy-btn" data-copy="docker cp $(docker compose ps -q twofa):/home/nonroot/admin_password.txt . &amp;&amp; docker cp $(docker compose ps -q twofa):/home/nonroot/admin_recovery_codes.txt . &amp;&amp; cat admin_password.txt">Скопировать</button>
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">bash — выгрузка пароля и break-glass кодов</span>
+            <button type="button" class="wiki-copy-btn" data-copy="docker cp $(docker compose ps -q twofa):/home/nonroot/admin_password.txt . &amp;&amp; docker cp $(docker compose ps -q twofa):/home/nonroot/admin_recovery_codes.txt . &amp;&amp; cat admin_password.txt">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code># Забрать сгенерированный пароль администратора:
+          <pre class="wiki-pre"><code># Забрать сгенерированный пароль администратора:
 docker cp $(docker compose ps -q twofa):/home/nonroot/admin_password.txt .
 
-# Забрать 5 одноразовых break-glass кодов восстановления:
+# Забрать 5 одноразовых аварийных кодов восстановления:
 docker cp $(docker compose ps -q twofa):/home/nonroot/admin_recovery_codes.txt .
 
-# Просмотреть пароль:
+# Вывести пароль:
 cat admin_password.txt</code></pre>
         </div>
 
-        <div class="docs-callout docs-callout-warning">
-          <p><strong>Обязательные действия сразу после входа:</strong></p>
-          <p>1. Откройте веб-интерфейс <code>http://IP-адрес-сервера:8080</code> (логин: <code>admin</code>).<br>
-          2. Сохраните <code>admin_recovery_codes.txt</code> в корпоративный сейф паролей (KeePass / Vault).<br>
-          3. <strong>Удалите файл <code>admin_password.txt</code></strong> с сервера командой <code>rm -f admin_password.txt</code>.<br>
-          4. В профиле учётной записи установите постоянный пароль и подключите двухфакторную аутентификацию (TOTP или Telegram).</p>
+        <div class="wiki-callout wiki-callout-warning">
+          <span class="wiki-callout-icon">⚠️</span>
+          <div class="wiki-callout-body">
+            <p><strong>Порядок действий сразу после авторизации:</strong></p>
+            <p>1. Откройте в браузере <code>http://IP-сервера:8080</code> (логин: <code>admin</code>).<br>
+            2. Сохраните <code>admin_recovery_codes.txt</code> в корпоративный сейф (KeePass/Vault).<br>
+            3. Удалите файл пароля с хоста: <code>rm -f admin_password.txt</code>.<br>
+            4. В профиле измените пароль на постоянный и подключите второй фактор (TOTP / Telegram).</p>
+          </div>
         </div>
       </section>
 
       <!-- Section 4 -->
-      <section id="licensing" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">4</div>
-          <h2 class="docs-section-title">Активация лицензии и квоты пользователей</h2>
+      <section id="licensing" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">4</div>
+          <span>Лицензирование и автономность (Air-Gapped)</span>
         </div>
-        <p class="docs-p">Из коробки сервер запускается в бесплатной редакции <strong>Community</strong> — до 5 активных пользователей навсегда без ограничения срока действия.</p>
-        <p class="docs-p">Для расширения штата пользователей или активации корпоративных модулей (OpenID Connect / SAML SSO, Бастион, Windows Logon UAC elevation, Branch Relay):</p>
-
-        <ul class="docs-list">
-          <li>Перейдите в панель управления: <strong>/admin → Лицензия</strong>.</li>
-          <li>Вставьте полученный лицензионный ключ (подписанный криптографический блок Base64 на алгоритме Ed25519) в текстовое поле.</li>
-          <li>Нажмите кнопку <strong>«Сохранить лицензию»</strong>.</li>
+        <p>По умолчанию включена бесплатная редакция <strong>Community</strong> — до 5 активных сотрудников бессрочно.</p>
+        <p>Для перехода на коммерческую редакцию или активации 30-дневного пилота:</p>
+        <ul>
+          <li>Откройте раздел веб-интерфейса <strong>/admin → Лицензия</strong>.</li>
+          <li>Вставьте лицензионный ключ в текстовое поле и нажмите <strong>«Сохранить лицензию»</strong>.</li>
+          <li>Ключ подписан цифровой подписью Ed25519 — он валидируется локально и применяется моментально без перезагрузки сервера и без выхода в интернет.</li>
         </ul>
-
-        <div class="docs-callout docs-callout-tip">
-          <p><strong>Мгновенное применение без интернета:</strong></p>
-          <p>Лицензия проверяется локальной математической подписью открытым ключом вендора. Она активируется моментально без перезагрузки контейнеров и без необходимости выхода сервера в интернет.</p>
-        </div>
       </section>
+
       <!-- Section 5 -->
-      <section id="domain-ssl" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">5</div>
-          <h2 class="docs-section-title">Настройка домена и SSL/TLS</h2>
+      <section id="domain-ssl" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">5</div>
+          <span>Настройка сетевого домена и SSL/TLS</span>
         </div>
-        <p class="docs-p">Корректный внешний URL необходим для корректной генерации ссылок подтверждения входа, WebSSO перенаправлений и валидации WebAuthn / Passkeys.</p>
-        <p class="docs-p">В веб-интерфейсе перейдите в <strong>/admin → Настройки → Домен и шаблоны</strong> и укажите базовый адрес вашей инсталляции:</p>
-
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">json — server.domain</span>
-            <button type="button" class="copy-btn" data-copy="&quot;server.domain&quot;: &quot;https://auth.company.corp&quot;">Скопировать</button>
+        <p>В разделе <strong>/admin → Настройки → Домен и шаблоны</strong> укажите внешний URL вашего сервера в параметре <code>server.domain</code> (например: <code>https://auth.company.corp</code>).</p>
+        <div class="wiki-callout wiki-callout-tip">
+          <span class="wiki-callout-icon">🔒</span>
+          <div class="wiki-callout-body">
+            <p><strong>Рекомендуемая схема:</strong> Контейнер Ligament работает на внутреннем порту 8080, а входящий трафик терминируется на вашем внешнем обратном прокси (Nginx, Traefik, HAProxy, Caddy) с пробросом заголовков <code>X-Forwarded-For</code> и <code>X-Forwarded-Proto: https</code>.</p>
           </div>
-          <pre class="docs-code-pre"><code>"server.domain": "https://auth.company.corp"</code></pre>
         </div>
-
-        <h3 class="docs-subhead">Схемы организации HTTPS:</h3>
-        <ul class="docs-list">
-          <li><strong>Внешний Reverse Proxy (Nginx, Caddy, Traefik, HAProxy):</strong> Рекомендуемый промышленный способ. Контейнер Ligament принимает локальный HTTP-трафик на порту 8080, а TLS-сертификаты терминируются на корпоративном шлюзе. Обязательно передавайте заголовки <code>X-Forwarded-For</code> и <code>X-Forwarded-Proto: https</code>.</li>
-          <li><strong>Встроенный ACME (Let's Encrypt):</strong> При прямой доступности портов 80 и 443 из сети Интернет включите авто-заказ сертификата в <strong>/admin → Настройки → SSL/TLS</strong> (переменные <code>acme.domain</code> и <code>acme.email</code>).</li>
-        </ul>
       </section>
 
       <!-- Section 6 -->
-      <section id="active-directory" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">6</div>
-          <h2 class="docs-section-title">Интеграция с Active Directory и FreeIPA</h2>
+      <section id="active-directory" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">6</div>
+          <span>Интеграция с Active Directory и FreeIPA</span>
         </div>
-        <p class="docs-p">Ligament поддерживает сквозную аутентификацию сотрудников по каталогу пользователей Active Directory или FreeIPA через защищённый протокол LDAPS.</p>
-        <p class="docs-p">В разделе панели <strong>/admin → Настройки → Служба каталогов (LDAP)</strong> задайте конфигурацию подключения:</p>
+        <p>Импорт пользователей и проверка доменных паролей выполняются по защищённому протоколу LDAPS. В панели <strong>/admin → Настройки → Служба каталогов (LDAP)</strong> укажите:</p>
 
-        <div class="docs-table-wrapper">
-          <table class="docs-table">
+        <div class="wiki-table-wrapper">
+          <table class="wiki-table">
             <thead>
               <tr>
                 <th>Параметр</th>
-                <th>Пример значения</th>
-                <th>Описание</th>
+                <th>Значение</th>
+                <th>Назначение</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><code>enabled</code></td>
-                <td><code>true</code></td>
-                <td>Включение модуля синхронизации с доменом</td>
-              </tr>
-              <tr>
-                <td><code>url</code></td>
-                <td><code>ldaps://dc1.company.corp:636</code></td>
-                <td>Защищённый адрес контроллера домена</td>
-              </tr>
-              <tr>
-                <td><code>bind_dn</code></td>
-                <td><code>CN=svc-ligament,OU=Services,DC=company,DC=corp</code></td>
-                <td>Служебная учётная запись для поиска пользователей</td>
-              </tr>
-              <tr>
-                <td><code>bind_password</code></td>
-                <td><code>••••••••••••</code></td>
-                <td>Пароль служебной учётной записи</td>
-              </tr>
-              <tr>
-                <td><code>base_dn</code></td>
-                <td><code>DC=company,DC=corp</code></td>
-                <td>Базовый корень дерева Active Directory</td>
-              </tr>
-              <tr>
-                <td><code>user_filter</code></td>
-                <td><code>(&amp;(objectCategory=person)(sAMAccountName={login}))</code></td>
-                <td>Фильтр поиска целевого сотрудника по логину</td>
-              </tr>
-              <tr>
-                <td><code>cache_passwords</code></td>
-                <td><code>true</code></td>
-                <td>Шифрование проверенных паролей для Wi-Fi PEAP</td>
-              </tr>
+              <tr><td><code>enabled</code></td><td><code>true</code></td><td>Включение модуля синхронизации</td></tr>
+              <tr><td><code>url</code></td><td><code>ldaps://dc1.company.corp:636</code></td><td>Контроллер домена с шифрованием</td></tr>
+              <tr><td><code>bind_dn</code></td><td><code>CN=svc-ligament,OU=Services,DC=company,DC=corp</code></td><td>Служебная учётка для поиска</td></tr>
+              <tr><td><code>bind_password</code></td><td><code>••••••••••••</code></td><td>Пароль служебной учётки</td></tr>
+              <tr><td><code>base_dn</code></td><td><code>DC=company,DC=corp</code></td><td>Корень дерева поиска сотрудников</td></tr>
+              <tr><td><code>user_filter</code></td><td><code>(&amp;(objectCategory=person)(sAMAccountName={login}))</code></td><td>Шаблон поиска логина</td></tr>
+              <tr><td><code>cache_passwords</code></td><td><code>true</code></td><td>Шифрование паролей для Wi-Fi 802.1X PEAP</td></tr>
             </tbody>
           </table>
         </div>
-
-        <div class="docs-callout docs-callout-info">
-          <p><strong>Зачем нужно кэширование паролей (cache_passwords):</strong></p>
-          <p>При подключении к корпоративному Wi-Fi по стандарту WPA2/WPA3 Enterprise (EAP-PEAP / MS-CHAPv2) протокол требует сверки NT-хэша пароля на стороне RADIUS. Ligament безопасно шифрует проверенный доменный пароль мастер-ключом сервера в таблице <code>users.password_enc</code>, что позволяет сотрудникам входить в Wi-Fi сеть без изменения схемы Active Directory.</p>
-        </div>
       </section>
-
       <!-- Section 7 -->
-      <section id="mfa-factors" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">7</div>
-          <h2 class="docs-section-title">Настройка каналов доставки второго фактора (MFA)</h2>
+      <section id="mfa-factors" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">7</div>
+          <span>Факторы аутентификации 2FA</span>
         </div>
-        <p class="docs-p">В разделе <strong>/admin → Настройки</strong> настройте удобные для вашей компании каналы подтверждения:</p>
-
-        <h3 class="docs-subhead">1. Telegram-бот (Подтверждение в 1 клик и Number Matching)</h3>
-        <p class="docs-p">Сотрудники могут подтверждать вход кнопкой прямо в корпоративном мессенджере без необходимости установки мобильных приложений:</p>
-        <ul class="docs-list">
-          <li>Создайте бота в Telegram через официального <code>@BotFather</code> (команда <code>/newbot</code>).</li>
-          <li>Вставьте полученный токен в <strong>/admin → Настройки → Telegram → telegram.bot_token</strong>.</li>
-          <li>Сотрудники связывают бота со своей учётной записью, сканируя QR-код из личного кабинета.</li>
+        <p>В разделе <strong>/admin → Настройки</strong> включите требуемые каналы подтверждения:</p>
+        <ul>
+          <li><strong>Telegram-бот:</strong> Создайте бота через <code>@BotFather</code> и укажите токен в <code>telegram.bot_token</code>. Сотрудники подтверждают вход кнопкой в мессенджере или вводом числа (Number Matching).</li>
+          <li><strong>Корпоративная почта (SMTP):</strong> Оповещение одноразовыми кодами подтверждения через ваш почтовый сервер.</li>
+          <li><strong>FIDO2 / Passkeys / WebAuthn:</strong> Аппаратные токены (Рутокен MFA, YubiKey) и системные датчики (Windows Hello, Touch ID).</li>
         </ul>
-
-        <h3 class="docs-subhead">2. Корпоративный почтовый сервер (SMTP)</h3>
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">json — настройка SMTP</span>
-            <button type="button" class="copy-btn" data-copy="{&quot;host&quot;:&quot;mail.company.corp&quot;,&quot;port&quot;:587,&quot;starttls&quot;:true,&quot;user&quot;:&quot;auth-noreply@company.corp&quot;,&quot;password&quot;:&quot;P@ssw0rd&quot;,&quot;from&quot;:&quot;auth-noreply@company.corp&quot;,&quot;subject&quot;:&quot;Код подтверждения входа&quot;}">Скопировать</button>
-          </div>
-          <pre class="docs-code-pre"><code>{
-  "host": "mail.company.corp",
-  "port": 587,
-  "starttls": true,
-  "user": "auth-noreply@company.corp",
-  "password": "PasswordHere",
-  "from": "auth-noreply@company.corp",
-  "subject": "Код подтверждения входа"
-}</code></pre>
-        </div>
-
-        <h3 class="docs-subhead">3. SMS-шлюзы и Голосовая доставка (TTS)</h3>
-        <p class="docs-p">Поддерживаются встроенные пресеты: SMS.RU, SMS-Центр (smsc.ru), Devino Telecom, МегаФон Таргет, протокол SMPP и аппаратные USB-модемы.</p>
-
-        <h3 class="docs-subhead">4. Аппаратные FIDO2/Passkey токены (WebAuthn)</h3>
-        <p class="docs-p">Аппаратные USB-ключи (Рутокен MFA, YubiKey) и встроенные биометрические датчики (Windows Hello, Touch ID) работают нативно по открытым стандартам FIDO Alliance.</p>
       </section>
 
       <!-- Section 8 -->
-      <section id="radius-setup" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">8</div>
-          <h2 class="docs-section-title">Настройка RADIUS (MikroTik RouterOS, VPN, Wi-Fi 802.1X)</h2>
+      <section id="radius-setup" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">8</div>
+          <span>Настройка RADIUS (MikroTik, Wi-Fi 802.1X, VPN)</span>
         </div>
-        <p class="docs-p">Ligament Core содержит высокопроизводительный встроенный RADIUS-сервер (порты UDP 1812 — аутентификация, 1813 — аккаунтинг). В разделе <strong>/admin → Настройки → RADIUS</strong> задайте секретный ключ <code>radius.secret</code>.</p>
+        <p>Ligament Core предоставляет встроенный RADIUS-сервер (UDP 1812 / 1813). Для защиты маршрутизаторов MikroTik выполните в консоли RouterOS:</p>
 
-        <h3 class="docs-subhead">Интеграция с MikroTik RouterOS</h3>
-        <p class="docs-p">Выполните команды в терминале RouterOS для защиты входа в маршрутизатор, VPN-серверов и беспроводной сети:</p>
-
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">routeros — настройка RADIUS в MikroTik</span>
-            <button type="button" class="copy-btn" data-copy="/radius add address=192.168.1.10 secret=&quot;ВашСекретныйКлюч&quot; service=login,ppp,wireless timeout=5s
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">
+              <span class="wiki-code-dot wiki-dot-red"></span>
+              <span class="wiki-code-dot wiki-dot-yellow"></span>
+              <span class="wiki-code-dot wiki-dot-green"></span>
+              routeros — подключение RADIUS
+            </span>
+            <button type="button" class="wiki-copy-btn" data-copy="/radius add address=192.168.1.10 secret=&quot;ВашСекретныйКлюч&quot; service=login,ppp,wireless timeout=5s
 /user aaa set use-radius=yes
 /ppp aaa set use-radius=yes accounting=yes
 /radius incoming set accept=yes">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code># Подключение сервера Ligament как RADIUS-провайдера:
-/radius add address=192.168.1.10 secret="ВашСекретныйКлюч" service=login,ppp,wireless timeout=5s
-
-# Включение RADIUS для входа администраторов в WinBox / SSH:
+          <pre class="wiki-pre"><code>/radius add address=192.168.1.10 secret="ВашСекретныйКлюч" service=login,ppp,wireless timeout=5s
 /user aaa set use-radius=yes
-
-# Включение 2FA для VPN-туннелей (L2TP / SSTP / OpenVPN / PPTP):
 /ppp aaa set use-radius=yes accounting=yes
-
-# Включение принудительного разрыва сессий (RFC 3576 CoA / Disconnect):
 /radius incoming set accept=yes</code></pre>
         </div>
       </section>
+
       <!-- Section 9 -->
-      <section id="windows-agent" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">9</div>
-          <h2 class="docs-section-title">Развёртывание агентов Windows Logon &amp; RDP (MSI + GPO)</h2>
+      <section id="windows-agent" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">9</div>
+          <span>Развёртывание агентов Windows Logon (MSI + GPO)</span>
         </div>
-        <p class="docs-p">Модуль <strong>Ligament Windows Credential Provider</strong> интегрируется напрямую в экран блокировки Windows (LogonUI) для защиты локальных консолей и терминальных RDP-сессий с поддержкой мгновенного <strong>Auto-Logon</strong>.</p>
+        <p>Модуль <strong>Credential Provider</strong> устанавливается на рабочие станции и серверы Windows для защиты консольного и RDP входа с поддержкой мгновенного <strong>Auto-Logon</strong>.</p>
 
-        <h3 class="docs-subhead">Реальный интерфейс входа пользователя в Windows</h3>
-        <p class="docs-p">Ниже представлены скриншоты работы нативного провайдера на экране входа в систему:</p>
+        <h3 class="wiki-subheading">Интерфейс входа в систему</h3>
 
-        <div class="logon-gallery-grid" style="margin-bottom: 32px;">
-          <!-- Card 1: Windows Logon screen -->
-          <figure class="logon-gallery-card">
-            <div class="logon-img-wrap">
-              <img src="assets/media/screen-windows-logon.png" alt="Экран входа Windows LogonUI с Ligament 2FA" width="923" height="738" loading="lazy">
-            </div>
-            <figcaption>
-              <strong>Нативный экран входа Windows LogonUI</strong>
-              <span>Интеграция в системный экран блокировки. Пользователь вводит корпоративный логин/пароль и выбирает способ подтверждения: Push в приложение (число), бот в Telegram или Passkey.</span>
-            </figcaption>
-          </figure>
-
-          <!-- Card 2: Passkey QR-code -->
-          <figure class="logon-gallery-card">
-            <div class="logon-img-wrap">
-              <img src="assets/media/screen-windows-passkey-qr.png" alt="Вход в Windows по Passkey через QR-код" width="796" height="717" loading="lazy">
-            </div>
-            <figcaption>
-              <strong>Вход по Passkey (Динамический QR-код)</strong>
-              <span>Сотрудник сканирует динамический QR-код на экране монитора камерой смартфона. Биометрическая верификация Face ID / Touch ID мгновенно разблокирует рабочий стол без ввода цифр.</span>
-            </figcaption>
-          </figure>
+        <div class="wiki-media-frame">
+          <div class="wiki-media-img-box">
+            <img src="assets/media/screen-windows-logon.png" alt="Экран входа Windows LogonUI с Ligament 2FA" width="923" height="738" loading="lazy">
+          </div>
+          <div class="wiki-media-caption">
+            <strong>🪟 Нативный экран входа Windows LogonUI</strong>
+            Интеграция в системный экран блокировки: сотрудник вводит логин и пароль, после чего подтверждает вход через Push (Number Matching), Telegram или Passkey.
+          </div>
         </div>
 
-        <h3 class="docs-subhead">Централизованная раскатка через Active Directory GPO:</h3>
-        <ol class="docs-list">
-          <li>Скачайте релизный пакет <code>Ligament-2FA-Windows-x64.msi</code> и административные шаблоны <code>Ligament2FA.admx</code> / <code>Ligament2FA.adml</code> из <a href="index.html#downloads" style="color: var(--accent); text-decoration: underline;">раздела загрузок</a>.</li>
-          <li>Скопируйте <code>Ligament2FA.admx</code> в каталог Центрального хранилища шаблонов: <code>\\domain.corp\SYSVOL\domain.corp\Policies\PolicyDefinitions\</code>.</li>
-          <li>Скопируйте языковой файл <code>Ligament2FA.adml</code> в подпапку <code>PolicyDefinitions\ru-RU\</code> (или <code>en-US\</code>).</li>
-          <li>В консоли управления групповыми политиками (<code>gpmc.msc</code>) настройте параметры:
-            <ul style="margin-top: 8px;">
-              <li><strong>Server URL:</strong> <code>https://auth.company.corp:8080</code></li>
-              <li><strong>2FA Mode:</strong> <code>RDP and Local Console</code> (или <code>RDP Only</code>)</li>
-              <li><strong>Auto-Logon:</strong> <code>Enabled</code> (мгновенная разблокировка экрана после push-подтверждения)</li>
-              <li><strong>Number Matching:</strong> <code>Enabled</code> (отображение контрольного числа на экране)</li>
-              <li><strong>Fail Mode:</strong> <code>Fail-Open</code> (резервный доступ при аварии сети) или <code>Fail-Close</code> (строгая изоляция).</li>
-            </ul>
-          </li>
-          <li>Назначьте фоновую установку MSI-пакета в разделе <strong>Конфигурация компьютера → Политики → Установка программ</strong>.</li>
-        </ol>
+        <div class="wiki-media-frame">
+          <div class="wiki-media-img-box">
+            <img src="assets/media/screen-windows-passkey-qr.png" alt="Вход в Windows по Passkey через QR-код" width="796" height="717" loading="lazy">
+          </div>
+          <div class="wiki-media-caption">
+            <strong>🔑 Вход по Passkey (Динамический QR-код)</strong>
+            Сотрудник сканирует динамический QR-код камерой телефона и подтверждает вход биометрией Face ID / Touch ID. Ввод цифр не требуется.
+          </div>
+        </div>
+
+        <h3 class="wiki-subheading">Настройка групповой политики (GPO):</h3>
+        <p>1. Скопируйте <code>Ligament2FA.admx</code> в <code>\\domain\SYSVOL\domain\Policies\PolicyDefinitions\</code>.<br>
+        2. Скопируйте <code>Ligament2FA.adml</code> в папку <code>PolicyDefinitions\ru-RU\</code>.<br>
+        3. В оснастке <code>gpmc.msc</code> включите <strong>Server URL</strong> (<code>https://auth.company.corp:8080</code>), <strong>Auto-Logon</strong> (Enabled) и <strong>Number Matching</strong> (Enabled).</p>
       </section>
 
       <!-- Section 10 -->
-      <section id="workstation-clients" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">10</div>
-          <h2 class="docs-section-title">Подключение сотрудников и клиентские приложения</h2>
+      <section id="workstation-clients" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">10</div>
+          <span>Клиентские приложения и онбординг сотрудников</span>
         </div>
-        <p class="docs-p">Процедура первого подключения (онбординга) сотрудника максимально автоматизирована и занимает менее 1 минуты:</p>
+        <p>Для сотрудников под управлением Windows и российских ОС Linux (Astra Linux 1.7, РЕД ОС, Альт) доступно графическое приложение <strong>Ligament Authenticator</strong>.</p>
 
-        <ul class="docs-list">
-          <li>Сотрудник открывает портал <code>https://auth.company.corp/</code> и входит с доменными учётными данными.</li>
-          <li>На экране отображается динамический QR-код привязки.</li>
-          <li>Сотрудник сканирует код в мобильном приложении <strong>Ligament Authenticator</strong> (Android/iOS) либо нажимает кнопку перехода в корпоративный Telegram-бот.</li>
-          <li>Устройство надёжно привязано: все последующие входы в Windows, VPN или веб-портал подтверждаются в один клик.</li>
-        </ul>
-
-        <h3 class="docs-subhead">Десктопный клиент Ligament 2FA Authenticator</h3>
-        <p class="docs-p">Для рабочих станций сотрудников под управлением Windows и российских ОС Linux (Astra Linux Special Edition 1.7, РЕД ОС 7.3/8, Альт Рабочая станция p9/p10) доступно графическое приложение аутентификации:</p>
-
-        <div style="max-width: 480px; margin: 24px 0;">
-          <figure class="logon-gallery-card">
-            <div class="logon-img-wrap logon-img-wrap-contain" style="height: 380px;">
-              <img src="assets/media/screen-authenticator-login.png" alt="Вход в приложение Ligament 2FA Authenticator" width="367" height="565" loading="lazy">
-            </div>
-            <figcaption>
-              <strong>Вход в приложение Ligament 2FA Authenticator</strong>
-              <span>Окно авторизации рабочего места сотрудника: безопасный ввод учётных данных домена, поддержка системного трея, фоновые push-уведомления и регистрация протокола <code>x-scheme-handler/ligament</code>.</span>
-            </figcaption>
-          </figure>
+        <div class="wiki-media-frame" style="max-width: 520px;">
+          <div class="wiki-media-img-box" style="padding: 24px;">
+            <img src="assets/media/screen-authenticator-login.png" alt="Вход в приложение Ligament 2FA Authenticator" width="367" height="565" loading="lazy">
+          </div>
+          <div class="wiki-media-caption">
+            <strong>💻 Авторизация рабочего места в Ligament Authenticator</strong>
+            Привязка рабочего ПК к учётной записи пользователя, фоновые системные уведомления и статус соединения с ядром.
+          </div>
         </div>
       </section>
 
       <!-- Section 11 -->
-      <section id="branch-relay" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">11</div>
-          <h2 class="docs-section-title">Развёртывание узлов Ligament Relay в филиалах</h2>
+      <section id="branch-relay" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">11</div>
+          <span>Филиальный узел Ligament Relay (Офлайн-режим)</span>
         </div>
-        <p class="docs-p">Для удалённых подразделений, складов и филиалов с нестабильным доступом в интернет узел <strong>Ligament Relay</strong> решает две ключевые задачи:</p>
-
-        <ul class="docs-list">
-          <li><strong>Безопасный проброс RDP и SSH:</strong> Relay поднимает защищённый исходящий WSS-туннель (порт 443) к Core, позволяя администраторам подключаться к серверам филиала без белого IP и без открытия портов 3389/22 наружу.</li>
-          <li><strong>Резервный RADIUS для Wi-Fi:</strong> При полном обрыве интернет-канала локальный Relay выступает автономным RADIUS-сервером: корпоративный Wi-Fi (802.1X WPA2/WPA3 Enterprise) продолжает авторизовывать сотрудников по локальному кэшу.</li>
+        <p>Узел <strong>Relay</strong> решает две ключевые задачи удалённых подразделений:</p>
+        <ul>
+          <li><strong>Безопасный проброс RDP и SSH:</strong> Устанавливает исходящий туннель WSS (:443) к Core, обеспечивая удалённый доступ без белого IP и без открытия портов 3389/22 наружу.</li>
+          <li><strong>Резервный RADIUS для Wi-Fi:</strong> При обрыве интернет-канала выступает локальным автономным RADIUS-сервером (802.1X WPA2/WPA3 Enterprise) по локальному кэшу.</li>
         </ul>
-
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">yaml — docker-compose.relay.yml</span>
-            <button type="button" class="copy-btn" data-copy="services:
-  relay:
-    image: aligorov/ligament_relay:latest
-    restart: unless-stopped
-    ports:
-      - &quot;1812:1812/udp&quot;
-    environment:
-      CORE_URL: &quot;https://auth.company.corp&quot;
-      RELAY_SECRET: &quot;ПарольФилиалаИзПанели&quot;">Скопировать</button>
-          </div>
-          <pre class="docs-code-pre"><code>services:
-  relay:
-    image: aligorov/ligament_relay:latest
-    restart: unless-stopped
-    ports:
-      - "1812:1812/udp"
-    environment:
-      CORE_URL: "https://auth.company.corp"
-      RELAY_SECRET: "ПарольФилиалаИзПанелиАдминистратора"</code></pre>
-        </div>
       </section>
 
       <!-- Section 12 -->
-      <section id="maintenance" class="docs-section">
-        <div class="docs-step-header">
-          <div class="docs-step-num">12</div>
-          <h2 class="docs-section-title">Диагностика, мониторинг и резервное копирование</h2>
+      <section id="maintenance" class="wiki-section">
+        <div class="wiki-section-heading">
+          <div class="wiki-step-number">12</div>
+          <span>Мониторинг, аудит и резервное копирование</span>
         </div>
+        <p>• <strong>Healthcheck:</strong> <code>curl -I http://localhost:8080/healthz</code> (возвращает <code>HTTP 200 OK</code>).<br>
+        • <strong>Журнал аудита:</strong> В реальном времени фиксируется в панели <strong>/admin/audit</strong>.<br>
+        • <strong>Резервное копирование базы:</strong></p>
 
-        <h3 class="docs-subhead">Проверка готовности сервиса (Healthcheck)</h3>
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">bash — проверка healthz</span>
-            <button type="button" class="copy-btn" data-copy="curl -I http://localhost:8080/healthz">Скопировать</button>
+        <div class="wiki-code-card">
+          <div class="wiki-code-topbar">
+            <span class="wiki-code-title">
+              <span class="wiki-code-dot wiki-dot-red"></span>
+              <span class="wiki-code-dot wiki-dot-yellow"></span>
+              <span class="wiki-code-dot wiki-dot-green"></span>
+              bash — бэкап PostgreSQL
+            </span>
+            <button type="button" class="wiki-copy-btn" data-copy="docker compose exec -T db pg_dump -U twofa twofa | gzip > &quot;ligament_backup_$(date +%F_%H%M).sql.gz&quot;">Скопировать</button>
           </div>
-          <pre class="docs-code-pre"><code>curl -I http://localhost:8080/healthz
-# Ответ: HTTP/1.1 200 OK</code></pre>
-        </div>
-
-        <h3 class="docs-subhead">Журнал аудита событий безопасности</h3>
-        <p class="docs-p">В разделе консоли <strong>/admin/audit</strong> в режиме реального времени отображаются все события периметра:</p>
-        <ul class="docs-list">
-          <li>Успешные и отклонённые попытки входа в Windows, VPN, Wi-Fi и веб-сервисы.</li>
-          <li>IP-адрес источника, имя рабочей станции, используемый фактор 2FA и контрольное число.</li>
-          <li>Срабатывания защитного механизма Fail2Ban при подборе паролей.</li>
-        </ul>
-
-        <h3 class="docs-subhead">Резервное копирование базы данных PostgreSQL</h3>
-        <p class="docs-p">Для создания резервной копии базы выполните команду (рекомендуется настроить по cron):</p>
-        <div class="docs-code-card">
-          <div class="docs-code-header">
-            <span class="docs-code-title">bash — бэкап PostgreSQL</span>
-            <button type="button" class="copy-btn" data-copy="docker compose exec -T db pg_dump -U twofa twofa | gzip > &quot;ligament_backup_$(date +%F_%H%M).sql.gz&quot;">Скопировать</button>
-          </div>
-          <pre class="docs-code-pre"><code># Создание сжатого дампа базы данных:
-docker compose exec -T db pg_dump -U twofa twofa | gzip > "ligament_backup_$(date +%F_%H%M).sql.gz"
-
-# Восстановление базы из дампа:
-gunzip < ligament_backup_YYYY-MM-DD.sql.gz | docker compose exec -T db psql -U twofa twofa</code></pre>
-        </div>
-
-        <!-- Help Callout -->
-        <div class="docs-callout docs-callout-info" style="margin-top: 40px;">
-          <p><strong>Нужна помощь с пилотным внедрением?</strong></p>
-          <p>Инженеры технической поддержки помогут настроить интеграцию с вашей инфраструктурой Active Directory и сетевым оборудованием. Напишите нам на <a href="mailto:admin@ligam.org" style="color: var(--accent); font-weight: 600;">admin@ligam.org</a> или в Telegram <a href="https://t.me/ligament_support" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">@ligament_support</a>.</p>
+          <pre class="wiki-pre"><code>docker compose exec -T db pg_dump -U twofa twofa | gzip > "ligament_backup_$(date +%F_%H%M).sql.gz"</code></pre>
         </div>
       </section>
-    </article>
+    </main>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-            <img class="brand-logo" src="assets/brand/logo-light.svg" data-logo-dark="assets/brand/logo-light.svg" data-logo-light="assets/brand/logo-on-light.svg" alt="" width="136" height="37">
-          </div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 280px;">
-            Надежная On-Premise 2FA платформа для защиты рабочих станций Windows, VPN, Wi-Fi и Web SSO.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Навигация</h4>
-          <ul>
-            <li><a href="index.html#architecture">Граф периметра</a></li>
-            <li><a href="index.html#interface">Интерфейс входа</a></li>
-            <li><a href="docs.html">Документация</a></li>
-            <li><a href="index.html#pricing">Цены &amp; TCO</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Интеграции</h4>
-          <ul>
-            <li><a href="index.html#benefits">Windows Logon &amp; RDP</a></li>
-            <li><a href="index.html#benefits">RADIUS (MikroTik / Cisco)</a></li>
-            <li><a href="index.html#benefits">SSO OIDC &amp; SAML 2.0</a></li>
-            <li><a href="index.html#benefits">Branch Relay (Офлайн)</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Контакты</h4>
-          <ul>
-            <li><a href="mailto:admin@ligam.org">admin@ligam.org</a></li>
-            <li><a href="https://t.me/ligament_support" target="_blank" rel="noopener noreferrer">Telegram Support</a></li>
-            <li><a href="assets/downloads/ligament-presentation.pdf" download>Presentation PDF</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>© 2026 Ligament Security. Все права защищены.</div>
-        <div style="color: var(--text-subtle);">Zero Cloud • 100% On-Premise • 152-ФЗ / КИИ</div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="site.js?v=link-coming-soon-8"></script>
+  <script src="site.js?v=wiki-2"></script>
 </body>
 </html>
