@@ -2365,6 +2365,8 @@ button {
 }
 .link-teaser span { color: var(--text-muted); font-size: 12px; }
 .link-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: linear-gradient(140deg, var(--primary-glow), transparent 65%); }
+.recorder-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: linear-gradient(140deg, rgba(168, 85, 247, 0.09), transparent 65%); }
+[data-theme="light"] .recorder-section { background: linear-gradient(140deg, rgba(168, 85, 247, 0.05), #ffffff 65%); }
 .pacs-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: linear-gradient(140deg, rgba(6, 182, 212, 0.09), transparent 65%); }
 [data-theme="light"] .pacs-section { background: linear-gradient(140deg, rgba(6, 182, 212, 0.05), #ffffff 65%); }
 .fire-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: linear-gradient(140deg, rgba(239, 68, 68, 0.09), transparent 65%); }

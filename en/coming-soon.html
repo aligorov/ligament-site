@@ -21,7 +21,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=link-rework-1">
+  <link rel="stylesheet" href="../styles.css?v=recorder-1">
 </head>
 <body>
 
@@ -43,6 +43,7 @@
       <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="#ligament-link">Ligament Link</a>
+        <a href="#link-recorder">Link Recorder</a>
         <a href="#pacs">Ligament PACS</a>
         <a href="#bolid-fire">Bolid Fire</a>
         <a href="../docs.html">Docs</a>
@@ -72,6 +73,7 @@
       </p>
       <div class="cs-quick-nav">
         <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Presence Gateway) ↓</a>
+        <a href="#link-recorder" class="btn btn-secondary">📹 Link Recorder (Archive &amp; AI) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (Physical Access) ↓</a>
         <a href="#bolid-fire" class="btn btn-secondary">🔥 Bolid Fire Alarm &amp; Evacuation ↓</a>
       </div>
@@ -138,6 +140,75 @@
         <p><strong>For Remote Employees:</strong> secure access to office workstations (Console) from home without the overhead of maintaining a separate full-tunnel VPN.</p>
       </div>
       <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion provides RDP/SSH port forwarding via Core or Branch Relays. Ligament Link is an interactive real-time visual streaming gateway with WebRTC, UAC handling, perimeter Step-Up 2FA, and a unified agent.</p>
+    </div>
+  </section>
+
+  <!-- Ligament Link Recorder: planned module -->
+  <section id="link-recorder" class="section link-section recorder-section" aria-labelledby="recorder-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.15); color: #d8b4fe;">Coming soon · In development</span>
+          <h2 id="recorder-heading" class="section-title">Ligament Link Recorder</h2>
+          <p class="link-lead">Remote Session Archive, Auditing &amp; AI-Powered Incident Investigation</p>
+          <p class="link-description">
+            A dedicated on-premise archiving and forensics service for Link, Console, and SOS sessions with its own independent web console. Captures activity directly on the managed host without operator dependency (across both P2P and Relay sessions). High-definition adaptive screenshots around key actions, interactive timeline player, Legal Hold, password keystroke exclusion, and local evidence extraction for budget-controlled AI analysis.
+          </p>
+          <div class="tag-pills">
+            <span class="tag-pill">Host-Side Capture</span>
+            <span class="tag-pill">P2P + Relay Ingest</span>
+            <span class="tag-pill">Timeline &amp; Calendar</span>
+            <span class="tag-pill">Mandatory Recording (ACK)</span>
+            <span class="tag-pill">Legal Hold &amp; Export</span>
+            <span class="tag-pill">AI Forensics (OpenRouter ZDR)</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="Recorder Development Status">
+          <h3>Dedicated Interface &amp; Isolation</h3>
+          <p>Autonomous service with its own PostgreSQL database and decoupled RBAC permissions (Ingest, View, Export, Legal Hold, AI). Zero load on Core, zero cloud dependencies.</p>
+          <p class="link-disclaimer">
+            AI report visibility is strictly gated by source session permissions. Password entries and sensitive inputs are filtered at the host; external AI dispatch requires explicit authorization under strict budget ceilings.
+          </p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20Link%20Recorder%20early%20access" class="btn btn-primary" style="background: #7c3aed; border-color: #8b5cf6;">Request Link Recorder Demo</a>
+        </aside>
+      </div>
+
+      <h3 class="link-features-heading">Architectural Capabilities of Link Recorder</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Host-Side Capture (P2P &amp; Relay Ingest)</h4>
+          <p>Recording originates directly on the managed host machine and continues uninterrupted regardless of the operator's browser window, across both encrypted Relay and direct WebRTC P2P streams.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Adaptive Action-Driven Screenshots</h4>
+          <p>Smart screen capture: baseline interval snapshots augmented with high-definition bursts around clicks, keystrokes, system dialogs, errors, and window changes without storage bloat.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Mandatory Recording &amp; Host Enforcement</h4>
+          <p>Centralized policies (inherit, record+AI, record_only, exclude). Under mandatory recording, desktop control is withheld until the first stored frame is ACKed and suspends immediately if archiving fails.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Interactive Timeline, Player &amp; Calendar</h4>
+          <p>Dedicated web console featuring session calendar grid, visual timeline with frame scrubbers, remote input traces, operator handover markers, and session coverage integrity indicators.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Incident Investigations &amp; Legal Hold</h4>
+          <p>Attach notes, review tags, and helpdesk ticket references to session records. Legal Hold flag prevents scheduled retention purge. Cryptographic manifest export for compliance and courtroom evidence.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Cost-Effective AI Forensics (Worker &amp; ZDR)</h4>
+          <p>Local OCR and frame deduplication extract minimal evidence packages. Structured analysis via OpenRouter with Zero Data Retention (ZDR), token caps, and exact second-by-second evidence citation.</p>
+        </article>
+      </div>
+
+      <div class="link-use-cases">
+        <p><strong>For Security &amp; SOC Teams:</strong> 100% verified chronological timeline of remote admin activity, tamper-resistant evidence trail, and accelerated incident root-cause analysis.</p>
+        <p><strong>For IT Helpdesks &amp; Team Leads:</strong> dispute resolution, vendor/contractor audit, and automatic summarized action recaps for ticket resolution.</p>
+        <p><strong>For Compliance &amp; Privacy:</strong> granular access segregation, password masking at source, customizable retention schedules, and partition-level automated pruning.</p>
+      </div>
+      <p class="link-distinction">
+        <strong>Recorder / Standard Audit Logs:</strong> Standard audit logs only register connection timestamps. Link Recorder captures visual state, remote inputs, and user interactions with frame-accurate scrubbing and AI verification.
+      </p>
     </div>
   </section>
 

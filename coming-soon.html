@@ -21,7 +21,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=link-rework-1">
+  <link rel="stylesheet" href="styles.css?v=recorder-1">
 </head>
 <body>
 
@@ -43,6 +43,7 @@
       <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
         <a href="index.html">Главная</a>
         <a href="#ligament-link">Ligament Link</a>
+        <a href="#link-recorder">Link Recorder</a>
         <a href="#pacs">Ligament PACS</a>
         <a href="#bolid-fire">Болид Пожар</a>
         <a href="docs.html">Документация</a>
@@ -72,6 +73,7 @@
       </p>
       <div class="cs-quick-nav">
         <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Шлюз присутствия) ↓</a>
+        <a href="#link-recorder" class="btn btn-secondary">📹 Link Recorder (Архив и ИИ) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (СКУД и турникеты) ↓</a>
         <a href="#bolid-fire" class="btn btn-secondary">🔥 Болид Пожарная тревога &amp; Эвакуация ↓</a>
       </div>
@@ -138,6 +140,75 @@
         <p><strong>Для удалённых сотрудников:</strong> безопасный доступ к офисному ПК (Console) из дома без необходимости разворачивать отдельный сложный VPN.</p>
       </div>
       <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion обеспечивает проброс портов RDP/SSH через Core или Branch Relay. Ligament Link — это интерактивная визуальная консоль реального времени с WebRTC, поддержкой UAC, адаптивным 2FA-периметром и единым агентом.</p>
+    </div>
+  </section>
+
+  <!-- Ligament Link Recorder: planned module -->
+  <section id="link-recorder" class="section link-section recorder-section" aria-labelledby="recorder-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.15); color: #d8b4fe;">Coming soon · В разработке</span>
+          <h2 id="recorder-heading" class="section-title">Ligament Link Recorder</h2>
+          <p class="link-lead">Архив, аудит и расследование удалённых сессий с ИИ-аналитикой инцидентов</p>
+          <p class="link-description">
+            Отдельный On-Premise сервис архива и расследований для сессий Link, Console и SOS с собственным веб-интерфейсом. Запись выполняется непосредственно на стороне управляемого компьютера без зависимости от окна оператора (включая прямое P2P-соединение). Адаптивные скриншоты высокой чёткости вокруг значимых действий, шкала времени (Timeline), Legal Hold, исключение паролей из ввода и локальная подготовка доказательств для экономичного ИИ-анализа.
+          </p>
+          <div class="tag-pills">
+            <span class="tag-pill">Нативная запись на хосте</span>
+            <span class="tag-pill">P2P + Relay захват</span>
+            <span class="tag-pill">Таймлайн и календарь</span>
+            <span class="tag-pill">Mandatory Recording (ACK)</span>
+            <span class="tag-pill">Legal Hold &amp; Экспорт</span>
+            <span class="tag-pill">ИИ-аудит (OpenRouter ZDR)</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="Статус разработки модуля Recorder">
+          <h3>Собственный интерфейс и изоляция</h3>
+          <p>Выделенный сервис со своей базой PostgreSQL и раздельными правами (Ingest, View, Export, Legal Hold, AI). Не нагружает Core и не требует облаков.</p>
+          <p class="link-disclaimer">
+            Доступ к отчётам ИИ строго ограничен правами на исходные сессии. Секретный ввод и пароли отсекаются на хосте; внешняя отправка в ИИ требует явного разрешения и подчиняется лимитам бюджета.
+          </p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20Link%20Recorder%20early%20access" class="btn btn-primary" style="background: #7c3aed; border-color: #8b5cf6;">Запросить демо Link Recorder</a>
+        </aside>
+      </div>
+
+      <h3 class="link-features-heading">Возможности сервиса архивации и аудита Link Recorder</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Запись на стороне хоста (P2P и Relay)</h4>
+          <p>Запись инициируется на управляемом ПК и продолжается независимо от браузера оператора. Работает как через защищённый Relay, так и при прямом WebRTC P2P-соединении.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Адаптивные скриншоты вокруг событий</h4>
+          <p>Интеллектуальная фиксация экрана: базовый интервальный кадр плюс серия чётких скриншотов при кликах, сочетаниях клавиш, ошибках и переключении окон без раздувания размера архива.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Обязательная запись (Mandatory Recording)</h4>
+          <p>Централизованные политики inherit, record+AI, record_only, exclude. При обязательной записи управление ПК блокируется до подтверждения (ACK) сохранения первого кадра и останавливается при сбое архива.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Интерактивный таймлайн и календарь</h4>
+          <p>Собственный веб-интерфейс: календарная сетка сессий, шкала времени с кадрами и действиями ввода, фильтрация по ПК, операторам, типам сессий и индикация полноты покрытия.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Расследования, Legal Hold и экспорт</h4>
+          <p>Оформление карточек инцидентов с комментариями и ссылками на тикеты. Режим Legal Hold защищает важные записи от планового удаления. Экспорт фрагментов с криптографическим манифестом целостности.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Экономичный ИИ-разбор (AI Worker)</h4>
+          <p>Локальный OCR и дедупликация кадров с отбором улик. Пакетный анализ через OpenRouter с поддержкой Zero Data Retention (ZDR), лимитами затрат и посекундной привязкой выводов к доказательствам.</p>
+        </article>
+      </div>
+
+      <div class="link-use-cases">
+        <p><strong>Для ИБ и SOC:</strong> 100% подтверждённая хронология удалённых подключений, доказательная база при расследованиях инцидентов и защита от подделки.</p>
+        <p><strong>Для Helpdesk и Team Lead:</strong> оперативный разбор спорных ситуаций, контроль качества работы подрядчиков и автоматические сводки действий администраторов.</p>
+        <p><strong>Для комплаенс и аудита:</strong> разделение ролей доступа к архиву, защита чувствительных данных (скрытие паролей), гибкие сроки хранения (retention) и плановая очистка партиций БД.</p>
+      </div>
+      <p class="link-distinction">
+        <strong>Recorder / Обычный аудит:</strong> Обычный аудит фиксирует только метаданные («подключение открыто/закрыто»). Link Recorder сохраняет визуальный и событийный контекст каждого действия с возможностью посекундной перемотки и ИИ-верификации.
+      </p>
     </div>
   </section>
 
