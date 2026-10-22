@@ -31,7 +31,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=link-coming-soon-8">
+  <link rel="stylesheet" href="../styles.css?v=pacs-header-9">
 </head>
 <body>
 
@@ -53,12 +53,8 @@
       <nav id="site-navigation" class="site-nav" aria-label="Main navigation">
         <a href="#architecture">Topology</a>
         <a href="#interface">Logon UI</a>
-        <a href="#downloads">Downloads</a>
-        <a href="#debate">Why Ligament</a>
-        <a href="#personas">Solutions</a>
         <a href="#benefits">Modules</a>
         <a href="#pricing">Pricing</a>
-        <a href="#quickstart">Quickstart</a>
         <a href="../docs.html">Docs</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -103,7 +99,10 @@
         </div>
       </div>
 
-      <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — remote desktop in your infrastructure →</a>
+      <div class="coming-soon-teasers">
+        <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — remote desktop in your private perimeter →</a>
+        <a class="link-teaser" href="#pacs">Ligament PACS <span>Coming soon</span> — physical access & turnstiles with 2FA →</a>
+      </div>
       <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
       <div class="hero-mockup-wrapper">
         <div class="mockup-grid">
@@ -457,6 +456,65 @@
     </div>
   </section>
 
+  <!-- Ligament PACS: planned module, physical access control -->
+  <section id="pacs" class="section link-section pacs-section" aria-labelledby="pacs-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status">Coming soon · In development</span>
+          <h2 id="pacs-heading" class="section-title">Ligament PACS</h2>
+          <p class="link-lead">Physical access control & turnstiles under 2FA perimeter</p>
+          <p class="link-description">We are developing native integration between Ligament 2FA and Physical Access Control Systems (PACS): turnstiles, doors, and server room access validated via mobile Passkey/Push. Eliminates badge borrowing (Anti-Passback) and automatically locks the Windows desktop when leaving the premises.</p>
+          <div class="tag-pills">
+            <span class="tag-pill">On-Premise</span>
+            <span class="tag-pill">Anti-Passback + MFA</span>
+            <span class="tag-pill">Auto-Lock Windows</span>
+            <span class="tag-pill">Bolid / Sigur / RusGuard</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="PACS Development status">
+          <h3>Zero-Trust Physical Convergence</h3>
+          <p>Bridging physical access control and digital identity in a single security perimeter.</p>
+          <p class="link-disclaimer">The features below outline the architectural roadmap for Ligament PACS. Release timing, controller support lists, and licensing will be announced separately.</p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20PACS%20early%20access" class="btn btn-primary">Discuss PACS early access</a>
+        </aside>
+      </div>
+      <h3 class="link-features-heading">Planned PACS Capabilities</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Turnstile 2FA Validation</h4>
+          <p>Tapping an RFID/HID badge sends an instant Push or Passkey prompt to the employee's phone. Turnstile opens only upon personal biometric confirmation.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Auto-Lock on Office Exit</h4>
+          <p>Turnstile exit events automatically trigger an immediate Lock Screen for active Windows Logon and RDP sessions on the employee's workstation.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Anti-Passback Enforcement</h4>
+          <p>Prevents badge lending: access to server rooms or high-security zones requires FaceID/TouchID confirmation on the registered mobile device.</p>
+        </article>
+        <article class="link-feature">
+          <h4>PACS Controllers Interoperability</h4>
+          <p>Compatibility with Bolid Orion Pro, Sigur, RusGuard, HikCentral, Perco, and Wiegand/OSDP hardware controllers via native APIs and Webhooks.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Ghost Logon Detection</h4>
+          <p>Instant SIEM alert when an Active Directory, RDP, or VPN session originates for an employee who has not badged into the physical facility.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Converged Audit & SIEM</h4>
+          <p>Unified timeline correlating turnstile badges with Windows logins and 802.1X Wi-Fi connections, exported directly to corporate SIEM via Syslog/CEF.</p>
+        </article>
+      </div>
+      <div class="link-use-cases">
+        <p><strong>For Physical Security:</strong> eliminate badge borrowing and instantly revoke both physical turnstile and domain access with one click.</p>
+        <p><strong>For SOC & InfoSec:</strong> detect impossible logins by correlating physical location data with corporate credentials.</p>
+        <p><strong>For IT Administration:</strong> automatic lock for abandoned workstations without requiring employee action or short idle timers.</p>
+      </div>
+      <p class="link-distinction"><strong>PACS / RADIUS:</strong> RADIUS secures Wi-Fi and VPN network connections, while Ligament PACS secures doors, gates, and synchronizes real-world presence with workstation session locks.</p>
+    </div>
+  </section>
+
   <!-- Windows Logon Screenshots Section -->
   <section id="interface" class="section screenshots-section" aria-labelledby="interface-heading">
     <div class="container">
@@ -766,6 +824,7 @@
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
             <li><a href="#benefits">Branch Relay (RDP/SSH &amp; Wi-Fi)</a></li>
             <li><a href="#ligament-link">Ligament Link — Coming soon</a></li>
+            <li><a href="#pacs">PACS / Physical Access — Coming soon</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -784,6 +843,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=link-coming-soon-8"></script>
+  <script src="../site.js?v=pacs-header-9"></script>
 </body>
 </html>

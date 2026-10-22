@@ -31,7 +31,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=link-coming-soon-8">
+  <link rel="stylesheet" href="styles.css?v=pacs-header-9">
 </head>
 <body>
 
@@ -53,12 +53,8 @@
       <nav id="site-navigation" class="site-nav" aria-label="Основная навигация">
         <a href="#architecture">Граф</a>
         <a href="#interface">Интерфейс</a>
-        <a href="#downloads">Скачать</a>
-        <a href="#debate">Сравнение</a>
-        <a href="#personas">Для кого</a>
         <a href="#benefits">Модули</a>
         <a href="#pricing">Цены</a>
-        <a href="#quickstart">Быстрый старт</a>
         <a href="docs.html">Документация</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -103,7 +99,10 @@
         </div>
       </div>
 
-      <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — удалённый рабочий стол в вашем контуре →</a>
+      <div class="coming-soon-teasers">
+        <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — удалённый рабочий стол в вашем контуре →</a>
+        <a class="link-teaser" href="#pacs">Ligament PACS <span>Coming soon</span> — СКУД и турникеты под контролем 2FA →</a>
+      </div>
       <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
       <div class="hero-mockup-wrapper">
         <div class="mockup-grid">
@@ -457,6 +456,65 @@
     </div>
   </section>
 
+  <!-- Ligament PACS / Physical Access Control: planned module -->
+  <section id="pacs" class="section link-section pacs-section" aria-labelledby="pacs-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status">Coming soon · В разработке</span>
+          <h2 id="pacs-heading" class="section-title">Ligament PACS</h2>
+          <p class="link-lead">СКУД, турникеты и физический периметр под контролем 2FA</p>
+          <p class="link-description">Разрабатываем нативную интеграцию Ligament 2FA с системами контроля доступа (СКУД): турникеты, двери и серверные стойки с подтверждением через мобильный Passkey/Push. Исключение передачи пропусков (Anti-Passback) и мгновенный Lock Screen рабочей станции при уходе из офиса.</p>
+          <div class="tag-pills">
+            <span class="tag-pill">On-Premise</span>
+            <span class="tag-pill">Anti-Passback + MFA</span>
+            <span class="tag-pill">Auto-Lock Windows</span>
+            <span class="tag-pill">Bolid / Sigur / RusGuard</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="Статус разработки PACS">
+          <h3>Конвергенция с Zero-Trust</h3>
+          <p>Физический доступ и цифровая аутентификация в едином контуре безопасности.</p>
+          <p class="link-disclaimer">Возможности ниже — архитектурный план разработки модуля Ligament PACS. Сроки релиза, списки поддерживаемых контроллеров и лицензирование будут объявлены отдельно.</p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20PACS%20early%20access" class="btn btn-primary">Обсудить интеграцию СКУД</a>
+        </aside>
+      </div>
+      <h3 class="link-features-heading">Планируемые возможности модуля PACS</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Двухфакторный проход (Turnstile MFA)</h4>
+          <p>Прикладывание карты к турникету отправляет мгновенный Push-запрос или Passkey на корпоративный смартфон сотрудника. Турникет открывается только при подтверждении.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Auto-Lock при выходе из офиса</h4>
+          <p>Событие выхода через турникет автоматически отправляет команду блокировки (Lock Screen) сессии Windows Logon / RDP на рабочем ПК сотрудника.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Защита от передачи карт (Anti-Passback)</h4>
+          <p>Невозможно передать карту коллеге: вход в защищённые зоны, серверные или ЦОД требует биометрической верификации (TouchID/FaceID) в приложении Ligament 2FA.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Прямая интеграция со СКУД</h4>
+          <p>Поддержка ведущих систем: Bolid (Орион Про), Sigur, RusGuard, HikCentral (Hikvision), Parsec и контроллеров по протоколам Wiegand / OSDP и REST API.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Детекция «призрачных» логинов (Ghost Logon)</h4>
+          <p>Мгновенный алерт в SIEM, если в Active Directory или VPN фиксируется вход под учётной записью сотрудника, который физически отсутствует в здании.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Сквозной журнал аудита и 152-ФЗ</h4>
+          <p>Единая временная шкала физических проходов и сетевых сессий с экспортом в SIEM (Syslog/CEF). Полное соответствие требованиям 152-ФЗ и безопасности КИИ.</p>
+        </article>
+      </div>
+      <div class="link-use-cases">
+        <p><strong>Для СБ и охраны:</strong> исключение прохода по чужим пропускам и моментальный отзыв доступа на турникетах при блокировке в домене.</p>
+        <p><strong>Для ИБ / SOC:</strong> сквозная корреляция местоположения пользователя и попыток аутентификации в корпоративных системах.</p>
+        <p><strong>Для ИТ-администраторов:</strong> автоматический логаут забытых сессий Windows Logon и защита рабочих станций без участия пользователя.</p>
+      </div>
+      <p class="link-distinction"><strong>PACS / RADIUS:</strong> RADIUS защищает сетевой периметр Wi-Fi и VPN, в то время как Ligament PACS закрывает физический периметр (турникеты, двери) и синхронизирует статус присутствия с блокировкой рабочих ПК.</p>
+    </div>
+  </section>
+
   <!-- Windows Logon Screenshots Section -->
   <section id="interface" class="section screenshots-section" aria-labelledby="interface-heading">
     <div class="container">
@@ -772,6 +830,7 @@
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
             <li><a href="#benefits">Branch Relay (Офлайн)</a></li>
             <li><a href="#ligament-link">Ligament Link — Coming soon</a></li>
+            <li><a href="#pacs">PACS / СКУД — Coming soon</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -790,6 +849,6 @@
     </div>
   </footer>
 
-  <script src="site.js?v=link-coming-soon-8"></script>
+  <script src="site.js?v=pacs-header-9"></script>
 </body>
 </html>
