@@ -21,7 +21,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=cs-nav-link-2">
+  <link rel="stylesheet" href="../styles.css?v=fire-bolid-1">
 </head>
 <body>
 
@@ -44,6 +44,7 @@
         <a href="index.html">Home</a>
         <a href="#ligament-link">Ligament Link</a>
         <a href="#pacs">Ligament PACS</a>
+        <a href="#bolid-fire">Bolid Fire</a>
         <a href="../docs.html">Docs</a>
         <a href="index.html#pricing">Pricing</a>
       </nav>
@@ -72,6 +73,7 @@
       <div class="cs-quick-nav">
         <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Remote Desktop) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (Physical Access) ↓</a>
+        <a href="#bolid-fire" class="btn btn-secondary">🔥 Bolid Fire Alarm &amp; Evacuation ↓</a>
       </div>
     </div>
   </section>
@@ -193,6 +195,74 @@
     </div>
   </section>
 
+  <!-- Ligament Fire & Evacuation: Bolid Fire Alarm & Evacuation Control -->
+  <section id="bolid-fire" class="section link-section fire-section" aria-labelledby="fire-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.15); color: #fca5a5;">Coming soon · In development</span>
+          <h2 id="fire-heading" class="section-title">Ligament Fire &amp; Evacuation</h2>
+          <p class="link-lead">Bolid fire alarm zone mapping with targeted evacuation broadcast</p>
+          <p class="link-description">
+            Full-fledged fire incident management mapping Bolid fire detectors and loops to physical zones and occupants. Automated real-time evacuation monitoring using PACS presence data, emergency priority broadcasts to users trapped in the hazard zone, and live evacuation accounting.
+          </p>
+          <div class="tag-pills">
+            <span class="tag-pill">Bolid Orion / ISO</span>
+            <span class="tag-pill">Zone Presence Broadcast</span>
+            <span class="tag-pill">PACS Evacuation Tracking</span>
+            <span class="tag-pill">Inside / Evacuated FSM</span>
+            <span class="tag-pill">Building Hierarchy</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="Fire Alarm Module Development status">
+          <h3>Live Evacuation Command Board</h3>
+          <p>Real-time accounting of human safety: confirmed inside, confirmed evacuated via exit, and location unknown.</p>
+          <p class="link-disclaimer">
+            Evacuation exits (evacuation_exit) are audited separately from standard badging. Alarm-time snapshots (fire_person_snapshots) record occupants at initial alarm and update live.
+          </p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20Bolid%20Fire%20Integration" class="btn btn-primary" style="background: #dc2626; border-color: #ef4444;">Discuss Bolid Fire early access</a>
+        </aside>
+      </div>
+
+      <h3 class="link-features-heading">Planned Fire &amp; Evacuation Capabilities</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Bolid Detector-to-Room Spatial Hierarchy</h4>
+          <p>Precise mapping of Bolid detectors, loops, and partitions to: Building → Floor → Room → PACS Zone. If unmapped at room level, system reports "room unspecified" rather than guessing.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Immutable Alarm-Time Occupant Snapshot</h4>
+          <p>Upon fire alarm trigger, creates an immutable baseline snapshot (fire_person_snapshots) of all employees whose current_zone matches the incident zone or its child spaces.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Targeted Emergency Evacuation Broadcast</h4>
+          <p>Instantaneous alert dispatch specifically to occupants located in the active hazard zone: critical push notification with audible siren, Windows Logon full-screen dialog, SMS, and corporate bots.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Strict Safety FSM: Inside, Evacuated, Unknown</h4>
+          <p>Classifies occupants by evidence reliability: inside (confirmed present), outside (badged through exit), unknown (stale or ambiguous). An employee is never assumed safe without verified egress.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Dedicated Egress Audit (evacuation_exit)</h4>
+          <p>Turnstile and emergency door egress events are tagged specifically as evacuation_exit, preserving dedicated forensics separated from routine daily access logs.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Automated Emergency Egress Unlocking</h4>
+          <p>Automated command dispatch to open designated emergency exit paths and integration with Bolid fire safety scenarios without risking unmonitored perimeter collapse.</p>
+        </article>
+      </div>
+
+      <div class="link-use-cases">
+        <p><strong>For Incident Command &amp; Responders:</strong> named list of personnel confirmed inside the burning area, time of last verified badge, and data reliability metrics.</p>
+        <p><strong>For Building Occupants:</strong> personalized emergency alerts indicating the nearest clear egress route directly on smartphone and workstation screens.</p>
+        <p><strong>For Physical Security:</strong> unified live dashboard with one-click manual room sweep confirmation and zone clearance verification.</p>
+      </div>
+      <p class="link-distinction">
+        <strong>Bolid Fire / Standard PACS:</strong> Standard PACS only logs badge taps for time-tracking. Ligament Fire &amp; Evacuation transforms scattered Bolid alarms and turnstiles into a life-safety coordination hub with strict individual accounting.
+      </p>
+    </div>
+  </section>
+
   <!-- CTA Banner -->
   <section class="section" style="padding: 60px 0;">
     <div class="container">
@@ -259,6 +329,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=cs-nav-link-2"></script>
+  <script src="../site.js?v=fire-bolid-1"></script>
 </body>
 </html>

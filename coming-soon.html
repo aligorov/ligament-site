@@ -21,7 +21,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=cs-nav-link-2">
+  <link rel="stylesheet" href="styles.css?v=fire-bolid-1">
 </head>
 <body>
 
@@ -44,6 +44,7 @@
         <a href="index.html">Главная</a>
         <a href="#ligament-link">Ligament Link</a>
         <a href="#pacs">Ligament PACS</a>
+        <a href="#bolid-fire">Болид Пожар</a>
         <a href="docs.html">Документация</a>
         <a href="index.html#pricing">Цены</a>
       </nav>
@@ -72,6 +73,7 @@
       <div class="cs-quick-nav">
         <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Удалённый стол) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (СКУД и турникеты) ↓</a>
+        <a href="#bolid-fire" class="btn btn-secondary">🔥 Болид Пожарная тревога &amp; Эвакуация ↓</a>
       </div>
     </div>
   </section>
@@ -193,6 +195,74 @@
     </div>
   </section>
 
+  <!-- Ligament Fire & Evacuation: Bolid Fire Alarm & Evacuation Control -->
+  <section id="bolid-fire" class="section link-section fire-section" aria-labelledby="fire-heading">
+    <div class="container">
+      <div class="link-intro">
+        <div>
+          <span class="link-status" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.15); color: #fca5a5;">Coming soon · В разработке</span>
+          <h2 id="fire-heading" class="section-title">Ligament Fire &amp; Evacuation</h2>
+          <p class="link-lead">Пожарная тревога Болид по зонам СКУД с экстренным оповещением и контролем эвакуации</p>
+          <p class="link-description">
+            Полноценный объект пожарного инцидента с пространственной привязкой к помещениям и присутствующим людям. Интеграция с ИСО «Орион» (Болид): определение сотрудников в опасной зоне по данным СКУД/PACS-присутствия, мгновенное адресное Push/SMS-оповещение находящихся в эпицентре людей, оперативная эвакуационная панель для МЧС/СБ и разблокировка эвакуационных путей.
+          </p>
+          <div class="tag-pills">
+            <span class="tag-pill">Болид Орион Про / ИСО</span>
+            <span class="tag-pill">Оповещение людей в зоне</span>
+            <span class="tag-pill">PACS-присутствие</span>
+            <span class="tag-pill">Контроль эвакуации (inside/out)</span>
+            <span class="tag-pill">Иерархия помещений</span>
+          </div>
+        </div>
+        <aside class="link-roadmap" aria-label="Статус разработки модуля Пожарной тревоги">
+          <h3>Оперативная эвакуационная панель</h3>
+          <p>Live-контроль спасения людей: сколько подтверждённо внутри, кто вышел через эвакуационный выход, у кого статус неизвестен.</p>
+          <p class="link-disclaimer">
+            События эвакуации (evacuation_exit) фиксируются отдельно от обычных проходов. Снимок присутствия (fire_person_snapshots) фиксируется на момент тревоги и обновляется в реальном времени.
+          </p>
+          <a href="mailto:admin@ligam.org?subject=Ligament%20Bolid%20Fire%20Integration" class="btn btn-primary" style="background: #dc2626; border-color: #ef4444;">Обсудить интеграцию с Болид</a>
+        </aside>
+      </div>
+
+      <h3 class="link-features-heading">Возможности модуля Пожарной тревоги и эвакуации</h3>
+      <div class="link-features">
+        <article class="link-feature">
+          <h4>Пространственная привязка Болид к зонам</h4>
+          <p>Точечное сопоставление датчиков, шлейфов и разделов Болид с иерархией: Объект → Корпус → Этаж → Помещение → Зона СКУД. Если точное помещение не передано, система честно фиксирует «помещение не определено».</p>
+        </article>
+        <article class="link-feature">
+          <h4>Снимок присутствия на момент тревоги</h4>
+          <p>При поступлении пожарной тревоги формируется неизменяемый снимок (fire_person_snapshots) всех сотрудников, чья подтверждённая зона (current_zone) совпадает с зоной инцидента или её дочерними помещениями.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Адресное экстренное оповещение в зоне</h4>
+          <p>Мгновенная рассылка сигнала тревоги именно тем, кто находится в зоне возгорания: критический Push с сиреной в приложение Ligament 2FA, всплывающее окно на мониторах Windows Logon, SMS и корпоративные боты (Telegram/eXpress).</p>
+        </article>
+        <article class="link-feature">
+          <h4>Статусы: Inside, Evacuated, Unknown</h4>
+          <p>Разделение сотрудников по группам достоверности: inside (подтверждённо внутри), outside (вышел через турникет), unknown (данные устарели). Человек не считается спасённым просто из-за отсутствия новых событий.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Отдельное событие эвакуации (evacuation_exit)</h4>
+          <p>Проходы через пожарные двери и эвакуационные турникеты фиксируются как специальное событие evacuation_exit, не смешиваясь с рутинным журналом проходов, для криминалистики и отчётов МЧС.</p>
+        </article>
+        <article class="link-feature">
+          <h4>Авторазблокировка путей эвакуации</h4>
+          <p>Автоматическая отправка команды разблокировки контроллерам СКУД только для заранее разрешённых эвакуационных точек и интеграция с пожарными сценариями Болид без риска блокировки людей.</p>
+        </article>
+      </div>
+
+      <div class="link-use-cases">
+        <p><strong>Для штаба эвакуации и МЧС:</strong> точный пофамильный список тех, кто остался в горящем помещении или на этаже, время их последнего подтверждённого прохода и надёжность данных.</p>
+        <p><strong>Для сотрудников в здании:</strong> персональное экстренное уведомление с указанием ближайшего свободного выхода на экране смартфона и ПК.</p>
+        <p><strong>Для службы безопасности (СБ/Охрана):</strong> единая оперативная панель с кнопками фиксации ручной проверки помещений и подтверждения локализации очага.</p>
+      </div>
+      <p class="link-distinction">
+        <strong>Bolid Fire / Обычный СКУД:</strong> Обычный СКУД фиксирует факт прохода для учёта рабочего времени. Модуль Ligament Fire &amp; Evacuation превращает разрозненные датчики Болид и точки прохода в активный координационный центр спасения людей с гарантией учёта каждого сотрудника.
+      </p>
+    </div>
+  </section>
+
   <!-- CTA Banner -->
   <section class="section" style="padding: 60px 0;">
     <div class="container">
@@ -259,6 +329,6 @@
     </div>
   </footer>
 
-  <script src="site.js?v=cs-nav-link-2"></script>
+  <script src="site.js?v=fire-bolid-1"></script>
 </body>
 </html>
