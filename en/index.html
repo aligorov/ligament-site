@@ -31,7 +31,7 @@
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=pacs-header-9">
+  <link rel="stylesheet" href="../styles.css?v=cs-page-1">
 </head>
 <body>
 
@@ -99,10 +99,7 @@
         </div>
       </div>
 
-      <div class="coming-soon-teasers">
-        <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — remote desktop in your private perimeter →</a>
-        <a class="link-teaser" href="#pacs">Ligament PACS <span>Coming soon</span> — physical access & turnstiles with 2FA →</a>
-      </div>
+      <a class="link-teaser" href="coming-soon.html">🚀 Upcoming modules (Coming soon): Ligament Link & PACS →</a>
       <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
       <div class="hero-mockup-wrapper">
         <div class="mockup-grid">
@@ -444,74 +441,21 @@
     </div>
   </section>
 
-  <!-- Ligament Link: planned product, not a released download -->
-  <section id="ligament-link" class="section link-section" aria-labelledby="link-heading">
+  <!-- Coming Soon Callout -->
+  <section class="section coming-soon-callout" aria-labelledby="cs-callout-heading">
     <div class="container">
-      <div class="link-intro"><div><span class="link-status">Coming soon · In development</span><h2 id="link-heading" class="section-title">Ligament Link</h2><p class="link-lead">Remote desktop under your control</p><p class="link-description">We are developing an on-premise alternative to TeamViewer and AnyDesk within the Ligament 2FA ecosystem, for IT support, administration and access to an office PC from home.</p><div class="tag-pills"><span class="tag-pill">On-Premise</span><span class="tag-pill">Console Sharing</span><span class="tag-pill">2FA / Passkey / Push</span></div></div>
-      <aside class="link-roadmap" aria-label="Development status"><h3>What we are building</h3><p>One environment for device access, second-factor authentication, permission revocation and audit.</p><p class="link-disclaimer">The features below describe the development roadmap. Release timing, supported platforms, release scope and licensing will be announced separately.</p><a href="mailto:admin@ligam.org?subject=Ligament%20Link%20early%20access" class="btn btn-primary">Discuss early access</a></aside></div>
-      <h3 class="link-features-heading">Planned capabilities</h3>
-      <div class="link-features"><article class="link-feature"><h4>Shared desktop</h4><p>Console sharing lets the operator and employee see the same desktop and work together without opening a separate RDP session.</p></article><article class="link-feature"><h4>Unattended access</h4><p>Planned access to locked PCs, login-screen interaction and Ctrl+Alt+Del. Access follows assigned permissions and the 2FA policy.</p></article><article class="link-feature"><h4>Your own infrastructure</h4><p>Planned deployment of servers, relays and keys within the organization’s infrastructure. Screen and file traffic stays within that deployment.</p></article><article class="link-feature"><h4>HTTPS / WSS :443</h4><p>Secure outbound connections to your infrastructure, without inbound port forwarding on workstations. Connectivity depends on network policies and proxy configuration.</p></article><article class="link-feature"><h4>Central access revocation</h4><p>Planned centralized access control and termination of active sessions from Ligament 2FA when a user is blocked or a permission is revoked.</p></article><article class="link-feature"><h4>Device inventory and audit</h4><p>Planned Windows/Linux device inventory with status and connection logs: user, source device, target host, time and access mode. Event integration with SIEM.</p></article></div>
-      <div class="link-use-cases"><p><strong>For security teams:</strong> managed access instead of untracked remote connections.</p><p><strong>For IT teams:</strong> help employees in their current console and service devices without the user present.</p><p><strong>For employees:</strong> access the familiar office desktop with 2FA, without a mandatory separate office VPN.</p></div>
-      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion provides RDP/SSH forwarding through Core or Relay. Ligament Link is being developed for shared-console access and remote assistance as a separate product direction.</p>
-    </div>
-  </section>
-
-  <!-- Ligament PACS: planned module, physical access control -->
-  <section id="pacs" class="section link-section pacs-section" aria-labelledby="pacs-heading">
-    <div class="container">
-      <div class="link-intro">
-        <div>
-          <span class="link-status">Coming soon · In development</span>
-          <h2 id="pacs-heading" class="section-title">Ligament PACS</h2>
-          <p class="link-lead">Physical access control & turnstiles under 2FA perimeter</p>
-          <p class="link-description">We are developing native integration between Ligament 2FA and Physical Access Control Systems (PACS): turnstiles, doors, and server room access validated via mobile Passkey/Push. Eliminates badge borrowing (Anti-Passback) and automatically locks the Windows desktop when leaving the premises.</p>
-          <div class="tag-pills">
-            <span class="tag-pill">On-Premise</span>
-            <span class="tag-pill">Anti-Passback + MFA</span>
-            <span class="tag-pill">Auto-Lock Windows</span>
-            <span class="tag-pill">Bolid / Sigur / RusGuard</span>
-          </div>
+      <div class="coming-soon-card">
+        <div class="coming-soon-card-content">
+          <span class="brand-badge">Roadmap · Coming soon</span>
+          <h2 id="cs-callout-heading" class="coming-soon-card-title">Upcoming Modules: Ligament Link & PACS</h2>
+          <p class="coming-soon-card-desc">
+            Developing native on-premise remote desktop (Console Sharing) and physical access control (PACS turnstiles, Anti-Passback, Auto-Lock on exit).
+          </p>
         </div>
-        <aside class="link-roadmap" aria-label="PACS Development status">
-          <h3>Zero-Trust Physical Convergence</h3>
-          <p>Bridging physical access control and digital identity in a single security perimeter.</p>
-          <p class="link-disclaimer">The features below outline the architectural roadmap for Ligament PACS. Release timing, controller support lists, and licensing will be announced separately.</p>
-          <a href="mailto:admin@ligam.org?subject=Ligament%20PACS%20early%20access" class="btn btn-primary">Discuss PACS early access</a>
-        </aside>
+        <div class="coming-soon-card-action">
+          <a href="coming-soon.html" class="btn btn-secondary">Learn about upcoming modules →</a>
+        </div>
       </div>
-      <h3 class="link-features-heading">Planned PACS Capabilities</h3>
-      <div class="link-features">
-        <article class="link-feature">
-          <h4>Turnstile 2FA Validation</h4>
-          <p>Tapping an RFID/HID badge sends an instant Push or Passkey prompt to the employee's phone. Turnstile opens only upon personal biometric confirmation.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Auto-Lock on Office Exit</h4>
-          <p>Turnstile exit events automatically trigger an immediate Lock Screen for active Windows Logon and RDP sessions on the employee's workstation.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Anti-Passback Enforcement</h4>
-          <p>Prevents badge lending: access to server rooms or high-security zones requires FaceID/TouchID confirmation on the registered mobile device.</p>
-        </article>
-        <article class="link-feature">
-          <h4>PACS Controllers Interoperability</h4>
-          <p>Compatibility with Bolid Orion Pro, Sigur, RusGuard, HikCentral, Perco, and Wiegand/OSDP hardware controllers via native APIs and Webhooks.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Ghost Logon Detection</h4>
-          <p>Instant SIEM alert when an Active Directory, RDP, or VPN session originates for an employee who has not badged into the physical facility.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Converged Audit & SIEM</h4>
-          <p>Unified timeline correlating turnstile badges with Windows logins and 802.1X Wi-Fi connections, exported directly to corporate SIEM via Syslog/CEF.</p>
-        </article>
-      </div>
-      <div class="link-use-cases">
-        <p><strong>For Physical Security:</strong> eliminate badge borrowing and instantly revoke both physical turnstile and domain access with one click.</p>
-        <p><strong>For SOC & InfoSec:</strong> detect impossible logins by correlating physical location data with corporate credentials.</p>
-        <p><strong>For IT Administration:</strong> automatic lock for abandoned workstations without requiring employee action or short idle timers.</p>
-      </div>
-      <p class="link-distinction"><strong>PACS / RADIUS:</strong> RADIUS secures Wi-Fi and VPN network connections, while Ligament PACS secures doors, gates, and synchronizes real-world presence with workstation session locks.</p>
     </div>
   </section>
 
@@ -817,14 +761,13 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Integrations</h4>
+          <h4>Integrations & Roadmap</h4>
           <ul>
             <li><a href="#benefits">Windows Logon & RDP</a></li>
             <li><a href="#benefits">RADIUS (MikroTik / Cisco)</a></li>
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
             <li><a href="#benefits">Branch Relay (RDP/SSH &amp; Wi-Fi)</a></li>
-            <li><a href="#ligament-link">Ligament Link — Coming soon</a></li>
-            <li><a href="#pacs">PACS / Physical Access — Coming soon</a></li>
+            <li><a href="coming-soon.html"><strong>Upcoming Modules (Coming soon) →</strong></a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -843,6 +786,6 @@
     </div>
   </footer>
 
-  <script src="../site.js?v=pacs-header-9"></script>
+  <script src="../site.js?v=cs-page-1"></script>
 </body>
 </html>

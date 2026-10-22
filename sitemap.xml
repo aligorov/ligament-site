@@ -26,4 +26,22 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://ligam.org/coming-soon.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ligam.org/coming-soon.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ligam.org/en/coming-soon.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ligam.org/coming-soon.html" />
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ligam.org/en/coming-soon.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ligam.org/coming-soon.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://ligam.org/en/coming-soon.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ligam.org/coming-soon.html" />
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

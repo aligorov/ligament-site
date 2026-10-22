@@ -31,7 +31,7 @@
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=pacs-header-9">
+  <link rel="stylesheet" href="styles.css?v=cs-page-1">
 </head>
 <body>
 
@@ -99,10 +99,7 @@
         </div>
       </div>
 
-      <div class="coming-soon-teasers">
-        <a class="link-teaser" href="#ligament-link">Ligament Link <span>Coming soon</span> — удалённый рабочий стол в вашем контуре →</a>
-        <a class="link-teaser" href="#pacs">Ligament PACS <span>Coming soon</span> — СКУД и турникеты под контролем 2FA →</a>
-      </div>
+      <a class="link-teaser" href="coming-soon.html">🚀 Модули в разработке (Coming soon): Ligament Link и PACS / СКУД →</a>
       <!-- Interactive Mockup (Windows Logon + Smartphone Push) -->
       <div class="hero-mockup-wrapper">
         <div class="mockup-grid">
@@ -444,74 +441,21 @@
     </div>
   </section>
 
-  <!-- Ligament Link: planned product, not a released download -->
-  <section id="ligament-link" class="section link-section" aria-labelledby="link-heading">
+  <!-- Coming Soon Callout -->
+  <section class="section coming-soon-callout" aria-labelledby="cs-callout-heading">
     <div class="container">
-      <div class="link-intro"><div><span class="link-status">Coming soon · В разработке</span><h2 id="link-heading" class="section-title">Ligament Link</h2><p class="link-lead">Удалённый рабочий стол под вашим контролем</p><p class="link-description">Разрабатываем собственную On-Premise альтернативу TeamViewer и AnyDesk в экосистеме Ligament 2FA: для техподдержки, администрирования и работы с офисным ПК из дома.</p><div class="tag-pills"><span class="tag-pill">On-Premise</span><span class="tag-pill">Console Sharing</span><span class="tag-pill">2FA / Passkey / Push</span></div></div>
-      <aside class="link-roadmap" aria-label="Статус разработки"><h3>Что готовим</h3><p>Один контур: доступ к устройствам, второй фактор, отзыв разрешений и аудит.</p><p class="link-disclaimer">Возможности ниже — план разработки. Срок выхода, поддерживаемые платформы, состав релиза и лицензирование будут объявлены отдельно.</p><a href="mailto:admin@ligam.org?subject=Ligament%20Link%20early%20access" class="btn btn-primary">Обсудить ранний доступ</a></aside></div>
-      <h3 class="link-features-heading">Планируемые возможности</h3>
-      <div class="link-features"><article class="link-feature"><h4>Совместный рабочий стол</h4><p>Console Sharing: оператор и сотрудник видят одну консоль и могут работать вместе без открытия отдельной RDP-сессии.</p></article><article class="link-feature"><h4>Доступ без присутствия пользователя</h4><p>Планируется подключение к заблокированным ПК, работа с экраном входа и отправка Ctrl+Alt+Del. Доступ — по назначенным правам и политике 2FA.</p></article><article class="link-feature"><h4>Своя инфраструктура</h4><p>Планируется размещение серверов, Relay и ключей в инфраструктуре организации. Передача экрана и файлов — через собственный контур.</p></article><article class="link-feature"><h4>HTTPS / WSS :443</h4><p>Защищённые исходящие соединения к своей инфраструктуре: без входящего проброса портов на рабочих ПК. Доступность зависит от сетевых политик и настроек прокси.</p></article><article class="link-feature"><h4>Центральный отзыв доступа</h4><p>Планируется единое управление доступом и завершение активных сеансов из Ligament 2FA при блокировке пользователя или отзыве разрешения.</p></article><article class="link-feature"><h4>Парк устройств и аудит</h4><p>Планируется единый список устройств Windows/Linux со статусами и журнал подключений: пользователь, устройство, целевой хост, время и режим доступа. Интеграция событий с SIEM.</p></article></div>
-      <div class="link-use-cases"><p><strong>Для ИБ:</strong> управляемый доступ вместо неучтённых удалённых подключений.</p><p><strong>Для ИТ:</strong> помощь сотруднику в его текущей консоли и обслуживание устройств без присутствия пользователя.</p><p><strong>Для сотрудников:</strong> доступ к привычному рабочему столу с подтверждением 2FA, без обязательного отдельного VPN к офису.</p></div>
-      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion уже описывает проброс RDP/SSH через Core или Relay. Ligament Link разрабатывается для работы с общей консолью и удалённой помощи — это отдельное направление продукта.</p>
-    </div>
-  </section>
-
-  <!-- Ligament PACS / Physical Access Control: planned module -->
-  <section id="pacs" class="section link-section pacs-section" aria-labelledby="pacs-heading">
-    <div class="container">
-      <div class="link-intro">
-        <div>
-          <span class="link-status">Coming soon · В разработке</span>
-          <h2 id="pacs-heading" class="section-title">Ligament PACS</h2>
-          <p class="link-lead">СКУД, турникеты и физический периметр под контролем 2FA</p>
-          <p class="link-description">Разрабатываем нативную интеграцию Ligament 2FA с системами контроля доступа (СКУД): турникеты, двери и серверные стойки с подтверждением через мобильный Passkey/Push. Исключение передачи пропусков (Anti-Passback) и мгновенный Lock Screen рабочей станции при уходе из офиса.</p>
-          <div class="tag-pills">
-            <span class="tag-pill">On-Premise</span>
-            <span class="tag-pill">Anti-Passback + MFA</span>
-            <span class="tag-pill">Auto-Lock Windows</span>
-            <span class="tag-pill">Bolid / Sigur / RusGuard</span>
-          </div>
+      <div class="coming-soon-card">
+        <div class="coming-soon-card-content">
+          <span class="brand-badge">Дорожная карта · Coming soon</span>
+          <h2 id="cs-callout-heading" class="coming-soon-card-title">Модули в разработке: Ligament Link и PACS</h2>
+          <p class="coming-soon-card-desc">
+            Проектируем собственный On-Premise удалённый рабочий стол (Console Sharing) и нативную интеграцию со СКУД (турникеты, Anti-Passback, Auto-Lock сессий Windows при уходе из офиса).
+          </p>
         </div>
-        <aside class="link-roadmap" aria-label="Статус разработки PACS">
-          <h3>Конвергенция с Zero-Trust</h3>
-          <p>Физический доступ и цифровая аутентификация в едином контуре безопасности.</p>
-          <p class="link-disclaimer">Возможности ниже — архитектурный план разработки модуля Ligament PACS. Сроки релиза, списки поддерживаемых контроллеров и лицензирование будут объявлены отдельно.</p>
-          <a href="mailto:admin@ligam.org?subject=Ligament%20PACS%20early%20access" class="btn btn-primary">Обсудить интеграцию СКУД</a>
-        </aside>
+        <div class="coming-soon-card-action">
+          <a href="coming-soon.html" class="btn btn-secondary">Подробнее о модулях в разработке →</a>
+        </div>
       </div>
-      <h3 class="link-features-heading">Планируемые возможности модуля PACS</h3>
-      <div class="link-features">
-        <article class="link-feature">
-          <h4>Двухфакторный проход (Turnstile MFA)</h4>
-          <p>Прикладывание карты к турникету отправляет мгновенный Push-запрос или Passkey на корпоративный смартфон сотрудника. Турникет открывается только при подтверждении.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Auto-Lock при выходе из офиса</h4>
-          <p>Событие выхода через турникет автоматически отправляет команду блокировки (Lock Screen) сессии Windows Logon / RDP на рабочем ПК сотрудника.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Защита от передачи карт (Anti-Passback)</h4>
-          <p>Невозможно передать карту коллеге: вход в защищённые зоны, серверные или ЦОД требует биометрической верификации (TouchID/FaceID) в приложении Ligament 2FA.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Прямая интеграция со СКУД</h4>
-          <p>Поддержка ведущих систем: Bolid (Орион Про), Sigur, RusGuard, HikCentral (Hikvision), Parsec и контроллеров по протоколам Wiegand / OSDP и REST API.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Детекция «призрачных» логинов (Ghost Logon)</h4>
-          <p>Мгновенный алерт в SIEM, если в Active Directory или VPN фиксируется вход под учётной записью сотрудника, который физически отсутствует в здании.</p>
-        </article>
-        <article class="link-feature">
-          <h4>Сквозной журнал аудита и 152-ФЗ</h4>
-          <p>Единая временная шкала физических проходов и сетевых сессий с экспортом в SIEM (Syslog/CEF). Полное соответствие требованиям 152-ФЗ и безопасности КИИ.</p>
-        </article>
-      </div>
-      <div class="link-use-cases">
-        <p><strong>Для СБ и охраны:</strong> исключение прохода по чужим пропускам и моментальный отзыв доступа на турникетах при блокировке в домене.</p>
-        <p><strong>Для ИБ / SOC:</strong> сквозная корреляция местоположения пользователя и попыток аутентификации в корпоративных системах.</p>
-        <p><strong>Для ИТ-администраторов:</strong> автоматический логаут забытых сессий Windows Logon и защита рабочих станций без участия пользователя.</p>
-      </div>
-      <p class="link-distinction"><strong>PACS / RADIUS:</strong> RADIUS защищает сетевой периметр Wi-Fi и VPN, в то время как Ligament PACS закрывает физический периметр (турникеты, двери) и синхронизирует статус присутствия с блокировкой рабочих ПК.</p>
     </div>
   </section>
 
@@ -823,14 +767,13 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Интеграции</h4>
+          <h4>Интеграции & Roadmap</h4>
           <ul>
             <li><a href="#benefits">Windows Logon & RDP</a></li>
             <li><a href="#benefits">RADIUS (MikroTik / Cisco)</a></li>
             <li><a href="#benefits">SSO OIDC & SAML 2.0</a></li>
             <li><a href="#benefits">Branch Relay (Офлайн)</a></li>
-            <li><a href="#ligament-link">Ligament Link — Coming soon</a></li>
-            <li><a href="#pacs">PACS / СКУД — Coming soon</a></li>
+            <li><a href="coming-soon.html"><strong>Модули в разработке (Coming soon) →</strong></a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -849,6 +792,6 @@
     </div>
   </footer>
 
-  <script src="site.js?v=pacs-header-9"></script>
+  <script src="site.js?v=cs-page-1"></script>
 </body>
 </html>
