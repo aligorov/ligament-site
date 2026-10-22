@@ -92,6 +92,25 @@ server {
 
 ---
 
+## 🔄 Автообновление ссылок на релизы
+
+Кнопки скачивания в блоках `#downloads` (`index.html` и `en/index.html`) ведут на
+`https://github.com/aligorov/ligament-apps/releases/latest/download/<asset>`,
+поэтому всегда отдают файлы последнего стабильного релиза без правок сайта.
+Условие: имена ассетов в релизах (`Ligament-2FA-Windows-x64.msi`, `Ligament-2FA-macOS.dmg`,
+`Ligament-2FA.apk`, `Ligament-2FA.ipa` и т.д.) не должны меняться.
+
+Текст с номером версии обновляется скриптом:
+
+```bash
+python3 scripts/update_latest_release.py          # обновить номер версии на сайте
+python3 scripts/update_latest_release.py --check  # только проверить, актуальна ли версия
+```
+
+Скрипт использует GitHub API (без токена, лимит 60 запросов/час с одного IP).
+
+---
+
 ## 📸 Добавление скриншотов и видео
 
 Все медиафайлы управляются через `assets/media/manifest.json`.
