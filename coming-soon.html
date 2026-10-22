@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Модули в разработке · Ligament Security — Ligament Link и PACS</title>
-  <meta name="description" content="Планы развития On-Premise 2FA/MFA экосистемы Ligament: удалённый рабочий стол Ligament Link и интеграция с физическим доступом СКУД Ligament PACS.">
+  <title>Модули в разработке · Ligament Security — Link, PACS и Болид Пожар</title>
+  <meta name="description" content="Планы развития On-Premise экосистемы Ligament: шлюз удалённого присутствия Ligament Link (Console, SOS, Unattended), СКУД Ligament PACS и пожарная тревога Болид с контролем эвакуации.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://ligam.org/coming-soon.html">
   <link rel="alternate" hreflang="ru" href="https://ligam.org/coming-soon.html">
@@ -14,14 +14,14 @@
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ligam.org/coming-soon.html">
-  <meta property="og:title" content="Модули в разработке: Ligament Link & PACS">
-  <meta property="og:description" content="On-Premise удалённый рабочий стол и интеграция турникетов СКУД под единым контролем Ligament 2FA.">
+  <meta property="og:title" content="Модули в разработке: Ligament Link, PACS &amp; Болид Пожар">
+  <meta property="og:description" content="Шлюз присутствия Ligament Link (Console/SOS/Unattended), интеграция турникетов СКУД и пожарная тревога Болид под единым контролем 2FA.">
   <meta property="og:image" content="https://ligam.org/assets/brand/og-image-ru.png">
   <meta property="og:locale" content="ru_RU">
 
   <link rel="icon" type="image/png" href="assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="assets/brand/favicon.ico">
-  <link rel="stylesheet" href="styles.css?v=fire-bolid-1">
+  <link rel="stylesheet" href="styles.css?v=link-rework-1">
 </head>
 <body>
 
@@ -71,7 +71,7 @@
         Мы непрерывно расширяем единый On-Premise периметр безопасности. Помимо уже поставляемых компонентов (Core, Windows Logon, RADIUS 802.1X, SSO OIDC/SAML и Branch Relay), наша команда проектирует новые продукты для решения задач удалённого администрирования и физического доступа.
       </p>
       <div class="cs-quick-nav">
-        <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Удалённый стол) ↓</a>
+        <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Шлюз присутствия) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (СКУД и турникеты) ↓</a>
         <a href="#bolid-fire" class="btn btn-secondary">🔥 Болид Пожарная тревога &amp; Эвакуация ↓</a>
       </div>
@@ -85,54 +85,59 @@
         <div>
           <span class="link-status">Coming soon · В разработке</span>
           <h2 id="link-heading" class="section-title">Ligament Link</h2>
-          <p class="link-lead">Удалённый рабочий стол под вашим контролем</p>
-          <p class="link-description">Разрабатываем собственную On-Premise альтернативу TeamViewer и AnyDesk в экосистеме Ligament 2FA: для техподдержки, администрирования и работы с офисным ПК из дома без сторонних облаков.</p>
+          <p class="link-lead">Корпоративный шлюз удалённого присутствия: Console, SOS &amp; Unattended под контролем Zero-Trust</p>
+          <p class="link-description">
+            Собственная On-Premise система удалённого доступа без сторонних облаков. Единый нативный агент для фонового администрирования серверов (Unattended), экрана владельца (Console) и экстренной помощи сотрудникам (SOS) со строгим числовым подтверждением (Number Matching), адаптивной детекцией периметра сети и защитой Step-Up 2FA.
+          </p>
           <div class="tag-pills">
             <span class="tag-pill">On-Premise</span>
-            <span class="tag-pill">Console Sharing</span>
-            <span class="tag-pill">2FA / Passkey / Push</span>
+            <span class="tag-pill">Console + SOS + Unattended</span>
+            <span class="tag-pill">Step-Up 2FA извне</span>
+            <span class="tag-pill">Strict Number Matching</span>
+            <span class="tag-pill">UAC &amp; Winlogon DXGI</span>
+            <span class="tag-pill">Claim-Check Hub</span>
           </div>
         </div>
         <aside class="link-roadmap" aria-label="Статус разработки">
-          <h3>Что готовим</h3>
-          <p>Один контур: доступ к устройствам, второй фактор, отзыв разрешений и аудит.</p>
-          <p class="link-disclaimer">Возможности ниже — план разработки. Срок выхода, поддерживаемые платформы, состав релиза и лицензирование будут объявлены отдельно.</p>
+          <h3>Единая архитектура присутствия</h3>
+          <p>Один контур: единый агент LocalSystem, 60 FPS без артефактов при UAC, сетевой грейс-период 60 с и строгий аудит.</p>
+          <p class="link-disclaimer">Возможности ниже отражают актуальную архитектуру подсистемы Ligament Link. Срок релиза, поддерживаемые ОС и состав корпоративных лицензий будут объявлены отдельно.</p>
           <a href="mailto:admin@ligam.org?subject=Ligament%20Link%20early%20access" class="btn btn-primary">Обсудить ранний доступ</a>
         </aside>
       </div>
-      <h3 class="link-features-heading">Планируемые возможности Ligament Link</h3>
+      <h3 class="link-features-heading">Архитектурные возможности Ligament Link</h3>
       <div class="link-features">
         <article class="link-feature">
-          <h4>Совместный рабочий стол</h4>
-          <p>Console Sharing: оператор и сотрудник видят одну консоль и могут работать вместе без открытия отдельной RDP-сессии.</p>
+          <h4>Унифицированный агент: Console, SOS и Unattended</h4>
+          <p>Единый высокопроизводительный сервис (LocalSystem Go-агент) заменяет разрозненные утилиты. Управление всеми сценариями: удалённая консоль ПК владельца, каталог серверов и экстренный хелпдеск (SOS) в общем клиентском приложении.</p>
         </article>
         <article class="link-feature">
-          <h4>Доступ без присутствия пользователя</h4>
-          <p>Планируется подключение к заблокированным ПК, работа с экраном входа и отправка Ctrl+Alt+Del. Доступ — по назначенным правам и политике 2FA.</p>
+          <h4>Адаптивный периметр и Step-Up 2FA извне</h4>
+          <p>Интеллектуальный контроль IP по маскам CIDR: из доверенной корпоративной сети сессия стартует мгновенно, а при входе оператора из внешней сети строго запрашивается повторное подтверждение (Passkey/биометрия или TOTP).</p>
         </article>
         <article class="link-feature">
-          <h4>Своя инфраструктура</h4>
-          <p>Планируется размещение серверов, Relay и ключей в инфраструктуре организации. Передача экрана и файлов — через собственный контур.</p>
+          <h4>Строгий Number Matching без слепого одобрения</h4>
+          <p>Защита от Push-бомбинга и социальной инженерии в режиме SOS: пользователь обязан вручную набрать на клавиатуре 2-значный код верификации оператора. Слепые кнопки «Разрешить» полностью исключены.</p>
         </article>
         <article class="link-feature">
-          <h4>HTTPS / WSS :443</h4>
-          <p>Защищённые исходящие соединения к своей инфраструктуре: без входящего проброса портов на рабочих ПК. Доступность зависит от сетевых политик и настроек прокси.</p>
+          <h4>Поддержка экрана входа Winlogon и диалогов UAC</h4>
+          <p>Работа с заблокированными ПК, системными окнами RunAs и экраном ввода пароля Windows. Автоматический перехват DXGI Desktop Duplication при смене десктопов (Default ↔ Winlogon) без зависания картинки.</p>
         </article>
         <article class="link-feature">
-          <h4>Центральный отзыв доступа</h4>
-          <p>Планируется единое управление доступом и завершение активных сеансов из Ligament 2FA при блокировке пользователя или отзыве разрешения.</p>
+          <h4>Кластерный диспетчер Claim-Check (LISTEN/NOTIFY)</h4>
+          <p>Масштабирование сессий между нодами Ligament 2FA через PostgreSQL Claim-Check: передача сверхлегких триггеров и надёжная доставка WebRTC SDP-офферов без ограничений по размеру пакета и задержкам.</p>
         </article>
         <article class="link-feature">
-          <h4>Парк устройств и аудит</h4>
-          <p>Планируется единый список устройств Windows/Linux со статусами и журнал подключений: пользователь, устройство, целевой хост, время и режим доступа. Интеграция событий с SIEM.</p>
+          <h4>Сетевая устойчивость: 60 сек Grace Period и ICE Restart</h4>
+          <p>При переключении Wi-Fi/LTE или микрообрыве сессия не рвётся: действует 60-секундный таймер удержания, прозрачный перезапуск ICE и мгновенный фолбэк на защищённый канал WSS 443 без сброса прав.</p>
         </article>
       </div>
       <div class="link-use-cases">
-        <p><strong>Для ИБ:</strong> управляемый доступ вместо неучтённых удалённых подключений.</p>
-        <p><strong>Для ИТ:</strong> помощь сотруднику в его текущей консоли и обслуживание устройств без присутствия пользователя.</p>
-        <p><strong>Для сотрудников:</strong> доступ к привычному рабочему столу с подтверждением 2FA, без обязательного отдельного VPN к офису.</p>
+        <p><strong>Для ИБ и Zero-Trust:</strong> адаптивный контроль доступа с привязкой к периметру, обязательный Step-Up 2FA снаружи и защита пользователей от фишинга через Number Matching.</p>
+        <p><strong>Для ИТ-поддержки:</strong> мгновенное подключение к сессиям пользователей по коду SOS, помощь на экране логина и перехват UAC без вылетов.</p>
+        <p><strong>Для удалённых сотрудников:</strong> безопасный доступ к офисному ПК (Console) из дома без необходимости разворачивать отдельный сложный VPN.</p>
       </div>
-      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion уже описывает проброс RDP/SSH через Core или Relay. Ligament Link разрабатывается для работы с общей консолью и удалённой помощи — это отдельное направление продукта.</p>
+      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion обеспечивает проброс портов RDP/SSH через Core или Branch Relay. Ligament Link — это интерактивная визуальная консоль реального времени с WebRTC, поддержкой UAC, адаптивным 2FA-периметром и единым агентом.</p>
     </div>
   </section>
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upcoming Modules · Ligament Security — Link & PACS</title>
-  <meta name="description" content="Roadmap and upcoming modules for the Ligament On-Premise 2FA ecosystem: Ligament Link remote desktop and Ligament PACS physical access control integration.">
+  <title>Upcoming Modules · Ligament Security — Link, PACS &amp; Bolid Fire</title>
+  <meta name="description" content="Development roadmap for Ligament On-Premise ecosystem: Ligament Link remote presence gateway (Console, SOS, Unattended), PACS turnstiles, and Bolid fire evacuation management.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://ligam.org/en/coming-soon.html">
   <link rel="alternate" hreflang="ru" href="https://ligam.org/coming-soon.html">
@@ -14,14 +14,14 @@
   <!-- OpenGraph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ligam.org/en/coming-soon.html">
-  <meta property="og:title" content="Upcoming Modules: Ligament Link & PACS">
-  <meta property="og:description" content="On-Premise remote desktop and physical access control (PACS) integration under unified Ligament 2FA control.">
+  <meta property="og:title" content="Upcoming Modules: Ligament Link, PACS &amp; Bolid Fire">
+  <meta property="og:description" content="Ligament Link presence gateway (Console/SOS/Unattended), physical access control (PACS), and Bolid fire evacuation under unified 2FA control.">
   <meta property="og:image" content="https://ligam.org/assets/brand/og-image-ru.png">
   <meta property="og:locale" content="en_US">
 
   <link rel="icon" type="image/png" href="../assets/brand/favicon.png">
   <link rel="icon" type="image/x-icon" href="../assets/brand/favicon.ico">
-  <link rel="stylesheet" href="../styles.css?v=fire-bolid-1">
+  <link rel="stylesheet" href="../styles.css?v=link-rework-1">
 </head>
 <body>
 
@@ -71,7 +71,7 @@
         We continuously expand the unified On-Premise security perimeter. Beyond currently shipped components (Core, Windows Logon, RADIUS 802.1X, SSO OIDC/SAML, and Branch Relay), our team is actively architecting new products for remote administration and physical access control.
       </p>
       <div class="cs-quick-nav">
-        <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Remote Desktop) ↓</a>
+        <a href="#ligament-link" class="btn btn-secondary">💻 Ligament Link (Presence Gateway) ↓</a>
         <a href="#pacs" class="btn btn-secondary">🛡️ Ligament PACS (Physical Access) ↓</a>
         <a href="#bolid-fire" class="btn btn-secondary">🔥 Bolid Fire Alarm &amp; Evacuation ↓</a>
       </div>
@@ -85,54 +85,59 @@
         <div>
           <span class="link-status">Coming soon · In development</span>
           <h2 id="link-heading" class="section-title">Ligament Link</h2>
-          <p class="link-lead">Remote desktop under your control</p>
-          <p class="link-description">We are developing an on-premise alternative to TeamViewer and AnyDesk within the Ligament 2FA ecosystem, for IT support, administration and access to an office PC from home without third-party clouds.</p>
+          <p class="link-lead">Corporate Remote Presence Gateway: Console, SOS &amp; Unattended under Zero-Trust Control</p>
+          <p class="link-description">
+            A proprietary on-premise remote presence platform with zero third-party cloud dependencies. A unified native agent for server fleets (Unattended), owner console access (Console), and on-demand user helpdesk (SOS) featuring strict Number Matching, perimeter-aware evaluation, and Step-Up 2FA enforcement.
+          </p>
           <div class="tag-pills">
             <span class="tag-pill">On-Premise</span>
-            <span class="tag-pill">Console Sharing</span>
-            <span class="tag-pill">2FA / Passkey / Push</span>
+            <span class="tag-pill">Console + SOS + Unattended</span>
+            <span class="tag-pill">External Step-Up 2FA</span>
+            <span class="tag-pill">Strict Number Matching</span>
+            <span class="tag-pill">UAC &amp; Winlogon DXGI</span>
+            <span class="tag-pill">Claim-Check Hub</span>
           </div>
         </div>
         <aside class="link-roadmap" aria-label="Development status">
-          <h3>What we are building</h3>
-          <p>One environment for device access, second-factor authentication, permission revocation and audit.</p>
-          <p class="link-disclaimer">The features below describe the development roadmap. Release timing, supported platforms, release scope and licensing will be announced separately.</p>
+          <h3>Unified Remote Presence</h3>
+          <p>Single LocalSystem host daemon, 60 FPS zero-tearing capture across UAC desktops, 60s network grace period, and comprehensive audit trails.</p>
+          <p class="link-disclaimer">The features below reflect the current architecture of the Ligament Link subsystem. Release dates, supported operating systems, and enterprise licensing packages will be announced separately.</p>
           <a href="mailto:admin@ligam.org?subject=Ligament%20Link%20early%20access" class="btn btn-primary">Discuss early access</a>
         </aside>
       </div>
-      <h3 class="link-features-heading">Planned capabilities</h3>
+      <h3 class="link-features-heading">Architectural Capabilities</h3>
       <div class="link-features">
         <article class="link-feature">
-          <h4>Shared desktop</h4>
-          <p>Console sharing lets the operator and employee see the same desktop and work together without opening a separate RDP session.</p>
+          <h4>Unified Agent: Console, SOS &amp; Unattended</h4>
+          <p>A single high-performance LocalSystem Go daemon replaces fragmented tools. Supports all remote presence scenarios: owner desktop console, server fleet management, and emergency SOS support within a unified client application.</p>
         </article>
         <article class="link-feature">
-          <h4>Unattended access</h4>
-          <p>Planned access to locked PCs, login-screen interaction and Ctrl+Alt+Del. Access follows assigned permissions and the 2FA policy.</p>
+          <h4>Perimeter Awareness &amp; External Step-Up 2FA</h4>
+          <p>Dynamic CIDR evaluation classifies connections as internal or external. Operators connecting from trusted office networks proceed instantly, while external sessions strictly require fresh 2FA re-verification (Passkey biometrics or TOTP).</p>
         </article>
         <article class="link-feature">
-          <h4>Your own infrastructure</h4>
-          <p>Planned deployment of servers, relays and keys within the organization’s infrastructure. Screen and file traffic stays within that deployment.</p>
+          <h4>Strict Number Matching (No Blind Prompts)</h4>
+          <p>Eliminates push fatigue and social engineering during SOS sessions: the remote user must manually type a 2-digit verification code provided by the operator. Blind "Allow" buttons are completely excluded.</p>
         </article>
         <article class="link-feature">
-          <h4>HTTPS / WSS :443</h4>
-          <p>Secure outbound connections to your infrastructure, without inbound port forwarding on workstations. Connectivity depends on network policies and proxy configuration.</p>
+          <h4>Winlogon Lock Screen &amp; UAC Desktop Capture</h4>
+          <p>Full support for locked workstations, RunAs dialogs, and Windows logon credentials. Seamless DXGI Desktop Duplication recovery during desktop transitions (Default ↔ Winlogon) prevents frozen video streams.</p>
         </article>
         <article class="link-feature">
-          <h4>Central access revocation</h4>
-          <p>Planned centralized access control and termination of active sessions from Ligament 2FA when a user is blocked or a permission is revoked.</p>
+          <h4>Claim-Check Cluster Hub (LISTEN/NOTIFY)</h4>
+          <p>Scales WebRTC signaling across distributed Ligament 2FA cluster nodes using PostgreSQL Claim-Check routing: lightweight notifications bypass payload limits while handling large SDP offers reliably.</p>
         </article>
         <article class="link-feature">
-          <h4>Device inventory and audit</h4>
-          <p>Planned Windows/Linux device inventory with status and connection logs: user, source device, target host, time and access mode. Event integration with SIEM.</p>
+          <h4>Network Resilience: 60s Grace Period &amp; ICE Restart</h4>
+          <p>Temporary drops, Wi-Fi roaming, or mobile handovers do not sever the session: a 60-second resilience window triggers automatic background ICE Restart and seamless fallback to WSS 443 relay without re-prompting users.</p>
         </article>
       </div>
       <div class="link-use-cases">
-        <p><strong>For security teams:</strong> managed access instead of untracked remote connections.</p>
-        <p><strong>For IT teams:</strong> help employees in their current console and service devices without the user present.</p>
-        <p><strong>For employees:</strong> access the familiar office desktop with 2FA, without a mandatory separate office VPN.</p>
+        <p><strong>For Security &amp; Zero-Trust Teams:</strong> perimeter-adaptive access control, mandatory external Step-Up MFA, and user phishing protection via Number Matching.</p>
+        <p><strong>For IT Helpdesks:</strong> instant attended support via 2-digit SOS codes, interaction with Windows logon screens, and seamless UAC elevation.</p>
+        <p><strong>For Remote Employees:</strong> secure access to office workstations (Console) from home without the overhead of maintaining a separate full-tunnel VPN.</p>
       </div>
-      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion provides RDP/SSH forwarding through Core or Relay. Ligament Link is being developed for shared-console access and remote assistance as a separate product direction.</p>
+      <p class="link-distinction"><strong>Link / Bastion:</strong> Bastion provides RDP/SSH port forwarding via Core or Branch Relays. Ligament Link is an interactive real-time visual streaming gateway with WebRTC, UAC handling, perimeter Step-Up 2FA, and a unified agent.</p>
     </div>
   </section>
 
