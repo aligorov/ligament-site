@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ligament-site:latest
+    image: aligorov/ligament-site:latest
     container_name: ligament-site
     restart: unless-stopped
     networks:
