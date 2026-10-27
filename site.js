@@ -740,6 +740,158 @@
     initScreenshots();
     initDocsToc();
     initWikiSearch();
+    initNeuralMeshBackground();
+  }
+
+  // 11. Фоновая анимированная кибер-сеть (Neural Mesh Constellation)
+  function initNeuralMeshBackground() {
+    let canvas = document.getElementById('bg-neural-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'bg-neural-canvas';
+      canvas.className = 'bg-neural-canvas';
+      document.body.prepend(canvas);
+    }
+    if (!canvas || !canvas.getContext) return;
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const mouse = { x: -9999, y: -9999, active: false };
+    window.addEventListener('pointermove', function (e) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
+    }, { passive: true });
+    window.addEventListener('pointerleave', function () {
+      mouse.active = false;
+    }, { passive: true });
+
+    function isDarkTheme() {
+      return document.documentElement.getAttribute('data-theme') !== 'light';
+    }
+
+    function resize() {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      initParticles();
+    }
+    window.addEventListener('resize', resize, { passive: true });
+
+    const maxDist = 165;
+    const maxDistSq = maxDist * maxDist;
+    const mouseMaxDist = 180;
+    const mouseMaxDistSq = mouseMaxDist * mouseMaxDist;
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.r = Math.random() * 2.0 + 1.6;
+        this.alpha = Math.random() * 0.35 + 0.6;
+        this.isCyan = Math.random() > 0.4;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > w) this.vx *= -1;
+        if (this.y < 0 || this.y > h) this.vy *= -1;
+      }
+      draw(dark) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        const color = dark
+          ? (this.isCyan ? '#22d3ee' : '#818cf8')
+          : (this.isCyan ? '#0284c7' : '#4f46e5');
+        ctx.fillStyle = color;
+        ctx.globalAlpha = dark ? this.alpha : (this.alpha * 0.7);
+        ctx.shadowBlur = dark ? 10 : 6;
+        ctx.shadowColor = color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1.0;
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.max(55, Math.floor((w * h) / 11000));
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    resize();
+
+    function render() {
+      ctx.clearRect(0, 0, w, h);
+      const dark = isDarkTheme();
+      const lineStroke = dark ? '#22d3ee' : '#4f46e5';
+      const lineBaseAlpha = dark ? 0.42 : 0.25;
+
+      // Связи между частицами
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dSq = dx * dx + dy * dy;
+          if (dSq < maxDistSq) {
+            const dist = Math.sqrt(dSq);
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = lineStroke;
+            ctx.globalAlpha = (1 - dist / maxDist) * lineBaseAlpha;
+            ctx.lineWidth = 1.1;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+          }
+        }
+
+        // Интерактивная лазерная нить к курсору мыши
+        if (mouse.active) {
+          const mdx = particles[i].x - mouse.x;
+          const mdy = particles[i].y - mouse.y;
+          const mdSq = mdx * mdx + mdy * mdy;
+          if (mdSq < mouseMaxDistSq) {
+            const mdist = Math.sqrt(mdSq);
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = dark ? '#38bdf8' : '#0284c7';
+            ctx.globalAlpha = (1 - mdist / mouseMaxDist) * (dark ? 0.55 : 0.35);
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+          }
+        }
+
+        particles[i].update();
+        particles[i].draw(dark);
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
   }
 
   if (document.readyState === 'loading') {

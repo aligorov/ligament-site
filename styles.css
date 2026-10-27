@@ -368,6 +368,35 @@ button {
   font-size: inherit;
 }
 
+/* ---- Анимированный фоновый холст кибер-сети (Neural Mesh Constellation) ---- */
+.bg-neural-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-neural-canvas {
+    display: none !important;
+  }
+}
+
+.announcement-bar,
+.hero-section,
+.metrics-section,
+.section,
+.collab-section,
+.screenshots-section,
+.downloads-section,
+.graph-section,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
 .container {
   width: 100%;
   max-width: var(--max-w);

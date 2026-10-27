@@ -48,9 +48,19 @@
     .ghost { border: 1px solid rgba(148, 163, 184, 0.4); color: #cbd5e1; }
     .ghost:hover { border-color: #38bdf8; color: #38bdf8; }
     .hint { margin-top: 26px; font-size: 13px; color: #64748b; }
+    .bg-neural-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    main { position: relative; z-index: 1; }
   </style>
 </head>
 <body>
+  <canvas id="bg-neural-canvas" class="bg-neural-canvas" aria-hidden="true"></canvas>
   <main>
     <p class="code">404</p>
     <h1>Страница не найдена</h1>
@@ -61,5 +71,6 @@
     </div>
     <p class="hint">Page not found — use one of the links above.</p>
   </main>
+  <script src="site.js?v=neural-mesh-1"></script>
 </body>
 </html>
