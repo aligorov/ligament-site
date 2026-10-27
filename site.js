@@ -321,18 +321,29 @@
     const winStatus = document.getElementById('win-logon-status');
     const winSub = document.getElementById('win-logon-sub');
     const phonePushStatus = document.getElementById('phone-push-status');
+    const mockupCard = document.querySelector('.mockup-card');
+    const mockupBridge = document.getElementById('mockup-bridge');
     const isEn = document.documentElement.lang === 'en';
+    let resetTimer = null;
 
     if (!matchOpts.length || !winStatus) return;
 
     matchOpts.forEach(function (opt) {
       opt.addEventListener('click', function () {
+        if (resetTimer) {
+          clearTimeout(resetTimer);
+          resetTimer = null;
+        }
+
         const num = opt.getAttribute('data-match');
         matchOpts.forEach(function (o) { o.classList.remove('active'); });
 
         if (num === '42') {
           // Success
           opt.classList.add('active');
+          if (mockupCard) mockupCard.classList.add('unlocked-glow');
+          if (mockupBridge) mockupBridge.classList.add('bridge-success');
+
           winStatus.textContent = '';
           const dot = document.createElement('span');
           dot.className = 'pulse-dot';
@@ -347,14 +358,62 @@
             phonePushStatus.textContent = isEn ? '✓ Session Confirmed' : '✓ Вход подтвержден';
             phonePushStatus.style.color = '#34d399';
           }
+
+          // Smooth reset back to waiting state after 4 seconds
+          resetTimer = setTimeout(function () {
+            opt.classList.remove('active');
+            if (mockupCard) mockupCard.classList.remove('unlocked-glow');
+            if (mockupBridge) mockupBridge.classList.remove('bridge-success');
+
+            winStatus.textContent = '';
+            const waitDot = document.createElement('span');
+            waitDot.className = 'pulse-dot';
+            winStatus.appendChild(waitDot);
+            winStatus.appendChild(document.createTextNode(' ' + (isEn ? 'Waiting for smartphone approval...' : 'Ожидание подтверждения на смартфоне...')));
+            winStatus.style.color = '#a5b4fc';
+
+            if (winSub) {
+              winSub.textContent = isEn ? 'Tap number 42 on your phone' : 'Выберите число 42 на телефоне';
+              winSub.style.color = 'var(--text-muted)';
+            }
+            if (phonePushStatus) {
+              phonePushStatus.textContent = isEn ? 'Tap 42 for instant unlock' : 'Нажмите 42 для мгновенного входа';
+              phonePushStatus.style.color = 'var(--text-muted)';
+            }
+          }, 4000);
         } else {
           // Mismatch
+          if (mockupCard) mockupCard.classList.remove('unlocked-glow');
+          if (mockupBridge) mockupBridge.classList.remove('bridge-success');
+
           winStatus.textContent = isEn ? '✕ Number Mismatch' : '✕ Неверное число';
           winStatus.style.color = '#f87171';
           if (winSub) {
             winSub.textContent = isEn ? 'Please tap number 42 on your phone' : 'Выберите число 42 на телефоне';
             winSub.style.color = '#94a3b8';
           }
+          if (phonePushStatus) {
+            phonePushStatus.textContent = isEn ? '✕ Verification Failed' : '✕ Не совпадает';
+            phonePushStatus.style.color = '#f87171';
+          }
+
+          resetTimer = setTimeout(function () {
+            winStatus.textContent = '';
+            const waitDot = document.createElement('span');
+            waitDot.className = 'pulse-dot';
+            winStatus.appendChild(waitDot);
+            winStatus.appendChild(document.createTextNode(' ' + (isEn ? 'Waiting for smartphone approval...' : 'Ожидание подтверждения на смартфоне...')));
+            winStatus.style.color = '#a5b4fc';
+
+            if (winSub) {
+              winSub.textContent = isEn ? 'Tap number 42 on your phone' : 'Выберите число 42 на телефоне';
+              winSub.style.color = 'var(--text-muted)';
+            }
+            if (phonePushStatus) {
+              phonePushStatus.textContent = isEn ? 'Tap 42 for instant unlock' : 'Нажмите 42 для мгновенного входа';
+              phonePushStatus.style.color = 'var(--text-muted)';
+            }
+          }, 2500);
         }
       });
     });
